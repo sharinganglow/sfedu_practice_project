@@ -2,6 +2,9 @@
 
 namespace App\Router;
 
+use App\Controllers\PageNotFound;
+use App\Controllers\Welcome;
+
 class Router
 {
     private $uri;
@@ -14,19 +17,21 @@ class Router
     public function runRoute() :void
     {
         if ($this->uri == '/') {
-            echo 'Hello there, welcome to homepage';
-        }
-
-        $path = explode('/', $this->uri);
-        $method = ucfirst(end($path));
-        $method = ucfirst($method);
-        $className = 'App\\Controllers\\' . $method;
-
-        if (class_exists($className)) {
-            $controller = new $className;
-            $controller->greetUser();
+            $controller = new Welcome();
         } else {
-            echo '404 incorrect url';
+
+            $path = explode('/', $this->uri);
+            $method = ucfirst(end($path));
+            $method = ucfirst($method);
+            $className = 'App\\Controllers\\' . $method; // если поменяется метод - можно сделать переменные полями
+                                                         // класса и сделать сеттер, думаю
+            if (class_exists($className)) {
+                $controller = new $className;
+            } else {
+                $controller = new PageNotFound();
+            }
         }
+
+        $controller->greetUser();
     }
 }

@@ -7,7 +7,3 @@ $requestPath = $_SERVER['REQUEST_URI'] ?? '';
 
 $router = new Router($requestPath);
 $router->runRoute();
-
-if (isset($method)) {
-    $method->greetUser();
-}
