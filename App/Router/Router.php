@@ -23,8 +23,8 @@ class Router
             $path = explode('/', $this->uri);
             $method = ucfirst(end($path));
             $method = ucfirst($method);
-            $className = 'App\\Controllers\\' . $method; // если поменяется метод - можно сделать переменные полями
-                                                         // класса и сделать сеттер, думаю
+            $className = 'App\\Controllers\\' . $method;
+
             if (class_exists($className)) {
                 $controller = new $className;
             } else {
