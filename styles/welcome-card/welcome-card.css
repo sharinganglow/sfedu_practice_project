@@ -1,0 +1,21 @@
+.welcome-card {
+    display: flex;
+
+    width: 90%;
+    height: max-content;
+    margin: 50px auto 90px;
+    padding: 40px;
+
+    box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 1);
+}
+
+.welcome-card_little {
+    width: 40%;
+    padding: 30px;
+}
+
+.welcome-card_little:last-child {
+    margin-top: 0;
+}

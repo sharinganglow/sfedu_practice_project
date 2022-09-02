@@ -1,0 +1,29 @@
+.photo-box {
+    width:  450px;
+    height: 85%;
+    margin: auto;
+
+    box-shadow: 0 0 15px rgba(50, 12, 220, 1);
+    border-radius: 15px;
+    background-image: url("../../img/background.jpg");
+    overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.photo-box_little {
+    width: 200px;
+    height: 200px;
+}
+
+.photo {
+    overflow: hidden;
+    width: 700px;
+    height: 400px;
+
+    object-fit: cover;
+}
+
+.photo_full {
+    width: 100%;
+}

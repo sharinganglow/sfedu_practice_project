@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Blocks\StorageBlock;
+
 class Storage
 {
     public function greetUser() :void
     {
-        echo ' Hello there, this is storage page';
+        $block = new StorageBlock();
+        $block->render();
     }
 }

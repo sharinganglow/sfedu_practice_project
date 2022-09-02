@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Blocks\ProductBlock;
+
 class Product
 {
     public function greetUser() :void
     {
-        echo ' Hello there, this is product page';
+        $block = new ProductBlock();
+        $block->render();
     }
 }

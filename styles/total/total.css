@@ -1,0 +1,23 @@
+.total {
+    display: flex;
+    justify-content: space-between;
+
+    position: relative;
+
+    margin-top: 30px;
+}
+
+.total:after {
+    content: "";
+
+    position: absolute;
+    top: -17px;
+    left: -8%;
+
+    width: 115%;
+    height: 1.5px;
+
+    background-color: black;
+    box-shadow: 0 0 5px gray;
+    border-radius: 20px;
+}

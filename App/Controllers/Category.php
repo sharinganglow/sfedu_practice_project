@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Blocks\CategoryBlock;
+
 class Category
 {
     public function greetUser() :void
     {
-        echo ' Hello there, this is category page';
+        $block = new CategoryBlock();
+        $block->render();
     }
 }

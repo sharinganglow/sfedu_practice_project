@@ -3,7 +3,7 @@
 namespace App\Router;
 
 use App\Controllers\PageNotFound;
-use App\Controllers\Welcome;
+use App\Controllers\Mainpage;
 
 class Router
 {
@@ -17,7 +17,7 @@ class Router
     public function runRoute() :void
     {
         if ($this->uri == '/') {
-            $controller = new Welcome();
+            $controller = new Mainpage();
         } else {
 
             $path = explode('/', $this->uri);

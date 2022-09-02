@@ -1,0 +1,35 @@
+.check-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-width: 25%;
+    height: 60vh;
+    margin: auto;
+    padding: 40px;
+
+    text-align: center;
+
+    background-color: honeydew;
+    box-shadow: 0 4px 6px #666666;
+    box-sizing: border-box;
+}
+
+.bottom-bar {
+    width: 100%;
+
+    position: relative;
+}
+
+
+.check-box__title {
+    margin-bottom: 60px;
+}
+
+.check-box__unit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}

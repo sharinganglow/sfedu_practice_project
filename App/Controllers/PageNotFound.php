@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Blocks\PageNotFoundBlock;
+
 class PageNotFound
 {
     public function greetUser() :void
     {
-        echo '404 incorrect url';
+        $block = new PageNotFoundBlock();
+        $block->render();
     }
 }

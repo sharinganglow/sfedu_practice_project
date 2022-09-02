@@ -1,0 +1,62 @@
+@import "../check-box/check-box.css";
+@import "../description/description.css";
+@import "../elements/elements.css";
+@import "../footer/footer.css";
+@import "../header/header.css";
+@import "../menu/menu.css";
+@import "../order/order.css";
+@import "../photo-box/photo.css";
+@import "../total/total.css";
+@import "../welcome-card/welcome-card.css";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.link_white {
+    color: white;
+}
+
+.feed {
+    display: flex;
+    flex-direction: column;
+    min-height: 79.5vh;
+
+    box-sizing: border-box;
+}
+
+.feed_row {
+    flex-flow: row wrap;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__name {
+    margin: 0 auto 30px;
+
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.greet-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 55%;
+    height: 79.5vh;
+    margin: 0 auto 0 150px;
+
+    text-align: center;
+    color: dimgray;
+    font-size: 65px;
+}

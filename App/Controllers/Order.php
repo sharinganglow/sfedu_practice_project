@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Blocks\OrderBlock;
+
 class Order
 {
     public function greetUser() :void
     {
-        echo ' Hello there, this is order page';
+        $block = new OrderBlock();
+        $block->render();
     }
 }
