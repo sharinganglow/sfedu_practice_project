@@ -14,7 +14,7 @@ class Router
         $this->uri = $uri;
     }
 
-    public function runRoute() :void
+    public function runRoute(): void
     {
         if ($this->uri == '/') {
             $controller = new Mainpage();
@@ -32,6 +32,6 @@ class Router
             }
         }
 
-        $controller->greetUser();
+        $controller->execute();
     }
 }

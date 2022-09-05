@@ -6,7 +6,7 @@ use App\Blocks\StorageBlock;
 
 class Storage
 {
-    public function greetUser() :void
+    public function execute(): void
     {
         $block = new StorageBlock();
         $block->render();

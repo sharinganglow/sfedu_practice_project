@@ -2,14 +2,19 @@
 
 namespace App\Blocks;
 
-class ProductBlock
+class ProductBlock extends AbstractBlockHandler
 {
+    private $layout = APP_ROOT . '/views/product.phtml';
+
     public function render()
     {
-        require APP_ROOT . '/views/product.phtml';
+        $header = new HeaderBlock(2);
+        $footer = new FooterBlock();
+
+        require_once APP_ROOT . '/views/constituents/main-template.phtml';
     }
 
-    public function getData() :array
+    public function getData(): array
     {
         return $data = [
             [
@@ -36,10 +41,5 @@ class ProductBlock
                 'category'  => 'supersmartphone, linux',
             ]
         ];
-    }
-
-    public function setData(): void
-    {
-
     }
 }

@@ -6,7 +6,7 @@ use App\Blocks\PageNotFoundBlock;
 
 class PageNotFound
 {
-    public function greetUser() :void
+    public function execute(): void
     {
         $block = new PageNotFoundBlock();
         $block->render();

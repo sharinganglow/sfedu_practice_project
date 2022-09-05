@@ -6,7 +6,7 @@ use App\Blocks\ProductBlock;
 
 class Product
 {
-    public function greetUser() :void
+    public function execute(): void
     {
         $block = new ProductBlock();
         $block->render();

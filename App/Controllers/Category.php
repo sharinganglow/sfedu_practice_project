@@ -6,7 +6,7 @@ use App\Blocks\CategoryBlock;
 
 class Category
 {
-    public function greetUser() :void
+    public function execute(): void
     {
         $block = new CategoryBlock();
         $block->render();

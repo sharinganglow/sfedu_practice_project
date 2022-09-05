@@ -2,25 +2,25 @@
 
 namespace App\Blocks;
 
-class CategoryBlock
+class CategoryBlock extends AbstractBlockHandler
 {
+    private $layout = APP_ROOT . '/views/category.phtml';
+
     public function render()
     {
-        require APP_ROOT . '/views/category.phtml';
+        $header = new HeaderBlock(4);
+        $footer = new FooterBlock();
+
+        require_once APP_ROOT . '/views/constituents/main-template.phtml';
     }
 
-    public function getData() :array
+    public function getData(): array
     {
         return $data = [
-            'category' => 'smartphone', 'ios', 'android', 'supersmartphone', 'linux',
-                          'smartphone', 'ios', 'android', 'supersmartphone', 'linux',
-                          'smartphone', 'ios', 'android', 'supersmartphone', 'linux',
-                          'smartphone', 'ios', 'android', 'supersmartphone', 'linux',
+                      'smartphone', 'ios', 'android', 'supersmartphone', 'linux',
+                      'smartphone', 'ios', 'android', 'supersmartphone', 'linux',
+                      'smartphone', 'ios', 'android', 'supersmartphone', 'linux',
+                      'smartphone', 'ios', 'android', 'supersmartphone', 'linux',
         ];
-    }
-
-    public function setData() :void
-    {
-
     }
 }

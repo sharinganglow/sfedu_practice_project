@@ -6,7 +6,7 @@ use App\Blocks\MainpageBlock;
 
 class Mainpage
 {
-    public function greetUser() :void
+    public function execute(): void
     {
         $block = new MainpageBlock();
         $block->render();

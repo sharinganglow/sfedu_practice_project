@@ -2,22 +2,20 @@
 
 namespace App\Blocks;
 
-class OrderBlock
+class OrderBlock extends AbstractBlockHandler
 {
+    private $layout = APP_ROOT . '/views/order.phtml';
+
     public function render()
     {
-        require APP_ROOT . '/views/order.phtml';
+        $header = new HeaderBlock(0);
+        $footer = new FooterBlock();
+
+        require_once APP_ROOT . '/views/constituents/main-template.phtml';
     }
 
-    public function getData() :array
+    public function getData(): array
     {
-        return $data = [
-            'total' => '13004', '89999', '100000',
-        ];
-    }
-
-    public function setData() :void
-    {
-
+        return $data = ['13004', '89999', '100000',];
     }
 }

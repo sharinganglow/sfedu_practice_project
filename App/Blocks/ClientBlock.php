@@ -2,14 +2,19 @@
 
 namespace App\Blocks;
 
-class ClientBlock
+class ClientBlock extends AbstractBlockHandler
 {
+    private $layout = APP_ROOT . '/views/client.phtml';
+
     public function render()
     {
-        require APP_ROOT . '/views/client.phtml';
+        $header = new HeaderBlock(5);
+        $footer = new FooterBlock();
+
+        require_once APP_ROOT . '/views/constituents/main-template.phtml';
     }
 
-    public function getData() :array
+    public function getData(): array
     {
         return $data = [
             [
@@ -28,10 +33,5 @@ class ClientBlock
                 'email'     => 'twister@gmail.com'
             ]
         ];
-    }
-
-    public function setData() :void
-    {
-
     }
 }
