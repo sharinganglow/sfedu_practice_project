@@ -3,12 +3,18 @@
 namespace App\Controllers;
 
 use App\Blocks\CategoryBlock;
+use App\Database\Database;
 
 class Category
 {
     public function execute(): void
     {
+        $connection = Database::getConnection();
+        $query = $connection->prepare('SELECT * FROM category;');
+
         $block = new CategoryBlock();
-        $block->render();
+        $block
+            ->setData($query->fetchAll())
+            ->render();
     }
 }
