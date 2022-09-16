@@ -13,8 +13,8 @@ class Database
         }
 
         $host = 'localhost';
-        $db   = 'Module4';
-        $user = 'sql_empl';
+        $db   = 'module_4';
+        $user = 'mysql_empl';
         $pass = '322228';
         $charset = 'utf8';
 
@@ -24,6 +24,7 @@ class Database
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             \PDO::ATTR_EMULATE_PREPARES   => false,
         ];
+
         self::$connection = new \PDO($dsn, $user, $pass, $opt);
         return self::$connection;
     }

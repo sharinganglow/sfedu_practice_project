@@ -4,10 +4,13 @@
 @import "../footer/footer.css";
 @import "../header/header.css";
 @import "../menu/menu.css";
-@import "../order/order.css";
+@import "../button/button.css";
 @import "../photo-box/photo.css";
 @import "../total/total.css";
 @import "../welcome-card/welcome-card.css";
+@import "../create-user/create-user.css";
+@import "../input-form/input-form.css";
+@import "../registration/registration.css";
 
 * {
     margin: 0;

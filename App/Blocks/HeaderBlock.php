@@ -13,6 +13,6 @@ class HeaderBlock extends AbstractBlockHandler
 
     public function render(): void
     {
-        require_once APP_ROOT . '/views/constituents/header.phtml';
+        require_once APP_ROOT . '/views/components/header.phtml';
     }
 }

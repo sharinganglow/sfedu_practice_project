@@ -1,10 +1,14 @@
-
+<?php
+/**
+ * @var \App\Blocks\StorageBlock $this
+ */
+?>
 <div class="feed">
     <div class="welcome-card">
         <div class="element-box">
             <?php foreach ($this->getData() as $item): ?>
                 <div class="element element_large">
-                    <?= $item ?>
+                    <?= $item['address'] ?>
                 </div>
             <?php endforeach; ?>
         </div>

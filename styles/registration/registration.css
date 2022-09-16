@@ -1,0 +1,38 @@
+.registration {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+
+    width: 100%;
+}
+
+.registration__field {
+    margin: 10px 0 10px 0;
+
+}
+
+.registration__input {
+    padding: 10px;
+
+    box-shadow: inset 0px 0px 3px rgba(0, 152, 100, 0.1);
+    background-color: #F8FAFD;
+    border-radius: 6px;
+    border: none;
+}
+
+.registration__submit {
+    width: 120px;
+    padding: 5px 10px;
+
+    box-shadow: inset 0px 0px 3px rgba(0, 152, 100, 0.1);
+    border-radius: 8px;
+    transition: 0.5s all;
+}
+
+.registration__submit:hover {
+    box-shadow: 2px 4px 0 rgba(0, 50, 200, 0.2);
+    background-color: darkgray;
+    transition: 0.5s all;
+    border-radius: 2px;
+}

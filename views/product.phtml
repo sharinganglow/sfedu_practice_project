@@ -1,4 +1,9 @@
-
+<?php
+/**
+ * @var \App\Blocks\CategoryBlock $category
+ * @var \App\Blocks\ProductBlock $this
+ */
+?>
 <div class="feed">
     <?php foreach ($this->getData() as $product): ?>
     <div class="welcome-card">
@@ -24,7 +29,7 @@
                 date: <?= $product['date'] ?>
             </div>
             <div class="description__item">
-                category: <?= $product['category'] ?>
+                category: <?= $category->getAllCategories($product['id']) ?>
             </div>
         </div>
     </div>

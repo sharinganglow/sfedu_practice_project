@@ -10,7 +10,8 @@ class Category
     public function execute(): void
     {
         $connection = Database::getConnection();
-        $query = $connection->prepare('SELECT * FROM category;');
+        $query = $connection->prepare('SELECT * FROM category');
+        $query->execute();
 
         $block = new CategoryBlock();
         $block

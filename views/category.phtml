@@ -1,11 +1,15 @@
-
+<?php
+/**
+ * @var \App\Blocks\CategoryBlock $this
+ */
+?>
 <div class="feed">
         <div class="welcome-card">
             <div class="element-box">
                 <?php foreach ($this->getData() as $item): ?>
-                <div class="element">
-                <?= $item ?>
-                </div>
+                    <div class="element">
+                <?= $item['name'] ?>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>

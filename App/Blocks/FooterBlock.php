@@ -6,6 +6,6 @@ class FooterBlock extends AbstractBlockHandler
 {
     public function render(): void
     {
-        require_once APP_ROOT . '/views/constituents/footer.phtml';
+        require_once APP_ROOT . '/views/components/footer.phtml';
     }
 }

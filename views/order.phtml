@@ -1,4 +1,8 @@
-
+<?php
+/**
+ * @var \App\Blocks\OrderBlock $this
+ */
+?>
 <div class="feed">
     <div class="check-box">
         <h2 class="check-box__title">
@@ -9,11 +13,11 @@
         <?php foreach ($this->getData() as $item): ?>
             <div class="check-box__unit">
                 <div class="product">
-                    Наименование товара
+                    <?= $item['name'] ?>
                 </div>
                 <div class="check__item">
-                    <?= $item ?>
-                    <?php $total += $item ?>
+                    <?= $item['total'] ?>
+                    <?php $total += $item['total'] ?>
                 </div>
             </div>
         <?php endforeach; ?>

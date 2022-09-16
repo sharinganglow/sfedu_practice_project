@@ -1,4 +1,4 @@
-.order {
+.button {
     display: flex;
 
     padding: 18px 45px;
@@ -12,6 +12,10 @@
     transition: all 0.3s ease-in-out;
 }
 
-.order:hover {
+.button:hover {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.7);
+}
+
+.button__alternate {
+    background: white;
 }

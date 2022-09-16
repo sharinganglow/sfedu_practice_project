@@ -1,23 +1,33 @@
+<?php
+/**
+ * @var \App\Blocks\ClientBlock $this
+ */
+?>
+<div class="create-user">
+    <a href="../addClient" class="button button__alternate link">
+        create client
+    </a>
+</div>
 
-    <div class="feed feed_row">
-        <?php foreach ($this->getData() as $product): ?>
-            <div class="welcome-card welcome-card_little">
-                <div class="form">
-                    <div class="photo-box photo-box_little">
-                        <img class="photo photo_full" src="../img/background.jpg" alt="photo">
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="description__item">
-                        name: <?= $product['name'] ?>
-                    </div>
-                    <div class="description__item">
-                        surname: <?= $product['surname'] ?>
-                    </div>
-                    <div class="description__item">
-                        email: <?= $product['email'] ?>
-                    </div>
+<div class="feed feed_row">
+    <?php foreach ($this->getData() as $product): ?>
+        <div class="welcome-card welcome-card_little">
+            <div class="form">
+                <div class="photo-box photo-box_little">
+                    <img class="photo photo_full" src="../img/background.jpg" alt="photo">
                 </div>
             </div>
-        <?php endforeach; ?>
-    </div>
+            <div class="description">
+                <div class="description__item">
+                    name: <?= $product['name'] ?>
+                </div>
+                <div class="description__item">
+                    surname: <?= $product['surname'] ?>
+                </div>
+                <div class="description__item">
+                    email: <?= $product['email'] ?>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
