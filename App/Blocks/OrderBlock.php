@@ -22,7 +22,7 @@ class OrderBlock extends AbstractBlockHandler
         return $this->data;
     }
 
-    public function setData($id) :self
+    public function initOrder($id) :self
     {
         $connection = Database::getConnection();
         $query = $connection->prepare(

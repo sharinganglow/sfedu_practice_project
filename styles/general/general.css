@@ -63,3 +63,10 @@
     color: dimgray;
     font-size: 65px;
 }
+
+.main-space {
+    display: flex;
+    flex-direction: column;
+
+    height: 79.5vh;
+}

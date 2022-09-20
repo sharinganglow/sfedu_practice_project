@@ -28,7 +28,7 @@ class CategoryBlock extends AbstractBlockHandler
         return $this;
     }
 
-    public function getAllCategories($id) :string
+    public function getAllCategories($productId): array
     {
         $connection = Database::getConnection();
         $query = $connection->prepare(
@@ -36,13 +36,7 @@ class CategoryBlock extends AbstractBlockHandler
                     ON (t1.id=t2.category_id) JOIN product AS t3 ON (t2.product_id=t3.id) 
                      WHERE t3.id = ?;'
         );
-        $query->execute([$id]);
-        $dataFromDb = $query->fetchAll();
-
-        $result = '';
-        foreach ($dataFromDb as $item) {
-            $result .= ' ' . $item['name'];
-        }
-        return $result;
+        $query->execute([$productId]);
+        return $query->fetchAll();
     }
 }

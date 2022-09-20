@@ -11,7 +11,7 @@ class Order
     {
         $block = new OrderBlock();
         $block
-            ->setData(2)
+            ->initOrder(2)
             ->render();
     }
 }

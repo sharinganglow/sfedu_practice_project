@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Blocks\AddClientBlock;
 use App\Database\Database;
 
-class AddClient
+class AddClient extends AbstractController
 {
     public function execute(): void
     {
@@ -17,15 +17,17 @@ class AddClient
         }
     }
 
-    public function addClient()
+    public function addClient(): bool
     {
-        $name = htmlspecialchars($_POST['name']);
-        $surname = htmlspecialchars($_POST['surname']);
-        $email = htmlspecialchars($_POST['email']);
-        $password = htmlspecialchars($_POST['password']);
-        $rePassword = htmlspecialchars($_POST['re-password']);
+        $name = $this->getPostParam('name');
+        $surname = $this->getPostParam('surname');
+        $email = $this->getPostParam('email');
+        $password = $this->getPostParam('password');
+        $rePassword = $this->getPostParam('re-password');
 
-        if ($password == $rePassword) {
+        $hasRequiredFields = $name && $surname && $email && $password;
+        $hasPasswordMatch  = $password === $rePassword;
+        if ($hasRequiredFields && $hasPasswordMatch) {
             $connection = Database::getConnection();
             $query = $connection->prepare(
                 'INSERT INTO client (name, surname, email, password) VALUES (?, ?, ?, ?);'

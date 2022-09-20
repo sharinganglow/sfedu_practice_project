@@ -28,8 +28,10 @@
             <div class="description__item">
                 date: <?= $product['date'] ?>
             </div>
+                <?php $categories = $category->getAllCategories($product['id']); ?>
             <div class="description__item">
-                category: <?= $category->getAllCategories($product['id']) ?>
+                category:
+                <?= implode(' ', array_column($categories, 'name')); ?>
             </div>
         </div>
     </div>

@@ -26,15 +26,4 @@ class ProductBlock extends AbstractBlockHandler
         $this->data = $data;
         return $this;
     }
-
-//    public function getHierarchy($id): string
-//    {
-//        $result = '';
-//        foreach ($this->data as $item) {
-//            if ($this->data['product_id'] == $id) {
-//                $result .= ', ' . $this->data['category_name'];
-//            }
-//        }
-//        return $result;
-//    }
 }
