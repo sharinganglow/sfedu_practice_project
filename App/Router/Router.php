@@ -16,6 +16,17 @@ class Router
 
     public function runRoute(): void
     {
+        define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD'] ?? 'GET');
+
+        $branch  = strpos($this->uri, '/');
+        $id = strpos($this->uri, '?');
+
+        if ($id === false) {
+            $this->uri = substr($this->uri, $branch);
+        } else {
+            $this->uri = substr($this->uri, $branch, $id);
+        }
+
         if ($this->uri == '/') {
             $controller = new Mainpage();
         } else {

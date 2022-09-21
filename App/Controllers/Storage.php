@@ -4,18 +4,17 @@ namespace App\Controllers;
 
 use App\Blocks\StorageBlock;
 use App\Database\Database;
+use App\Models\StorageModel;
 
 class Storage
 {
     public function execute(): void
     {
-        $connection = Database::getConnection();
-        $query = $connection->prepare('SELECT * FROM storage');
-        $query->execute();
+       $storage = new StorageModel();
 
         $block = new StorageBlock();
         $block
-            ->setData($query->fetchAll())
+            ->setData($storage->getQuery())
             ->render();
     }
 }

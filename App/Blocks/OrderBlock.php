@@ -3,10 +3,11 @@
 namespace App\Blocks;
 
 use App\Database\Database;
+use App\Models\OrderModel;
 
 class OrderBlock extends AbstractBlockHandler
 {
-    private $data;
+    protected $data;
     private $template = APP_ROOT . '/views/order.phtml';
 
     public function render()
@@ -15,24 +16,5 @@ class OrderBlock extends AbstractBlockHandler
         $footer = new FooterBlock();
 
         require_once APP_ROOT . '/views/components/layout.phtml';
-    }
-
-    public function getData(): array
-    {
-        return $this->data;
-    }
-
-    public function initOrder($id) :self
-    {
-        $connection = Database::getConnection();
-        $query = $connection->prepare(
-            'SELECT _order.total, product.name, _order.id AS order_id FROM _order JOIN order_item 
-                    ON (order_item.id=_order.id) JOIN product ON (order_item.product_id=product.id)
-                    WHERE order_id = ?;'
-        );
-        $query->execute([$id]);
-
-        $this->data = $query->fetchAll();
-        return $this;
     }
 }

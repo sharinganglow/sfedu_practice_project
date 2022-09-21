@@ -1,25 +1,21 @@
 <?php
 /**
- * @var App\Models\CategoryModel $category
  * @var App\Blocks\ProductBlock $this
+ * @var App\Models\CategoryModel $category
  */
 ?>
 <div class="main-space">
-    <?php foreach ($this->getData() as $product): ?>
     <div class="welcome-card">
+        <?php $product = $this->getData() ?>
         <div class="form">
-            <a href="../productUnit?id=<?= $product['id_product'] ?>"
-               class="form__name link name"
-               data-replace="<?= $product['name'] ?>">
-                <span class="name__item">
-                    <?= $product['name'] ?>
-                </span>
-            </a>
+            <div class="form__name">
+                <?= $product['name'] ?>
+            </div>
             <div class="photo-box">
-                <img class="photo" src="../img/background.jpg" alt="photo">
+                <img src="../img/addClientPhoto.jpg" alt="picture" class="photo photo_full">
             </div>
         </div>
-        <div class="description description_tabbed">
+        <div class="description">
             <div class="description__item">
                 price: <?= $product['price'] ?> rub
             </div>
@@ -32,12 +28,11 @@
             <div class="description__item">
                 date: <?= $product['date'] ?>
             </div>
-                <?php $categories = $category->getAllCategories($product['id_product']); ?>
+            <?php $categories = $category->getAllCategories($product['id_product']); ?>
             <div class="description__item">
                 category:
                 <?= implode(' ', array_column($categories, 'name')); ?>
             </div>
         </div>
     </div>
-        <?php endforeach; ?>
 </div>

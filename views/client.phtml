@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \App\Blocks\ClientBlock $this
+ * @var App\Blocks\ClientBlock $this
  */
 ?>
 <div class="create-user">
@@ -9,9 +9,12 @@
     </a>
 </div>
 
-<div class="feed feed_row">
-    <?php foreach ($this->getData() as $product): ?>
+<div class="main-space main-space_row">
+    <?php foreach ($this->getData() as $client): ?>
         <div class="welcome-card welcome-card_little">
+            <a href="../editProfile?id=<?= $client['id'] ?>" class="edit">
+                <img src="../icons/edit-button.svg" alt="edit" class="edit__svg">
+            </a>
             <div class="form">
                 <div class="photo-box photo-box_little">
                     <img class="photo photo_full" src="../img/background.jpg" alt="photo">
@@ -19,13 +22,13 @@
             </div>
             <div class="description">
                 <div class="description__item">
-                    name: <?= $product['name'] ?>
+                    name: <?= $client['name'] ?>
                 </div>
                 <div class="description__item">
-                    surname: <?= $product['surname'] ?>
+                    surname: <?= $client['surname'] ?>
                 </div>
                 <div class="description__item">
-                    email: <?= $product['email'] ?>
+                    email: <?= $client['email'] ?>
                 </div>
             </div>
         </div>

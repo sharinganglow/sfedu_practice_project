@@ -4,14 +4,17 @@ namespace App\Controllers;
 
 use App\Blocks\OrderBlock;
 use App\Database\Database;
+use App\Models\OrderModel;
 
 class Order
 {
     public function execute(): void
     {
+        $order = new OrderModel();
+
         $block = new OrderBlock();
         $block
-            ->initOrder(2)
+            ->setData($order->initOrder(2))
             ->render();
     }
 }

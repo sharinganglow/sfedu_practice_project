@@ -12,6 +12,8 @@
 }
 
 .welcome-card_little {
+    position: relative;
+
     width: 40%;
     padding: 30px;
 }

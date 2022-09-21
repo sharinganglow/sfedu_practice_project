@@ -2,9 +2,11 @@
 
 namespace App\Blocks;
 
+use App\Database\Database;
+
 class ClientBlock extends AbstractBlockHandler
 {
-    private $data;
+    protected $data;
     private $template = APP_ROOT . '/views/client.phtml';
 
     public function render()
@@ -13,16 +15,5 @@ class ClientBlock extends AbstractBlockHandler
         $footer = new FooterBlock();
 
         require_once APP_ROOT . '/views/components/layout.phtml';
-    }
-
-    public function getData(): array
-    {
-        return $this->data;
-    }
-
-    public function setData($data): self
-    {
-        $this->data = $data;
-        return $this;
     }
 }

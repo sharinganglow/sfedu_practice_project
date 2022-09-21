@@ -11,6 +11,7 @@
 @import "../create-user/create-user.css";
 @import "../input-form/input-form.css";
 @import "../registration/registration.css";
+@import "../name/name.css";
 
 * {
     margin: 0;
@@ -26,7 +27,7 @@
     color: white;
 }
 
-.feed {
+.main-space {
     display: flex;
     flex-direction: column;
     min-height: 79.5vh;
@@ -34,7 +35,7 @@
     box-sizing: border-box;
 }
 
-.feed_row {
+.main-space_row {
     flex-flow: row wrap;
 }
 
@@ -64,9 +65,24 @@
     font-size: 65px;
 }
 
-.main-space {
-    display: flex;
-    flex-direction: column;
+.edit {
+    position: absolute;
+    right: 5%;
 
-    height: 79.5vh;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+
+    border-radius: 50%;
+    transition: 0.3s all ease-in-out;
+}
+
+.edit__svg {
+    width: 20px;
+    height: 20px;
+}
+
+.edit:hover {
+    transition: 0.2s all ease-in-out;
+    box-shadow: 0 0 10px rgba(50, 12, 220, 1);
 }

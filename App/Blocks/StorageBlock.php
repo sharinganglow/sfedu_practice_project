@@ -4,7 +4,7 @@ namespace App\Blocks;
 
 class StorageBlock extends AbstractBlockHandler
 {
-    private $data;
+    protected $data;
     private $template = APP_ROOT . '/views/storage.phtml';
 
     public function render()
@@ -13,16 +13,5 @@ class StorageBlock extends AbstractBlockHandler
         $footer = new FooterBlock();
 
         require_once APP_ROOT . '/views/components/layout.phtml';
-    }
-
-    public function getData(): array
-    {
-        return $this->data;
-    }
-
-    public function setData($data): self
-    {
-        $this->data = $data;
-        return $this;
     }
 }

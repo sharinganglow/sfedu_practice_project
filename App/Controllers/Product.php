@@ -4,22 +4,17 @@ namespace App\Controllers;
 
 use App\Blocks\ProductBlock;
 use App\Database\Database;
+use App\Models\ProductModel;
 
 class Product
 {
     public function execute(): void
     {
-        $connection = Database::getConnection();
-        $query = $connection->prepare(
-            'SELECT *
-                    FROM product JOIN country ON (country.id=product.country_id)
-                    JOIN brand ON (brand.id=product.brand_id)'
-        );
-        $query->execute();
+        $product = new ProductModel();
 
         $block = new ProductBlock();
         $block
-            ->setData($query->fetchAll())
+            ->setData($product->getQuery())
             ->render();
     }
 }

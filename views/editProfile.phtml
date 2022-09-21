@@ -1,0 +1,64 @@
+<?php
+/**
+ * @var App\models\ClientModel $client
+ */
+?>
+<div class="main-space">
+    <div class="welcome-card input-form">
+        <div class="form">
+            <?php $data = $client->getClientById(); ?>
+            <div class="form__name">
+                Change information
+            </div>
+            <div class="photo-box">
+                <img class="photo photo_full" src="../img/addClientPhoto.jpg" alt="beauty">
+            </div>
+        </div>
+        <form class="registration"  action="" method="post">
+            <div class="registration__field">
+                <input
+                        class="registration__input"
+                        type="text"
+                        name="name"
+                        placeholder="name"
+                        value="<?= $data['name'] ?>">
+            </div>
+
+            <div class="registration__field">
+                <input
+                        class="registration__input"
+                        type="text"
+                        name="surname"
+                        placeholder="surname"
+                        value="<?= $data['surname'] ?>"
+                >
+            </div>
+
+            <div class="registration__field">
+                <input
+                        class="registration__input"
+                        type="email"
+                        name="email"
+                        placeholder="email"
+                        value="<?= $data['email'] ?>"
+                >
+            </div>
+
+            <div class="registration__field">
+                <input class="registration__input" type="password" name="password" placeholder="password">
+            </div>
+
+            <div class="registration__field">
+                <input class="registration__input"
+                       type="password"
+                       name="re-password"
+                       placeholder="repeat password"
+                >
+            </div>
+
+            <div class="registration__field">
+                <input class="registration__submit" type="submit" name="submit" value="add">
+            </div>
+        </form>
+    </div>
+</div>

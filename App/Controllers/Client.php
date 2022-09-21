@@ -4,18 +4,17 @@ namespace App\Controllers;
 
 use App\Blocks\ClientBlock;
 use App\Database\Database;
+use App\Models\ClientModel;
 
 class Client
 {
     public function execute(): void
     {
-        $connection = Database::getConnection();
-        $query = $connection->prepare('SELECT * FROM client');
-        $query->execute();
+        $client = new ClientModel();
 
         $block = new ClientBlock();
         $block
-            ->setData($query->fetchAll())
+            ->setData($client->getQuery())
             ->render();
     }
 }
