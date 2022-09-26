@@ -16,8 +16,6 @@ class Router
 
     public function runRoute(): void
     {
-        define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD'] ?? 'GET');
-
         $branch  = strpos($this->uri, '/');
         $id = strpos($this->uri, '?');
 

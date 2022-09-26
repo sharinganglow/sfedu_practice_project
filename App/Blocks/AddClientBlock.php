@@ -2,13 +2,13 @@
 
 namespace App\Blocks;
 
-class AddClientBlock extends AbstractBlockHandler
+class AddClientBlock extends AbstractBlock
 {
     private $template = APP_ROOT . '/views/addClient.phtml';
 
     public function render()
     {
-        $header = new HeaderBlock(0);
+        $header = new HeaderBlock();
         $footer = new FooterBlock();
 
         require_once APP_ROOT . '/views/components/layout.phtml';

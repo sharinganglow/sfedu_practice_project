@@ -3,14 +3,14 @@
 namespace App\Controllers;
 
 use App\Blocks\ProductBlock;
-use App\Database\Database;
-use App\Models\ProductModel;
+use App\Models\Database;
+use App\Models\Resource\ProductResourceModel;
 
 class Product
 {
     public function execute(): void
     {
-        $product = new ProductModel();
+        $product = new ProductResourceModel();
 
         $block = new ProductBlock();
         $block

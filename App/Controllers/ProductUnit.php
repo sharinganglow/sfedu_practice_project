@@ -3,18 +3,18 @@
 namespace App\Controllers;
 
 use App\Blocks\ProductUnitBlock;
-use App\Database\Database;
-use App\Models\ProductUnitModel;
+use App\Models\Database;
+use App\Models\Resource\ProductResourceModel;
 
 class ProductUnit
 {
     public function execute(): void
     {
-        $productUnit = new ProductUnitModel();
+        $productUnit = new ProductResourceModel();
 
         $block = new ProductUnitBlock();
         $block
-            ->setData($productUnit->getQuery())
+            ->setData($productUnit->getProductById($_GET['id']))
             ->render();
     }
 }

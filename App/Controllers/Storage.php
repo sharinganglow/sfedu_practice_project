@@ -3,14 +3,14 @@
 namespace App\Controllers;
 
 use App\Blocks\StorageBlock;
-use App\Database\Database;
-use App\Models\StorageModel;
+use App\Models\Database;
+use App\Models\Resource\StorageResourceModel;
 
 class Storage
 {
     public function execute(): void
     {
-       $storage = new StorageModel();
+       $storage = new StorageResourceModel();
 
         $block = new StorageBlock();
         $block

@@ -1,6 +1,7 @@
 <?php
 /**
  * @var App\Blocks\ClientBlock $this
+ * @var App\Models\ClientsModel $model
  */
 ?>
 <div class="create-user">
@@ -10,9 +11,9 @@
 </div>
 
 <div class="main-space main-space_row">
-    <?php foreach ($this->getData() as $client): ?>
+    <?php foreach ($model->getData() as $client): ?>
         <div class="welcome-card welcome-card_little">
-            <a href="../editProfile?id=<?= $client['id'] ?>" class="edit">
+            <a href="../editProfile?id=<?= $client->getId() ?>" class="edit">
                 <img src="../icons/edit-button.svg" alt="edit" class="edit__svg">
             </a>
             <div class="form">
@@ -22,13 +23,13 @@
             </div>
             <div class="description">
                 <div class="description__item">
-                    name: <?= $client['name'] ?>
+                    name: <?= $client->getName() ?>
                 </div>
                 <div class="description__item">
-                    surname: <?= $client['surname'] ?>
+                    surname: <?= $client->getSurname() ?>
                 </div>
                 <div class="description__item">
-                    email: <?= $client['email'] ?>
+                    email: <?= $client->getEmail() ?>
                 </div>
             </div>
         </div>

@@ -2,16 +2,17 @@
 
 namespace App\Blocks;
 
-use App\Database\Database;
-use App\Models\CategoryModel;
+use App\Models\Database;
+use App\Models\Resource\CategoryResourceModel;
 
-class CategoryBlock extends AbstractBlockHandler
+class CategoryBlock extends AbstractBlock
 {
     private $template = APP_ROOT . '/views/category.phtml';
 
     public function render()
     {
-        $header = new HeaderBlock(4);
+        $header = new HeaderBlock();
+        $header->setFocusedLink(4);
         $footer = new FooterBlock();
 
         require_once APP_ROOT . '/views/components/layout.phtml';

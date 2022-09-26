@@ -2,7 +2,7 @@
 
 namespace App\Blocks;
 
-use App\Models\ClientModel;
+use App\Models\Resource\ClientResourceModel;
 
 class EditProfileBlock
 {
@@ -10,9 +10,9 @@ class EditProfileBlock
 
     public function render(): void
     {
-        $header = new HeaderBlock(0);
+        $header = new HeaderBlock();
         $footer = new FooterBlock();
-        $client = new ClientModel();
+        $client = new ClientResourceModel();
 
         require_once APP_ROOT . '/views/components/layout.phtml';
     }

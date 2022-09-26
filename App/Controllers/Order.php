@@ -3,18 +3,19 @@
 namespace App\Controllers;
 
 use App\Blocks\OrderBlock;
-use App\Database\Database;
-use App\Models\OrderModel;
+use App\Models\Database;
+use App\Models\Resource\OrderResourceModel;
 
 class Order
 {
     public function execute(): void
     {
-        $order = new OrderModel();
+        $order = new OrderResourceModel();
+        $orderItem = 2;
 
         $block = new OrderBlock();
         $block
-            ->setData($order->initOrder(2))
+            ->setData($order->initOrder($orderItem))
             ->render();
     }
 }

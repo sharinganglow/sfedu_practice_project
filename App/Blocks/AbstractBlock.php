@@ -2,7 +2,7 @@
 
 namespace App\Blocks;
 
-abstract class AbstractBlockHandler
+abstract class AbstractBlock
 {
     abstract protected function render();
 

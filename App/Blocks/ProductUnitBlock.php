@@ -2,21 +2,21 @@
 
 namespace App\Blocks;
 
-use App\Blocks\AbstractBlockHandler;
-use App\Models\CategoryModel;
-use App\Models\ProductModel;
+use App\Blocks\AbstractBlock;
+use App\Models\Resource\CategoryResourceModel;
+use App\Models\Resource\ProductResourceModel;
 
-class ProductUnitBlock extends AbstractBlockHandler
+class ProductUnitBlock extends AbstractBlock
 {
     protected $data;
     private $template = APP_ROOT . '/views/productUnit.phtml';
 
     public function render()
     {
-        $header = new HeaderBlock(0);
+        $header = new HeaderBlock();
         $footer = new FooterBlock();
-        $product = new ProductModel();
-        $category = new CategoryModel();
+        $product = new ProductResourceModel();
+        $category = new CategoryResourceModel();
 
         require_once APP_ROOT . '/views/components/layout.phtml';
     }

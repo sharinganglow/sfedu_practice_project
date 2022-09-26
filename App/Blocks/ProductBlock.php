@@ -2,18 +2,19 @@
 
 namespace App\Blocks;
 
-use App\Models\CategoryModel;
+use App\Models\Resource\CategoryResourceModel;
 
-class ProductBlock extends AbstractBlockHandler
+class ProductBlock extends AbstractBlock
 {
     protected $data;
     private $template = APP_ROOT . '/views/product.phtml';
 
     public function render()
     {
-        $header = new HeaderBlock(2);
+        $header = new HeaderBlock();
+        $header->setFocusedLink(2);
         $footer = new FooterBlock();
-        $category = new CategoryModel();
+        $category = new CategoryResourceModel();
 
         require_once APP_ROOT . '/views/components/layout.phtml';
     }

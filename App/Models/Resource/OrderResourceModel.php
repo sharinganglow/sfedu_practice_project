@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Resource;
 
-use App\Database\Database;
+use App\Models\Database;
 
-class OrderModel
+class OrderResourceModel
 {
     public function initOrder($id) :array
     {
