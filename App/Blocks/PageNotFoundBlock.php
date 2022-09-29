@@ -2,7 +2,7 @@
 
 namespace App\Blocks;
 
-class PageNotFoundBlock extends AbstractBlock
+class PageNotFoundBlock
 {
     public function render()
     {

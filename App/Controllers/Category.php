@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Blocks\CategoryBlock;
+use App\Models\CategoryModel;
 use App\Models\Database;
 use App\Models\Resource\CategoryResourceModel;
 
@@ -10,11 +11,11 @@ class Category
 {
     public function execute(): void
     {
-        $category = new CategoryResourceModel();
+        $categoryResource = new CategoryResourceModel();
+        $category = new CategoryModel();
+        $category->setData($categoryResource->getQuery());
 
         $block = new CategoryBlock();
-        $block
-            ->setData($category->getQuery())
-            ->render();
+        $block->render($category);
     }
 }

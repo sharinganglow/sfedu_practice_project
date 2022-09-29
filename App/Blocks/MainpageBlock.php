@@ -2,7 +2,7 @@
 
 namespace App\Blocks;
 
-class MainpageBlock extends AbstractBlock
+class MainpageBlock
 {
     private $template = APP_ROOT . '/views/mainpage.phtml';
 

@@ -2,7 +2,7 @@
 
 namespace App\Blocks;
 
-class FooterBlock extends AbstractBlock
+class FooterBlock
 {
     public function render(): void
     {

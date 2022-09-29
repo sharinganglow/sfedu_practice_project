@@ -1,12 +1,12 @@
 <?php
 /**
- * @var App\Blocks\ProductBlock $this
+ * @var App\Models\ProductModel $model
  * @var App\Models\Resource\CategoryResourceModel $category
  */
 ?>
 <div class="main-space">
     <div class="welcome-card">
-        <?php $product = $this->getData() ?>
+        <?php $product = $model->getData() ?>
         <div class="form">
             <div class="form__name">
                 <?= $product['name'] ?>

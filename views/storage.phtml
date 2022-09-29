@@ -1,12 +1,12 @@
 <?php
 /**
- * @var \App\Blocks\StorageBlock $this
+ * @var App\Models\StorageModel $model
  */
 ?>
 <div class="main-space">
     <div class="welcome-card">
         <div class="element-box">
-            <?php foreach ($this->getData() as $item): ?>
+            <?php foreach ($model->getData() as $item): ?>
                 <div class="element element_large">
                     <?= $item['address'] ?>
                 </div>

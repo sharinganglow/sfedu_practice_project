@@ -2,7 +2,7 @@
 
 namespace App\Blocks;
 
-class AddClientBlock extends AbstractBlock
+class AddClientBlock
 {
     private $template = APP_ROOT . '/views/addClient.phtml';
 

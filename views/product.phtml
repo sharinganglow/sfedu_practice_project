@@ -1,11 +1,11 @@
 <?php
 /**
  * @var App\Models\Resource\CategoryResourceModel $category
- * @var App\Blocks\ProductBlock $this
+ * @var App\Models\ProductModel $model
  */
 ?>
 <div class="main-space">
-    <?php foreach ($this->getData() as $product): ?>
+    <?php foreach ($model->getData() as $product): ?>
     <div class="welcome-card">
         <div class="form">
             <a href="../productUnit?id=<?= $product['id_product'] ?>"

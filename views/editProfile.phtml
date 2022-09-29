@@ -6,7 +6,7 @@
 <div class="main-space">
     <div class="welcome-card input-form">
         <div class="form">
-            <?php $data = $client->getClientById(); ?>
+            <?php $id = $client->getClientById(); ?>
             <div class="form__name">
                 Change information
             </div>
@@ -21,7 +21,7 @@
                         type="text"
                         name="name"
                         placeholder="name"
-                        value="<?= $data['name'] ?>">
+                        value="<?= $id['name'] ?>">
             </div>
 
             <div class="registration__field">
@@ -30,7 +30,7 @@
                         type="text"
                         name="surname"
                         placeholder="surname"
-                        value="<?= $data['surname'] ?>"
+                        value="<?= $id['surname'] ?>"
                 >
             </div>
 
@@ -40,7 +40,7 @@
                         type="email"
                         name="email"
                         placeholder="email"
-                        value="<?= $data['email'] ?>"
+                        value="<?= $id['email'] ?>"
                 >
             </div>
 

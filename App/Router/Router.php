@@ -17,12 +17,12 @@ class Router
     public function runRoute(): void
     {
         $branch  = strpos($this->uri, '/');
-        $id = strpos($this->uri, '?');
+        $queryParamsIndex = strpos($this->uri, '?');
 
-        if ($id === false) {
+        if ($queryParamsIndex === false) {
             $this->uri = substr($this->uri, $branch);
         } else {
-            $this->uri = substr($this->uri, $branch, $id);
+            $this->uri = substr($this->uri, $branch, $queryParamsIndex);
         }
 
         if ($this->uri == '/') {

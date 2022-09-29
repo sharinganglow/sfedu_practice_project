@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class ClientModel extends Model
+class StorageModel extends Model
 {
     protected $data = [];
 }

@@ -2,7 +2,7 @@
 
 namespace App\Blocks;
 
-class HeaderBlock extends AbstractBlock
+class HeaderBlock
 {
     private $focused = 0;
 

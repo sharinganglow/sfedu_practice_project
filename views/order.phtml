@@ -1,6 +1,6 @@
 <?php
 /**
- * @var App\Blocks\OrderBlock $this
+ * @var App\Models\OrderModel $model
  */
 ?>
 <div class="main-space">
@@ -10,7 +10,7 @@
         </h2>
         <div class="bottom-bar">
         <?php $total = 0; ?>
-        <?php foreach ($this->getData() as $item): ?>
+        <?php foreach ($model->getData() as $item): ?>
             <div class="check-box__unit">
                 <div class="product">
                     <?= $item['name'] ?>

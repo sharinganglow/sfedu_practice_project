@@ -1,12 +1,12 @@
 <?php
 /**
- * @var App\Blocks\CategoryBlock $this
+ * @var App\Models\CategoryModel $model
  */
 ?>
 <div class="main-space">
         <div class="welcome-card">
             <div class="element-box">
-                <?php foreach ($this->getData() as $item): ?>
+                <?php foreach ($model->getData() as $item): ?>
                     <div class="element">
                 <?= $item['name'] ?>
                     </div>
