@@ -17,5 +17,7 @@
 }
 
 .button__alternate {
+    margin-right: 0;
+
     background: white;
 }

@@ -24,8 +24,8 @@ class EditProfile extends AbstractController
                 $this->getPostParam('password'),
                 $this->getPostParam('re-password'),
             );
-            header('Location: http://localhost:8002/client');
-            exit();
+
+            $this->redirectTo('client');
         }
     }
 }

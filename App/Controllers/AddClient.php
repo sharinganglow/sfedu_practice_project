@@ -22,8 +22,8 @@ class AddClient extends AbstractController
                 $this->getPostParam('password'),
                 $this->getPostParam('re-password'),
             );
-            header('Location: http://localhost:8001/client');
-            exit();
+
+            $this->redirectTo('client');
         }
     }
 }

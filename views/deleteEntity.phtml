@@ -5,13 +5,8 @@
  */
 ?>
 <div class="main-space">
-    <?php $product = $model->getData() ?>
     <div class="welcome-card">
-        <div class="delete">
-            <a href="../deleteEntity?id=<?= $product['id_product'] ?>" class="delete__block">
-                <img class="delete__icon" src="../icons/x.png" alt="x">
-            </a>
-        </div>
+        <?php $product = $model->getData() ?>
         <div class="form">
             <div class="form__name">
                 <?= $product['name'] ?>

@@ -1,0 +1,39 @@
+.delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    position: absolute;
+    right: 4%;
+
+    width: max-content;
+    height: max-content;
+
+    font-size: 18px;
+}
+
+.delete__icon {
+    width: 25px;
+    height: 25px;
+
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: all 600ms;
+    -moz-transition: all 600ms;
+    -o-transition: all 600ms;
+    transition: all 1s;
+}
+
+.delete__icon:hover {
+    width: 30px;
+    height: 30px;
+
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+}

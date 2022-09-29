@@ -12,6 +12,7 @@
 @import "../input-form/input-form.css";
 @import "../registration/registration.css";
 @import "../name/name.css";
+@import "../delete/delete.css";
 
 * {
     margin: 0;

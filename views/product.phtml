@@ -7,6 +7,11 @@
 <div class="main-space">
     <?php foreach ($model->getData() as $product): ?>
     <div class="welcome-card">
+        <div class="delete">
+            <a href="../deleteEntity?id=<?= $product['id_product'] ?>" class="delete__block">
+                <img class="delete__icon" src="../icons/x.png" alt="x">
+            </a>
+        </div>
         <div class="form">
             <a href="../productUnit?id=<?= $product['id_product'] ?>"
                class="form__name link name"

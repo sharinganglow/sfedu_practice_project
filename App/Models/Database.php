@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Environment\Environment;
+
 class Database
 {
     protected static $connection;
@@ -12,11 +14,13 @@ class Database
             return self::$connection;
         }
 
-        $host = 'localhost';
-        $db   = 'module_4';
-        $user = 'mysql_empl';
-        $pass = '322228';
-        $charset = 'utf8';
+        $env = Environment::checkInstance();
+
+        $host = $env->getHost();
+        $db   = $env->getName();
+        $user = $env->getUser();
+        $pass = $env->getPassword();
+        $charset = $env->getCharset();
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
         $opt = [
