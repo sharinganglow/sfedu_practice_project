@@ -7,13 +7,13 @@ use App\Models\Database;
 use App\Models\ProductModel;
 use App\Models\Resource\ProductResourceModel;
 
-class ProductUnit
+class ProductUnit extends AbstractController
 {
     public function execute(): void
     {
         $productUnitResource = new ProductResourceModel();
         $product = new ProductModel();
-        $product->setData($productUnitResource->getProductById($_GET['id']));
+        $product->setData($productUnitResource->getProductById($this->getIDParam()));
 
         $block = new ProductUnitBlock();
         $block->render($product);

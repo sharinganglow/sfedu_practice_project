@@ -18,6 +18,11 @@ abstract class AbstractController
         return $_SERVER['REQUEST_METHOD'] ?? 'GET';
     }
 
+    public function getIdParam(): string
+    {
+        return $_GET['id'] ?? '';
+    }
+
     public function redirectTo(string $path = ''): void
     {
         $env = Environment::checkInstance();

@@ -24,13 +24,13 @@ abstract class HandlerResourceModel
         return $query->fetchAll();
     }
 
-    public function deleteRecord(string $table, $product_id, string $row = 'product_id'): void
+    public function deleteEntity($entityId): void
     {
         $connection = Database::getConnection();
         $query = $connection->prepare(
-            "DELETE FROM {$table} WHERE {$row} = ?;"
+            "DELETE FROM {$this->table} WHERE id = ?;"
         );
-        $query->bindParam(1, $product_id, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
-        $heh = $query->execute();
+        $query->bindParam(1, $entityId, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
+        $query->execute();
     }
 }

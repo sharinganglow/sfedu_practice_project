@@ -5,11 +5,15 @@ namespace App\Models\Environment;
 class Environment
 {
     private $settings = [];
+    protected $uri = [];
+    protected $database = [];
     private static $instance = null;
 
     private function __construct()
     {
         $this->settings = parse_ini_file(APP_ROOT . '/.env', true);
+        $this->uri = $this->settings['LINK']['URI'];
+        $this->database = $this->settings['DATABASE'];
     }
 
     public static function checkInstance(): Environment
@@ -23,31 +27,31 @@ class Environment
 
     public function getBaseUrl(): string
     {
-        return $this->settings['LINK']['URI'] ?? '';
+        return $this->uri ?? '';
     }
 
     public function getHost(): string
     {
-        return $this->settings['DATABASE']['HOST'] ?? '';
+        return $this->database['HOST'] ?? '';
     }
 
     public function getName(): string
     {
-        return $this->settings['DATABASE']['NAME'] ?? '';
+        return $this->database['NAME'] ?? '';
     }
 
     public function getUser(): string
     {
-        return $this->settings['DATABASE']['USER'] ?? '';
+        return $this->database['USER'] ?? '';
     }
 
     public function getPassword(): string
     {
-        return $this->settings['DATABASE']['PASSWORD'] ?? '';
+        return $this->database['PASSWORD'] ?? '';
     }
 
     public function getCharset(): string
     {
-        return $this->settings['DATABASE']['CHARSET'] ?? '';
+        return $this->database['CHARSET'] ?? '';
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
+use App\Models\ProjectException\ProjectException;
 
 class ClientResourceModel extends HandlerResourceModel
 {
@@ -30,7 +31,7 @@ class ClientResourceModel extends HandlerResourceModel
             );
             $query->execute([$name, $surname, $email, $password]);
         } else {
-            throw new \Exception('Пароли не совпадают');
+            throw new ProjectException('Пароли не совпадают');
         }
 
         return true;
@@ -51,7 +52,7 @@ class ClientResourceModel extends HandlerResourceModel
             );
             $query->execute([$name, $surname, $email, $password, $clientId]);
         } else {
-            throw new \Exception('Пароли не совпадают');
+            throw new ProjectException('Пароли не совпадают');
         }
 
         return true;

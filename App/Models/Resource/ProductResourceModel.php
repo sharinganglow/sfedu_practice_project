@@ -3,9 +3,12 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
+use App\Models\Model;
 
 class ProductResourceModel extends HandlerResourceModel
 {
+    protected $table = 'product';
+
     public function getQuery(): array
     {
         $connection = Database::getConnection();
@@ -32,14 +35,5 @@ class ProductResourceModel extends HandlerResourceModel
         $query->execute();
 
         return $query->fetch();
-    }
-
-    public function deleteProduct($product_id): void
-    {
-        $connection = Database::getConnection();
-        $this->deleteRecord('storage_item', $product_id);
-        $this->deleteRecord('order_item', $product_id);
-        $this->deleteRecord('categories_of_products', $product_id);
-        $this->deleteRecord('product', $product_id, 'id');
     }
 }
