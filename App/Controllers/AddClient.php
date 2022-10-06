@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Blocks\AddClientBlock;
 use App\Models\Database;
+use App\Models\ProjectException\ProjectException;
 use App\Models\Resource\ClientResourceModel;
 
 class AddClient extends AbstractController
@@ -13,7 +14,7 @@ class AddClient extends AbstractController
         if ($this->getRequestMethod() == 'GET') {
             $block = new AddClientBlock();
             $block->render();
-        } else {
+        } elseif ($this->checkEmail()) {
             $newClient = new ClientResourceModel();
             $newClient->addClient(
                 $this->getPostParam('name'),
@@ -23,7 +24,23 @@ class AddClient extends AbstractController
                 $this->getPostParam('re-password'),
             );
 
-            $this->redirectTo('client');
+            $this->redirectTo('profile');
         }
+    }
+
+    public function checkEmail(): bool
+    {
+        $email = $this->getPostParam('email');
+
+        if (!$email) {
+            throw new ProjectException('Поле с почтой не заполнено');
+        }
+
+        $clientResource = new ClientResourceModel();
+        if ($clientResource->checkExistingEmail($email)) {
+            throw new ProjectException('Данная почта уже используется');
+        }
+
+        return true;
     }
 }

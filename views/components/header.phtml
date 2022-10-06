@@ -1,6 +1,7 @@
 <?php
 /**
- * @var \App\Blocks\HeaderBlock $this
+ * @var App\Blocks\HeaderBlock $this
+ * @var App\Models\SessionModel $isLogged
  */
 ?>
 <!doctype html>
@@ -54,18 +55,22 @@
                 Category
             </a>
         </li>
-        <li class="menu__item <?php if ($this->focused == 5) { ?>
-            <?= 'menu__item_focus' ?>
-        <?php  } ?>
-        ">
-            <a href="../client" class="link">
-                Client
-            </a>
-        </li>
     </ul>
 
-    <a href="../order" class="button link link_white">
-        Order
-    </a>
+    <?php if (!$isLogged->getClientId()) { ?>
+    <div class="header__right-bar">
+        <a href="/addClient" class="sign-up link">sign up</a>
+        <a href="/login" class="button link link_white">
+            sign in
+        </a>
+    </div>
+    <?php } else { ?>
+        <div class="header__right-bar">
+            <a href="/LogOut" class="sign-up link">sign out</a>
+            <a href="/profile" class="button link link_white">
+                profile
+            </a>
+        </div>
+    <?php } ?>
 
 </header>

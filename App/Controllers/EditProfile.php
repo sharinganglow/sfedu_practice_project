@@ -6,7 +6,9 @@ use App\Blocks\AddClientBlock;
 use App\Blocks\ClientBlock;
 use App\Blocks\EditProfileBlock;
 use App\Models\Database;
+use App\Models\ProjectException\ProjectException;
 use App\Models\Resource\ClientResourceModel;
+use App\Models\SessionModel;
 
 class EditProfile extends AbstractController
 {
@@ -15,7 +17,7 @@ class EditProfile extends AbstractController
         if ($this->getRequestMethod() == 'GET') {
             $block = new EditProfileBlock();
             $block->render();
-        } else {
+        } elseif ($this->checkEmail()) {
             $model = new ClientResourceModel();
             $model->updateProfile(
                 $this->getPostParam('name'),
@@ -25,7 +27,25 @@ class EditProfile extends AbstractController
                 $this->getPostParam('re-password'),
             );
 
-            $this->redirectTo('client');
+            $this->redirectTo();
         }
+    }
+
+    public function checkEmail(): bool
+    {
+        $email = $this->getPostParam('email');
+
+        if (!$email) {
+            throw new ProjectException('Поле с почтой не заполнено');
+        }
+
+        $session = SessionModel::getInstance();
+        $clientResource = new ClientResourceModel();
+        $clientInfo = $clientResource->checkExistingEmail($email);
+        if ($clientInfo && $clientInfo['id'] != $session->getClientId()) {
+            throw new ProjectException('Данная почта уже используется');
+        }
+
+        return true;
     }
 }

@@ -6,7 +6,7 @@ use App\Models\Database;
 
 class OrderResourceModel
 {
-    public function initOrder($id) :array
+    public function initOrder($id): array
     {
         $connection = Database::getConnection();
         $query = $connection->prepare(
@@ -17,5 +17,14 @@ class OrderResourceModel
         $query->execute([$id]);
 
         return $query->fetchAll();
+    }
+
+    public function addOrder($id): void
+    {
+        $connection = Database::getConnection();
+        $query = $connection->prepare(
+            ''
+        );
+        $query->execute([$id]);
     }
 }

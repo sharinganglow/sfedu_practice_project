@@ -9,12 +9,23 @@ class ClientResourceModel extends HandlerResourceModel
 {
     protected $table = 'client';
 
-    public function getClientById(): array
+    public function getClientById($id): array
     {
         $connection = Database::getConnection();
         $query = $connection->prepare('SELECT * FROM client WHERE id = ?;');
 
-        $query->bindParam(1, $_GET['id'], \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
+        $query->bindParam(1, $id, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
+        $query->execute();
+
+        return $query->fetch();
+    }
+
+    public function getClientId($email, $password)
+    {
+        $connection = Database::getConnection();
+        $query = $connection->prepare('SELECT id FROM client WHERE email = ? AND password = ?;');
+
+        $query->bindParam(2, $email, $password, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
         $query->execute();
 
         return $query->fetch();
@@ -56,5 +67,30 @@ class ClientResourceModel extends HandlerResourceModel
         }
 
         return true;
+    }
+
+    public function checkExistingEmail(string $email): ?array
+    {
+        $connection = Database::getConnection();
+        $query = $connection->prepare('SELECT email, id FROM client WHERE email = ?;');
+        $query->execute([$email]);
+
+        return $query->fetch();
+    }
+
+
+    public function authenticate(string $email, string $password): ?int
+    {
+        $connection = Database::getConnection();
+        $query = $connection->prepare('SELECT email, password, id FROM client WHERE email = ?;');
+        $query->bindParam(1, $email, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
+        $query->execute();
+
+        $info = $query->fetch();
+        if ($info['email'] == $email || $info['password'] == $password) {
+            return $info['id'] ?? null;
+        }
+
+        throw new ProjectException('Логин или пароль введены неверно');
     }
 }

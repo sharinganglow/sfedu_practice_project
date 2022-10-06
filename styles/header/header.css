@@ -14,3 +14,12 @@
     margin-left: 50px;
     width: 180px;
 }
+
+.header__right-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 16%;
+}

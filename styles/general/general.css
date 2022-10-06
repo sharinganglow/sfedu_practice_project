@@ -13,6 +13,8 @@
 @import "../registration/registration.css";
 @import "../name/name.css";
 @import "../delete/delete.css";
+@import "../login/login.css";
+@import "../order/order.css";
 
 * {
     margin: 0;
@@ -86,4 +88,19 @@
 .edit:hover {
     transition: 0.2s all ease-in-out;
     box-shadow: 0 0 10px rgba(50, 12, 220, 1);
+}
+
+.profile {
+    display: flex;
+
+    position: relative;
+
+    width: 50%;
+    height: max-content;
+    margin: 50px auto 90px;
+    padding: 40px;
+
+    box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 1);
 }

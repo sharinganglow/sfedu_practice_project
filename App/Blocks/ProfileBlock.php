@@ -5,13 +5,14 @@ namespace App\Blocks;
 use App\Models\Resource\ClientResourceModel;
 use App\Models\SessionModel;
 
-class EditProfileBlock
+class ProfileBlock
 {
-    private $template = APP_ROOT . '/views/editProfile.phtml';
+    private $template = APP_ROOT . '/views/profile.phtml';
 
-    public function render(): void
+    public function render()
     {
         $header = new HeaderBlock();
+        $header->setFocusedLink(0);
         $footer = new FooterBlock();
         $client = new ClientResourceModel();
         $session = SessionModel::getInstance();

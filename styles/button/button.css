@@ -1,10 +1,10 @@
 .button {
     display: flex;
 
-    padding: 18px 45px;
+    padding: 16px 37px;
     margin-right: 50px;
 
-    font-size: 18px;
+    font-size: 16px;
 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     border-radius: 15px;

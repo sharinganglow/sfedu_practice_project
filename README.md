@@ -1,15 +1,19 @@
-<center>7 php Nikita</center>
-===
------
-<center>Website with designed with MVC</center>
----
------
-### <center>Environment:</center>
+<center> 7 php Nikita </center>
+ ===
+
+ -----
+
+<center> Website with designed with MVC </center>
+ ---
+
+ -----
+
+### <center> Environment: </center>
 - minimal PHP version is 7.3.33
 - mysql 5.7.37
 
 
-### <center>How to use</center>
+### <center> How to use </center>
 - first of all you need to install php, use this commands on terminal:
 
 
@@ -26,12 +30,12 @@
 
 
 -----
-### <center>The task of project:
+### <center> The task of project:
 Create an extensible web service that will interact with the database and process requests dynamically
 
 
 ---
-### <center>General pages:
+### <center> General pages:
 #### Mainpage - contains welcome words and navigation tabs
 
 #### Products - contains a list of products and (will contain an add to cart)

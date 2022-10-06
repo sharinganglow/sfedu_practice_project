@@ -1,0 +1,34 @@
+<?php
+/**
+ * @var App\Models\Resource\ClientResourceModel $client
+ * @var App\Models\SessionModel $session
+ */
+?>
+
+<div class="main-space">
+    <?php $data = $client->getClientById($session->getClientId()) ?>
+    <div class="profile">
+        <a href="../editProfile?id=<?= $data['id'] ?>" class="edit">
+            <img src="../icons/edit-button.svg" alt="edit" class="edit__svg">
+        </a>
+        <div class="form">
+            <div class="photo-box photo-box_little">
+                <img class="photo photo_full" src="../img/background.jpg" alt="photo">
+            </div>
+        </div>
+        <div class="description">
+            <div class="description__item">
+                name: <?= $data['name'] ?>
+            </div>
+            <div class="description__item">
+                surname: <?= $data['surname'] ?>
+            </div>
+            <div class="description__item">
+                email: <?= $data['email'] ?>
+            </div>
+        </div>
+    </div>
+        <a href="/order" class="order link">
+            check my orders
+        </a>
+</div>

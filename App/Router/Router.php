@@ -4,6 +4,7 @@ namespace App\Router;
 
 use App\Controllers\PageNotFound;
 use App\Controllers\Mainpage;
+use App\Models\SessionModel;
 
 class Router
 {
@@ -16,6 +17,7 @@ class Router
 
     public function runRoute(): void
     {
+        SessionModel::getInstance()->start();
         $branch  = strpos($this->uri, '/');
         $queryParamsIndex = strpos($this->uri, '?');
 
