@@ -6,7 +6,7 @@ use App\Models\SessionModel;
 
 class LogOut extends AbstractController
 {
-    public function execute()
+    public function execute(): void
     {
         SessionModel::getInstance()->destroy();
 

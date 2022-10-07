@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Blocks\StorageBlock;
 use App\Models\Database;
 use App\Models\Resource\StorageResourceModel;
-use App\Models\StorageModel;
+use App\Models\Entity\StorageModel;
 
 class Storage
 {

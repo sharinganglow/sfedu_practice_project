@@ -50,4 +50,29 @@ abstract class AbstractController
 
         return true;
     }
+
+    public function isInputValid(
+        string $name,
+        string $surname,
+        string $email,
+        string $password,
+        string $rePassword
+    ): bool {
+        $hasRequiredFields = $name && $surname && $email && $password;
+        $hasPasswordMatch  = $password === $rePassword;
+        if ($hasRequiredFields && $hasPasswordMatch) {
+            return true;
+        }
+
+        throw new ValidationException('Пароли не совпадают');
+    }
+
+    public function verifyToken($postToken): void
+    {
+        $sessionToken = SessionModel::getInstance()->getCsrfToken();
+
+        if ($sessionToken !== $postToken) {
+            throw new ValidationException('Не пакостить на этом сайте');
+        }
+    }
 }

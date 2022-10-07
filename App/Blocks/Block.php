@@ -36,4 +36,14 @@ class Block
     {
         return SessionModel::getInstance()->getClientId();
     }
+
+    public function ValidateOutput(string $output): string
+    {
+        return htmlspecialchars($output);
+    }
+
+    public function getCsrfToken(): ?string
+    {
+        return SessionModel::getInstance()->getCsrfToken();
+    }
 }

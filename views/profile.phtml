@@ -7,7 +7,7 @@
 <div class="main-space">
     <?php $data = $this->getCurrentClient() ?>
     <div class="profile">
-        <a href="../editProfile?id=<?= $data['id'] ?>" class="edit">
+        <a href="../editProfile?id=<?= $this->ValidateOutput($data['id']) ?>" class="edit">
             <img src="../icons/edit-button.svg" alt="edit" class="edit__svg">
         </a>
         <div class="form">
@@ -17,13 +17,13 @@
         </div>
         <div class="description">
             <div class="description__item">
-                name: <?= $data['name'] ?>
+                name: <?= $this->ValidateOutput($data['name']) ?>
             </div>
             <div class="description__item">
-                surname: <?= $data['surname'] ?>
+                surname: <?= $this->ValidateOutput($data['surname']) ?>
             </div>
             <div class="description__item">
-                email: <?= $data['email'] ?>
+                email: <?= $this->ValidateOutput($data['email']) ?>
             </div>
         </div>
     </div>

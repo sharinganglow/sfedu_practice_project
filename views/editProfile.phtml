@@ -18,30 +18,33 @@
         <form class="registration"  action="" method="post">
             <div class="registration__field">
                 <input
-                        class="registration__input"
-                        type="text"
-                        name="name"
-                        placeholder="name"
-                        value="<?= $id['name'] ?>">
+                    class="registration__input"
+                    type="text"
+                    name="name"
+                    placeholder="name"
+                    value="<?= $this->ValidateOutput($id['name']) ?>"
+                >
             </div>
+
+            <input name="csrf_token" type="hidden" value="<?= $this->getCsrfToken() ?>">
 
             <div class="registration__field">
                 <input
-                        class="registration__input"
-                        type="text"
-                        name="surname"
-                        placeholder="surname"
-                        value="<?= $id['surname'] ?>"
+                    class="registration__input"
+                    type="text"
+                    name="surname"
+                    placeholder="surname"
+                    value="<?= $this->ValidateOutput($id['surname']) ?>"
                 >
             </div>
 
             <div class="registration__field">
                 <input
-                        class="registration__input"
-                        type="email"
-                        name="email"
-                        placeholder="email"
-                        value="<?= $id['email'] ?>"
+                    class="registration__input"
+                    type="email"
+                    name="email"
+                    placeholder="email"
+                    value="<?= $this->ValidateOutput($id['email']) ?>"
                 >
             </div>
 
@@ -50,10 +53,11 @@
             </div>
 
             <div class="registration__field">
-                <input class="registration__input"
-                       type="password"
-                       name="re-password"
-                       placeholder="repeat password"
+                <input
+                    class="registration__input"
+                    type="password"
+                    name="re-password"
+                    placeholder="repeat password"
                 >
             </div>
 

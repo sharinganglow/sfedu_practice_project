@@ -2,7 +2,7 @@
 
 namespace App\Blocks;
 
-use App\Models\ClientModel;
+use App\Models\Entity\ClientModel;
 use App\Models\Database;
 
 class ClientBlock extends Block

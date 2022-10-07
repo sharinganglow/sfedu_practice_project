@@ -44,4 +44,15 @@ class SessionModel
     {
         return $_SESSION['client']['id'] ?? null;
     }
+
+    public function setCsrfToken(string $token): self
+    {
+        $_SESSION['client']['token'] = $token;
+        return $this;
+    }
+
+    public function getCsrfToken(): ?string
+    {
+        return $_SESSION['client']['token'] ?? null;
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @var App\Models\CategoryModel $model
+ * @var App\Models\Entity\CategoryModel $model
  */
 ?>
 <div class="main-space">
@@ -8,7 +8,7 @@
             <div class="element-box">
                 <?php foreach ($model->getData() as $item): ?>
                     <div class="element">
-                <?= $item['name'] ?>
+                <?= $this->ValidateOutput($item['name']) ?>
                     </div>
                 <?php endforeach; ?>
             </div>

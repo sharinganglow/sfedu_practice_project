@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Blocks\ClientBlock;
-use App\Models\ClientModel;
+use App\Models\Entity\ClientModel;
 use App\Models\Database;
 use App\Models\Resource\ClientResourceModel;
 

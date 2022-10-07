@@ -6,6 +6,7 @@ use App\Blocks\AddClientBlock;
 use App\Blocks\ClientBlock;
 use App\Blocks\EditProfileBlock;
 use App\Models\Database;
+use App\Models\Entity\CsrfTokenModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Exceptions\ValidationException;
 use App\Models\Resource\ClientResourceModel;
@@ -16,17 +17,35 @@ class EditProfile extends AbstractController
     public function execute(): void
     {
         if ($this->getRequestMethod() == 'GET') {
+            $token = new CsrfTokenModel();
+            SessionModel::getInstance()->setCsrfToken($token->generateCsrfToken());
+
             $block = new EditProfileBlock();
             $block->render();
         } elseif ($this->isEmailValid()) {
             $model = new ClientResourceModel();
-            $model->updateProfile(
+            $formAccepted = $this->isInputValid(
                 $this->getPostParam('name'),
                 $this->getPostParam('surname'),
                 $this->getPostParam('email'),
                 $this->getPostParam('password'),
-                $this->getPostParam('re-password'),
+                $this->getPostParam('re-password')
             );
+
+            if ($formAccepted) {
+                $inputToken = $this->getPostParam('csrf_token');
+                $this->verifyToken($inputToken);
+
+                $protectedPass = $model->hashPassword($this->getPostParam('password'));
+                $model->updateProfile(
+                    $this->getPostParam('name'),
+                    $this->getPostParam('surname'),
+                    $this->getPostParam('email'),
+                    $protectedPass
+                );
+            } else {
+                throw new ValidationException('Ошибка при добавлении пользователя');
+            }
 
             $this->redirectTo('mainpage');
         }

@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Blocks\OrderBlock;
 use App\Models\Database;
-use App\Models\OrderModel;
+use App\Models\Entity\OrderModel;
 use App\Models\Resource\OrderResourceModel;
 
 class Order

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Blocks\CategoryBlock;
-use App\Models\CategoryModel;
+use App\Models\Entity\CategoryModel;
 use App\Models\Database;
 use App\Models\Resource\CategoryResourceModel;
 

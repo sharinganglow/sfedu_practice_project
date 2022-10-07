@@ -9,6 +9,8 @@
                 <input class="login__row" type="email" name="email" placeholder="email">
             </div>
 
+            <input name="csrf_token" type="hidden" value="<?= $this->getCsrfToken() ?>">
+
             <div class="registration__field">
                 <input class="login__row" type="text" name="password" placeholder="password">
             </div>

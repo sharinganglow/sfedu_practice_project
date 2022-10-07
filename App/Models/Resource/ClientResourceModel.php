@@ -32,42 +32,26 @@ class ClientResourceModel extends HandlerResourceModel
         return $query->fetch();
     }
 
-    public function addClient($name, $surname, $email, $password, $rePassword): bool
+    public function addClient($name, $surname, $email, $password): void
     {
-        $hasRequiredFields = $name && $surname && $email && $password;
-        $hasPasswordMatch  = $password === $rePassword;
-        if ($hasRequiredFields && $hasPasswordMatch) {
-            $connection = Database::getConnection();
-            $query = $connection->prepare(
-                'INSERT INTO client (name, surname, email, password) VALUES (?, ?, ?, ?);'
-            );
-            $query->execute([$name, $surname, $email, $password]);
-        } else {
-            throw new ValidationException('Пароли не совпадают');
-        }
-
-        return true;
+        $connection = Database::getConnection();
+        $query = $connection->prepare(
+            'INSERT INTO client (name, surname, email, password) VALUES (?, ?, ?, ?);'
+        );
+        $query->execute([$name, $surname, $email, $password]);
     }
 
-    public function updateProfile($name, $surname, $email, $password, $rePassword): bool
+    public function updateProfile($name, $surname, $email, $password): void
     {
         $clientId = $_GET['id'];
 
-        $hasRequiredFields = $name && $surname && $email && $password;
-        $hasPasswordMatch  = $password === $rePassword;
-        if ($hasRequiredFields && $hasPasswordMatch) {
-            $connection = Database::getConnection();
-            $query = $connection->prepare(
-                'UPDATE client SET name = ?, 
-                        surname = ?, email = ?, password = ? 
-                        WHERE id = ?;'
-            );
-            $query->execute([$name, $surname, $email, $password, $clientId]);
-        } else {
-            throw new ValidationException('Пароли не совпадают');
-        }
-
-        return true;
+        $connection = Database::getConnection();
+        $query = $connection->prepare(
+            'UPDATE client SET name = ?, 
+                    surname = ?, email = ?, password = ? 
+                    WHERE id = ?;'
+        );
+        $query->execute([$name, $surname, $email, $password, $clientId]);
     }
 
     public function checkExistingEmail(string $email): ?array
@@ -80,12 +64,11 @@ class ClientResourceModel extends HandlerResourceModel
     }
 
 
-    public function authenticate(string $email, string $password): ?array
+    public function authenticate(string $email): ?array
     {
         $connection = Database::getConnection();
-        $query = $connection->prepare('SELECT email, password, id FROM client WHERE email = ? AND password = ?;');
+        $query = $connection->prepare('SELECT email, password, id FROM client WHERE email = ?;');
         $query->bindParam(1, $email, \PDO::PARAM_STR | \PDO::PARAM_INPUT_OUTPUT);
-        $query->bindParam(2, $password, \PDO::PARAM_STR | \PDO::PARAM_INPUT_OUTPUT);
         $query->execute();
 
         return $query->fetch() ?? null;

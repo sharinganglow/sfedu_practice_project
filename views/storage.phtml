@@ -1,6 +1,6 @@
 <?php
 /**
- * @var App\Models\StorageModel $model
+ * @var App\Models\Entity\StorageModel $model
  */
 ?>
 <div class="main-space">
@@ -8,7 +8,7 @@
         <div class="element-box">
             <?php foreach ($model->getData() as $item): ?>
                 <div class="element element_large">
-                    <?= $item['address'] ?>
+                    <?= $this->ValidateOutput($item['address']) ?>
                 </div>
             <?php endforeach; ?>
         </div>

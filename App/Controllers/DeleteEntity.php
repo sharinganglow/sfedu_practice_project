@@ -2,13 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Models\ProductModel;
+use App\Models\Entity\ProductModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Resource\ProductResourceModel;
 
 class DeleteEntity extends AbstractController
 {
-    public function execute()
+    public function execute(): void
     {
         try {
             $productResource = new ProductResourceModel();

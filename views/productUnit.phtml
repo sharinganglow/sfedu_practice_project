@@ -1,6 +1,6 @@
 <?php
 /**
- * @var App\Models\ProductModel $model
+ * @var App\Models\Entity\ProductModel $model
  * @var App\Models\Resource\CategoryResourceModel $category
  */
 ?>
@@ -8,13 +8,13 @@
     <?php $product = $model->getData() ?>
     <div class="welcome-card">
         <div class="delete">
-            <a href="../deleteEntity?id=<?= $product['id_product'] ?>" class="delete__block">
+            <a href="../deleteEntity?id=<?= $this->ValidateOutput($product['id_product']) ?>" class="delete__block">
                 <img class="delete__icon" src="../icons/x.png" alt="x">
             </a>
         </div>
         <div class="form">
             <div class="form__name">
-                <?= $product['name'] ?>
+                <?= $this->ValidateOutput($product['name']) ?>
             </div>
             <div class="photo-box">
                 <img src="../img/addClientPhoto.jpg" alt="picture" class="photo photo_full">
@@ -22,21 +22,21 @@
         </div>
         <div class="description">
             <div class="description__item">
-                price: <?= $product['price'] ?> rub
+                price: <?= $this->ValidateOutput($product['price']) ?> rub
             </div>
             <div class="description__item">
-                country: <?= $product['country'] ?>
+                country: <?= $this->ValidateOutput($product['country']) ?>
             </div>
             <div class="description__item">
-                brand: <?= $product['brand'] ?>
+                brand: <?= $this->ValidateOutput($product['brand']) ?>
             </div>
             <div class="description__item">
-                date: <?= $product['date'] ?>
+                date: <?= $this->ValidateOutput($product['date']) ?>
             </div>
             <?php $categories = $category->getAllCategories($product['id_product']); ?>
             <div class="description__item">
                 category:
-                <?= implode(' ', array_column($categories, 'name')); ?>
+                <?= $this->ValidateOutput(implode(' ', (array_column($categories, 'name')))); ?>
             </div>
         </div>
     </div>

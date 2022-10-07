@@ -1,6 +1,6 @@
 <?php
 /**
- * @var App\Models\OrderModel $model
+ * @var App\Models\Entity\OrderModel $model
  */
 ?>
 <div class="main-space">
@@ -13,10 +13,10 @@
         <?php foreach ($model->getData() as $item): ?>
             <div class="check-box__unit">
                 <div class="product">
-                    <?= $item['name'] ?>
+                    <?= $this->ValidateOutput($item['name']) ?>
                 </div>
                 <div class="check__item">
-                    <?= $item['total'] ?>
+                    <?= $this->ValidateOutput($item['total']) ?>
                     <?php $total += $item['total'] ?>
                 </div>
             </div>

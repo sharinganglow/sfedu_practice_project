@@ -1,6 +1,6 @@
 <?php
 /**
- * @var App\Models\ClientModel $model
+ * @var App\Models\Entity\ClientModel $model
  */
 ?>
 <div class="create-user">
@@ -23,13 +23,13 @@
             </div>
             <div class="description">
                 <div class="description__item">
-                    name: <?= $client['name'] ?>
+                    name: <?= $this->ValidateOutput($client['name']) ?>
                 </div>
                 <div class="description__item">
-                    surname: <?= $client['surname'] ?>
+                    surname: <?= $this->ValidateOutput($client['surname']) ?>
                 </div>
                 <div class="description__item">
-                    email: <?= $client['email'] ?>
+                    email: <?= $this->ValidateOutput($client['email']) ?>
                 </div>
             </div>
         </div>

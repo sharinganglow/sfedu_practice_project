@@ -13,6 +13,8 @@
                 <input class="registration__input" type="text" name="name" placeholder="name">
             </div>
 
+            <input name="csrf_token" type="hidden" value="<?= $this->getCsrfToken() ?>">
+
             <div class="registration__field">
                 <input class="registration__input" type="text" name="surname" placeholder="surname">
             </div>

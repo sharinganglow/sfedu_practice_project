@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Entity;
 
 class CategoryModel extends Model
 {

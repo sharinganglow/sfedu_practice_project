@@ -3,7 +3,7 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
-use App\Models\Model;
+use App\Models\Entity\Model;
 
 class ProductResourceModel extends HandlerResourceModel
 {

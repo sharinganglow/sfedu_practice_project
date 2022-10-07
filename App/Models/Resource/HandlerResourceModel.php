@@ -33,4 +33,9 @@ abstract class HandlerResourceModel
         $query->bindParam(1, $entityId, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
         $query->execute();
     }
+
+    public function hashPassword(string $password): string
+    {
+        return password_hash($password, PASSWORD_BCRYPT);
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Blocks\ProductUnitBlock;
 use App\Models\Database;
-use App\Models\ProductModel;
+use App\Models\Entity\ProductModel;
 use App\Models\Resource\ProductResourceModel;
 
 class ProductUnit extends AbstractController
