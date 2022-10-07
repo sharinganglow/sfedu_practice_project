@@ -8,12 +8,12 @@
     <?php foreach ($model->getData() as $product): ?>
     <div class="welcome-card">
         <div class="delete">
-            <a href="../deleteEntity?id=<?= $this->ValidateOutput($product['id_product']) ?>" class="delete__block">
+            <a href="../deleteEntity?id=<?= $this->validateOutput($product['id_product']) ?>" class="delete__block">
                 <img class="delete__icon" src="../icons/x.png" alt="x">
             </a>
         </div>
         <div class="form">
-            <a href="../productUnit?id=<?= $this->ValidateOutput($product['id_product']) ?>"
+            <a href="../productUnit?id=<?= $this->validateOutput($product['id_product']) ?>"
                class="form__name link name"
                data-replace="<?= $product['name'] ?>">
                 <span class="name__item">
@@ -26,21 +26,21 @@
         </div>
         <div class="description description_tabbed">
             <div class="description__item">
-                price: <?= $this->ValidateOutput($product['price']) ?> rub
+                price: <?= $this->validateOutput($product['price']) ?> rub
             </div>
             <div class="description__item">
-                country: <?= $this->ValidateOutput($product['country']) ?>
+                country: <?= $this->validateOutput($product['country']) ?>
             </div>
             <div class="description__item">
-                brand: <?= $this->ValidateOutput($product['brand']) ?>
+                brand: <?= $this->validateOutput($product['brand']) ?>
             </div>
             <div class="description__item">
-                date: <?= $this->ValidateOutput($product['date']) ?>
+                date: <?= $this->validateOutput($product['date']) ?>
             </div>
                 <?php $categories = $category->getAllCategories($product['id_product']); ?>
             <div class="description__item">
                 category:
-                <?= $this->ValidateOutput(implode(' ', (array_column($categories, 'name')))); ?>
+                <?= $this->validateOutput(implode(' ', (array_column($categories, 'name')))); ?>
             </div>
         </div>
     </div>

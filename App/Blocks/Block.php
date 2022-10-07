@@ -37,7 +37,7 @@ class Block
         return SessionModel::getInstance()->getClientId();
     }
 
-    public function ValidateOutput(string $output): string
+    public function validateOutput(string $output): string
     {
         return htmlspecialchars($output);
     }

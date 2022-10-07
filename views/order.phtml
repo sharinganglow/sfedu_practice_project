@@ -13,10 +13,10 @@
         <?php foreach ($model->getData() as $item): ?>
             <div class="check-box__unit">
                 <div class="product">
-                    <?= $this->ValidateOutput($item['name']) ?>
+                    <?= $this->validateOutput($item['name']) ?>
                 </div>
                 <div class="check__item">
-                    <?= $this->ValidateOutput($item['total']) ?>
+                    <?= $this->validateOutput($item['total']) ?>
                     <?php $total += $item['total'] ?>
                 </div>
             </div>

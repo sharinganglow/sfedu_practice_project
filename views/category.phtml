@@ -8,7 +8,7 @@
             <div class="element-box">
                 <?php foreach ($model->getData() as $item): ?>
                     <div class="element">
-                <?= $this->ValidateOutput($item['name']) ?>
+                <?= $this->validateOutput($item['name']) ?>
                     </div>
                 <?php endforeach; ?>
             </div>
