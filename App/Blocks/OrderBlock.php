@@ -5,10 +5,10 @@ namespace App\Blocks;
 use App\Models\Database;
 use App\Models\Resource\OrderResourceModel;
 
-class OrderBlock
+class OrderBlock extends Block
 {
     protected $data;
-    private $template = APP_ROOT . '/views/order.phtml';
+    protected $template = 'order.phtml';
 
     public function render($order)
     {
@@ -16,6 +16,6 @@ class OrderBlock
         $footer = new FooterBlock();
         $model = $order;
 
-        require_once APP_ROOT . '/views/components/layout.phtml';
+        require_once "{$this->getPath()}components/layout.phtml";
     }
 }

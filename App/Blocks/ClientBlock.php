@@ -5,18 +5,18 @@ namespace App\Blocks;
 use App\Models\ClientModel;
 use App\Models\Database;
 
-class ClientBlock
+class ClientBlock extends Block
 {
     protected $data;
-    private $template = APP_ROOT . '/views/client.phtml';
+    protected $template = 'client.phtml';
 
     public function render($client)
     {
         $header = new HeaderBlock();
-        $header->setFocusedLink(5);
+        $header->setUnderlinedLink(5);
         $footer = new FooterBlock();
         $model = $client;
 
-        require_once APP_ROOT . '/views/components/layout.phtml';
+        require_once "{$this->getPath()}components/layout.phtml";
     }
 }

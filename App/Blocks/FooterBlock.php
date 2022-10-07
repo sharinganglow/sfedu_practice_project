@@ -2,10 +2,10 @@
 
 namespace App\Blocks;
 
-class FooterBlock
+class FooterBlock extends Block
 {
     public function render(): void
     {
-        require_once APP_ROOT . '/views/components/footer.phtml';
+        require_once "{$this->getPath()}components/footer.phtml";
     }
 }

@@ -4,18 +4,17 @@ namespace App\Blocks;
 
 use App\Models\SessionModel;
 
-class HeaderBlock
+class HeaderBlock extends Block
 {
-    private $focused = 0;
+    private $underlined = 0;
 
     public function render(): void
     {
-        $isLogged = SessionModel::getInstance();
-        require_once APP_ROOT . '/views/components/header.phtml';
+        require_once "{$this->getPath()}components/header.phtml";
     }
 
-    public function setFocusedLink($focused): void
+    public function setUnderlinedLink($underlined): void
     {
-        $this->focused = $focused;
+        $this->underlined = $underlined;
     }
 }

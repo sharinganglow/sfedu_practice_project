@@ -2,18 +2,18 @@
 
 namespace App\Blocks;
 
-class StorageBlock
+class StorageBlock extends Block
 {
     protected $data;
-    private $template = APP_ROOT . '/views/storage.phtml';
+    protected $template = 'storage.phtml';
 
     public function render($storage)
     {
         $header = new HeaderBlock();
-        $header->setFocusedLink(3);
+        $header->setUnderlinedLink(3);
         $footer = new FooterBlock();
         $model = $storage;
 
-        require_once APP_ROOT . '/views/components/layout.phtml';
+        require_once "{$this->getPath()}components/layout.phtml";
     }
 }

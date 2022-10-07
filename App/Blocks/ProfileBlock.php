@@ -5,18 +5,17 @@ namespace App\Blocks;
 use App\Models\Resource\ClientResourceModel;
 use App\Models\SessionModel;
 
-class ProfileBlock
+class ProfileBlock extends Block
 {
-    private $template = APP_ROOT . '/views/profile.phtml';
+    protected $template = 'profile.phtml';
 
     public function render()
     {
         $header = new HeaderBlock();
-        $header->setFocusedLink(0);
         $footer = new FooterBlock();
         $client = new ClientResourceModel();
         $session = SessionModel::getInstance();
 
-        require_once APP_ROOT . '/views/components/layout.phtml';
+        require_once "{$this->getPath()}components/layout.phtml";
     }
 }

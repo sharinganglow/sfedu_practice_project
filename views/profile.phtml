@@ -1,12 +1,11 @@
 <?php
 /**
- * @var App\Models\Resource\ClientResourceModel $client
- * @var App\Models\SessionModel $session
+ * @var App\Blocks\Block $this
  */
 ?>
 
 <div class="main-space">
-    <?php $data = $client->getClientById($session->getClientId()) ?>
+    <?php $data = $this->getCurrentClient() ?>
     <div class="profile">
         <a href="../editProfile?id=<?= $data['id'] ?>" class="edit">
             <img src="../icons/edit-button.svg" alt="edit" class="edit__svg">

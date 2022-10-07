@@ -5,10 +5,10 @@ namespace App\Blocks;
 use App\Models\Resource\CategoryResourceModel;
 use App\Models\Resource\ProductResourceModel;
 
-class ProductUnitBlock
+class ProductUnitBlock extends Block
 {
     protected $data;
-    private $template = APP_ROOT . '/views/productUnit.phtml';
+    protected $template = 'productUnit.phtml';
 
     public function render($product)
     {
@@ -17,6 +17,6 @@ class ProductUnitBlock
         $category = new CategoryResourceModel();
         $model = $product;
 
-        require_once APP_ROOT . '/views/components/layout.phtml';
+        require_once "{$this->getPath()}components/layout.phtml";
     }
 }

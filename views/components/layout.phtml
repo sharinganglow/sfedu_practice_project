@@ -2,6 +2,7 @@
 /**
  * @var App\Blocks\FooterBlock $footer
  * @var App\Blocks\HeaderBlock $header
+ * @var App\Blocks\Block $this
  */
 ?>
 <!doctype html>
@@ -18,7 +19,7 @@
 
     <?php $header->render(); ?>
 
-    <?php require_once ($this->template); ?>
+    <?php require_once ($this->buildTemplate()); ?>
 
     <?php $footer->render(); ?>
 

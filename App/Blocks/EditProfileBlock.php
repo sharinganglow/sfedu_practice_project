@@ -5,9 +5,9 @@ namespace App\Blocks;
 use App\Models\Resource\ClientResourceModel;
 use App\Models\SessionModel;
 
-class EditProfileBlock
+class EditProfileBlock extends Block
 {
-    private $template = APP_ROOT . '/views/editProfile.phtml';
+    protected $template = 'editProfile.phtml';
 
     public function render(): void
     {
@@ -16,6 +16,6 @@ class EditProfileBlock
         $client = new ClientResourceModel();
         $session = SessionModel::getInstance();
 
-        require_once APP_ROOT . '/views/components/layout.phtml';
+        require_once "{$this->getPath()}components/layout.phtml";
     }
 }

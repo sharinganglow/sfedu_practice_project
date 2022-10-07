@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ProductModel;
-use App\Models\ProjectException\ProjectException;
+use App\Models\Exceptions\LogicalException;
 use App\Models\Resource\ProductResourceModel;
 
 class DeleteEntity extends AbstractController
@@ -14,8 +14,8 @@ class DeleteEntity extends AbstractController
             $productResource = new ProductResourceModel();
             $productResource->deleteEntity($this->getIDParam());
             $this->redirectTo('product');
-        } catch (ProjectException $exception) {
-            throw new ProjectException('Ошибка при удалении записи' . PHP_EOL);
+        } catch (LogicalException $exception) {
+            throw new LogicalException('Ошибка при удалении записи' . PHP_EOL);
         }
     }
 }

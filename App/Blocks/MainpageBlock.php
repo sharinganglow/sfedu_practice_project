@@ -2,16 +2,16 @@
 
 namespace App\Blocks;
 
-class MainpageBlock
+class MainpageBlock extends Block
 {
-    private $template = APP_ROOT . '/views/mainpage.phtml';
+    protected $template = 'mainpage.phtml';
 
     public function render()
     {
         $header = new HeaderBlock();
-        $header->setFocusedLink(1);
+        $header->setUnderlinedLink(1);
         $footer = new FooterBlock();
 
-        require_once APP_ROOT . '/views/components/layout.phtml';
+        require_once "{$this->getPath()}components/layout.phtml";
     }
 }

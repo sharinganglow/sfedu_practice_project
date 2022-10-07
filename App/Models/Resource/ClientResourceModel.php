@@ -3,7 +3,8 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
-use App\Models\ProjectException\ProjectException;
+use App\Models\Exceptions\LogicalException;
+use App\Models\Exceptions\ValidationException;
 
 class ClientResourceModel extends HandlerResourceModel
 {
@@ -42,7 +43,7 @@ class ClientResourceModel extends HandlerResourceModel
             );
             $query->execute([$name, $surname, $email, $password]);
         } else {
-            throw new ProjectException('Пароли не совпадают');
+            throw new ValidationException('Пароли не совпадают');
         }
 
         return true;
@@ -63,7 +64,7 @@ class ClientResourceModel extends HandlerResourceModel
             );
             $query->execute([$name, $surname, $email, $password, $clientId]);
         } else {
-            throw new ProjectException('Пароли не совпадают');
+            throw new ValidationException('Пароли не совпадают');
         }
 
         return true;
@@ -75,22 +76,18 @@ class ClientResourceModel extends HandlerResourceModel
         $query = $connection->prepare('SELECT email, id FROM client WHERE email = ?;');
         $query->execute([$email]);
 
-        return $query->fetch();
+        return $query->fetchAll();
     }
 
 
-    public function authenticate(string $email, string $password): ?int
+    public function authenticate(string $email, string $password): ?array
     {
         $connection = Database::getConnection();
-        $query = $connection->prepare('SELECT email, password, id FROM client WHERE email = ?;');
-        $query->bindParam(1, $email, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
+        $query = $connection->prepare('SELECT email, password, id FROM client WHERE email = ? AND password = ?;');
+        $query->bindParam(1, $email, \PDO::PARAM_STR | \PDO::PARAM_INPUT_OUTPUT);
+        $query->bindParam(2, $password, \PDO::PARAM_STR | \PDO::PARAM_INPUT_OUTPUT);
         $query->execute();
 
-        $info = $query->fetch();
-        if ($info['email'] == $email || $info['password'] == $password) {
-            return $info['id'] ?? null;
-        }
-
-        throw new ProjectException('Логин или пароль введены неверно');
+        return $query->fetch() ?? null;
     }
 }

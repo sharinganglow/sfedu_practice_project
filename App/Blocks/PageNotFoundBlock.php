@@ -2,10 +2,10 @@
 
 namespace App\Blocks;
 
-class PageNotFoundBlock
+class PageNotFoundBlock extends Block
 {
     public function render()
     {
-        require APP_ROOT . '/views/page-not-found.html';
+        require "{$this->getPath()}page-not-found.html";
     }
 }

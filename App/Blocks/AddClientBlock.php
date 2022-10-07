@@ -2,15 +2,15 @@
 
 namespace App\Blocks;
 
-class AddClientBlock
+class AddClientBlock extends Block
 {
-    private $template = APP_ROOT . '/views/addClient.phtml';
+    protected $template = 'addClient.phtml';
 
     public function render()
     {
         $header = new HeaderBlock();
         $footer = new FooterBlock();
 
-        require_once APP_ROOT . '/views/components/layout.phtml';
+        require_once "{$this->getPath()}components/layout.phtml";
     }
 }

@@ -23,7 +23,7 @@
     </a>
     <ul class="menu">
 
-        <li class="menu__item <?php if ($this->focused == 1) { ?>
+        <li class="menu__item <?php if ($this->underlined == 1) { ?>
             <?= 'menu__item_focus' ?>
         <?php  } ?>
         ">
@@ -31,7 +31,7 @@
                 Mainpage
             </a>
         </li>
-        <li class="menu__item <?php if ($this->focused == 2) { ?>
+        <li class="menu__item <?php if ($this->underlined == 2) { ?>
             <?= 'menu__item_focus' ?>
         <?php  } ?>
         ">
@@ -39,7 +39,7 @@
                 Products
             </a>
         </li>
-        <li class="menu__item <?php if ($this->focused == 3) { ?>
+        <li class="menu__item <?php if ($this->underlined == 3) { ?>
             <?= 'menu__item_focus' ?>
         <?php  } ?>
         ">
@@ -47,7 +47,7 @@
                 Storage
             </a>
         </li>
-        <li class="menu__item <?php if ($this->focused == 4) { ?>
+        <li class="menu__item <?php if ($this->underlined == 4) { ?>
             <?= 'menu__item_focus' ?>
         <?php  } ?>
         ">
@@ -57,7 +57,7 @@
         </li>
     </ul>
 
-    <?php if (!$isLogged->getClientId()) { ?>
+    <?php if (!$this->getCurrentId()) { ?>
     <div class="header__right-bar">
         <a href="/addClient" class="sign-up link">sign up</a>
         <a href="/login" class="button link link_white">
@@ -66,7 +66,7 @@
     </div>
     <?php } else { ?>
         <div class="header__right-bar">
-            <a href="/LogOut" class="sign-up link">sign out</a>
+            <a href="/logOut" class="sign-up link">sign out</a>
             <a href="/profile" class="button link link_white">
                 profile
             </a>

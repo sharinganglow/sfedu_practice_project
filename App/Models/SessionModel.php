@@ -31,6 +31,7 @@ class SessionModel
     public function destroy(): void
     {
         session_destroy();
+        $_SESSION['client'] = [];
     }
 
     public function setClientId(int $id): self
