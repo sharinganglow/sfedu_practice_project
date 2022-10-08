@@ -16,6 +16,8 @@ class Client
         $client->setData($clientResource->getQuery());
 
         $block = new ClientBlock();
-        $block->render($client);
+        $block
+            ->setClient($client)
+            ->render();
     }
 }

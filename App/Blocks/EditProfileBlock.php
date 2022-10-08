@@ -13,8 +13,6 @@ class EditProfileBlock extends Block
     {
         $header = new HeaderBlock();
         $footer = new FooterBlock();
-        $client = new ClientResourceModel();
-        $session = SessionModel::getInstance();
 
         require_once "{$this->getPath()}components/layout.phtml";
     }

@@ -16,6 +16,8 @@ class Category
         $category->setData($categoryResource->getQuery());
 
         $block = new CategoryBlock();
-        $block->render($category);
+        $block
+            ->setCategories($category)
+            ->render();
     }
 }

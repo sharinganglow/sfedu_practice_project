@@ -16,6 +16,8 @@ class Storage
        $storage->setData($storageResource->getQuery());
 
         $block = new StorageBlock();
-        $block->render($storage);
+        $block
+            ->setStorage($storage)
+            ->render();
     }
 }

@@ -1,12 +1,12 @@
 <?php
 /**
- * @var App\Models\Entity\StorageModel $model
+ * @var App\Blocks\StorageBlock $this
  */
 ?>
 <div class="main-space">
     <div class="welcome-card">
         <div class="element-box">
-            <?php foreach ($model->getData() as $item): ?>
+            <?php foreach ($this->getStorage() as $item): ?>
                 <div class="element element_large">
                     <?= $this->validateOutput($item['address']) ?>
                 </div>

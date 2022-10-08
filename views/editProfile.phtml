@@ -1,13 +1,12 @@
 <?php
 /**
- * @var App\Models\Resource\ClientResourceModel $client
- * @var App\Models\SessionModel $session
+ * @var App\Blocks\Block $this
  */
 ?>
 <div class="main-space">
     <div class="welcome-card input-form">
         <div class="form">
-            <?php $id = $client->getClientById($session->getClientId()); ?>
+            <?php $id = $this->getCurrentClient(); ?>
             <div class="form__name">
                 Change information
             </div>

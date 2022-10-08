@@ -17,6 +17,8 @@ class Order
         $order->setData($orderResource->initOrder($orderItem));
 
         $block = new OrderBlock();
-        $block->render($order);
+        $block
+            ->setOrder($order)
+            ->render();
     }
 }

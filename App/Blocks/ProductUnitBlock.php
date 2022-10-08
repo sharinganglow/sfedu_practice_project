@@ -10,12 +10,10 @@ class ProductUnitBlock extends Block
     protected $data;
     protected $template = 'productUnit.phtml';
 
-    public function render($product)
+    public function render()
     {
         $header = new HeaderBlock();
         $footer = new FooterBlock();
-        $category = new CategoryResourceModel();
-        $model = $product;
 
         require_once "{$this->getPath()}components/layout.phtml";
     }

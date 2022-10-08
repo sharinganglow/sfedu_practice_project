@@ -2,7 +2,10 @@
 
 namespace App\Blocks;
 
+use App\Models\Entity\Model;
+use App\Models\Entity\ProductModel;
 use App\Models\Exceptions\LogicalException;
+use App\Models\Resource\CategoryResourceModel;
 use App\Models\Resource\ClientResourceModel;
 use App\Models\SessionModel;
 
@@ -45,5 +48,22 @@ class Block
     public function getCsrfToken(): ?string
     {
         return SessionModel::getInstance()->getCsrfToken();
+    }
+
+    public function setProduct(ProductModel $model): self
+    {
+        $this->data = $model->getData();
+        return $this;
+    }
+
+    public function getProduct(): ?array
+    {
+        return $this->data ?? null;
+    }
+
+    public function getProductCategories(int $productId): ?array
+    {
+        $categoryResource = new CategoryResourceModel();
+        return $categoryResource->getAllCategories($productId) ?? null;
     }
 }

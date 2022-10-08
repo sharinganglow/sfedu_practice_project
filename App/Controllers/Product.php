@@ -16,6 +16,8 @@ class Product
         $product->setData($productResource->getQuery());
 
         $block = new ProductBlock();
-        $block->render($product);
+        $block
+            ->setProduct($product)
+            ->render();
     }
 }

@@ -16,6 +16,8 @@ class ProductUnit extends AbstractController
         $product->setData($productUnitResource->getProductById($this->getIDParam()));
 
         $block = new ProductUnitBlock();
-        $block->render($product);
+        $block
+            ->setProduct($product)
+            ->render();
     }
 }

@@ -1,11 +1,10 @@
 <?php
 /**
- * @var App\Models\Entity\ProductModel $model
- * @var App\Models\Resource\CategoryResourceModel $category
+ * @var App\Blocks\Block $this
  */
 ?>
 <div class="main-space">
-    <?php $product = $model->getData() ?>
+    <?php $product = $this->getProduct() ?>
     <div class="welcome-card">
         <div class="delete">
             <a href="../deleteEntity?id=<?= $this->validateOutput($product['id_product']) ?>" class="delete__block">
@@ -33,7 +32,7 @@
             <div class="description__item">
                 date: <?= $this->validateOutput($product['date']) ?>
             </div>
-            <?php $categories = $category->getAllCategories($product['id_product']); ?>
+            <?php $categories = $this->getProductCategories($product['id_product']); ?>
             <div class="description__item">
                 category:
                 <?= $this->validateOutput(implode(' ', (array_column($categories, 'name')))); ?>
