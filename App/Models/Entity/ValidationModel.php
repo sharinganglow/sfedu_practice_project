@@ -24,9 +24,8 @@ class ValidationModel
         return true;
     }
 
-    public function isInputValid(): bool
+    public function isInputValid($input): bool
     {
-        $input = $this->getInputParams();
         $hasRequiredFields = $input['name'] && $input['surname'] && $input['email'] && $input['password'];
         $hasPasswordMatch  = $input['password'] === $input['re-password'];
         if (!$hasPasswordMatch) {
@@ -40,9 +39,8 @@ class ValidationModel
          return true;
     }
 
-    public function verifyToken(): void
+    public function verifyToken($postToken): void
     {
-        $postToken = $this->getInputParams()['csrf_token'];
         $sessionToken = SessionModel::getInstance()->getCsrfToken();
 
         if ($sessionToken !== $postToken) {
@@ -65,10 +63,5 @@ class ValidationModel
     public function verifyPassword($password, $hash): bool
     {
         return password_verify($password, $hash);
-    }
-
-    public function getInputParams(): ?array
-    {
-        return $_POST ?? null;
     }
 }

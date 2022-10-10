@@ -28,7 +28,7 @@ class Login extends AbstractController
                 $this->getPostParam('password')
             );
             if ($authResult != null) {
-                $validation->verifyToken();
+                $validation->verifyToken($this->getCsrfToken());
                 SessionModel::getInstance()->setClientId($authResult);
 
                 $this->redirectTo('profile');

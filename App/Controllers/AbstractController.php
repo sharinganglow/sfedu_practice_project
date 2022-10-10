@@ -20,6 +20,11 @@ abstract class AbstractController
         return htmlspecialchars($_POST[$name]);
     }
 
+    public function getInputParams(): ?array
+    {
+        return ($_POST) ?? null;
+    }
+
     public function getRequestMethod(): string
     {
         return $_SERVER['REQUEST_METHOD'] ?? 'GET';
@@ -28,6 +33,11 @@ abstract class AbstractController
     public function getIdParam(): string
     {
         return $_GET['id'] ?? '';
+    }
+
+    public function getCsrfToken(): string
+    {
+        return $_POST['csrf_token'] ?? '';
     }
 
     public function redirectTo(string $path): void
@@ -55,12 +65,12 @@ abstract class AbstractController
     {
         $validation = new ValidationModel();
         $model = new ClientResourceModel();
-        $isFormAccepted = $validation->isInputValid();
+        $isFormAccepted = $validation->isInputValid($this->getInputParams());
 
         if (!$isFormAccepted) {
             throw new ValidationException('Ошибка при добавлении пользователя');
         }
-        $validation->verifyToken();
+        $validation->verifyToken($this->getCsrfToken());
         $protectedPass = $model->hashPassword($this->getPostParam('password'));
 
         if ($type == 'edit') {
