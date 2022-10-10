@@ -24,24 +24,25 @@ class ValidationModel
         return true;
     }
 
-    public function isInputValid(
-        string $name,
-        string $surname,
-        string $email,
-        string $password,
-        string $rePassword
-    ): bool {
-        $hasRequiredFields = $name && $surname && $email && $password;
-        $hasPasswordMatch  = $password === $rePassword;
-        if ($hasRequiredFields && $hasPasswordMatch) {
-            return true;
+    public function isInputValid(): bool
+    {
+        $input = $this->getInputParams();
+        $hasRequiredFields = $input['name'] && $input['surname'] && $input['email'] && $input['password'];
+        $hasPasswordMatch  = $input['password'] === $input['re-password'];
+        if (!$hasPasswordMatch) {
+            throw new ValidationException('Пароли не совпадают');
         }
 
-        throw new ValidationException('Пароли не совпадают');
+        if (!$hasRequiredFields) {
+            throw new ValidationException('Пожалуйста, заполните обязательные поля');
+        }
+
+         return true;
     }
 
-    public function verifyToken($postToken): void
+    public function verifyToken(): void
     {
+        $postToken = $this->getInputParams()['csrf_token'];
         $sessionToken = SessionModel::getInstance()->getCsrfToken();
 
         if ($sessionToken !== $postToken) {
@@ -49,10 +50,10 @@ class ValidationModel
         }
     }
 
-    public function checkValidate(string $email, string $password): ?int
+    public function checkValidation(string $email, string $password): ?int
     {
         $clientResource = new ClientResourceModel();
-        $info = $clientResource->authenticate($email);
+        $info = $clientResource->getByEmail($email);
 
         if ($info && $this->verifyPassword($password, $info['password'])) {
             return $info['id'] ?? null;
@@ -64,5 +65,10 @@ class ValidationModel
     public function verifyPassword($password, $hash): bool
     {
         return password_verify($password, $hash);
+    }
+
+    public function getInputParams(): ?array
+    {
+        return $_POST ?? null;
     }
 }

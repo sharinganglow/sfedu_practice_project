@@ -19,15 +19,4 @@ class CategoryBlock extends Block
 
         require_once "{$this->getPath()}components/layout.phtml";
     }
-
-    public function setCategories(CategoryModel $model): self
-    {
-        $this->data = $model->getData();
-        return $this;
-    }
-
-    public function getCategories(): ?array
-    {
-        return $this->data ?? null;
-    }
 }

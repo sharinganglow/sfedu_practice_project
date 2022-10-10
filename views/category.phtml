@@ -1,15 +1,15 @@
 <?php
 /**
- * @var App\Models\Entity\CategoryModel $model
+ * @var App\Models\Entity\CategoryModel $category
  * @var App\Blocks\CategoryBlock $this
  */
 ?>
 <div class="main-space">
         <div class="welcome-card">
             <div class="element-box">
-                <?php foreach ($this->getCategories() as $item): ?>
+                <?php foreach ($this->getModel() as $category): ?>
                     <div class="element">
-                <?= $this->validateOutput($item['name']) ?>
+                <?= $this->sanitizeOutput($category->getCategory()) ?>
                     </div>
                 <?php endforeach; ?>
             </div>

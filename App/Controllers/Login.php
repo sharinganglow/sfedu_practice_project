@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Blocks\LoginBlock;
-use App\Models\Entity\CsrfTokenModel;
+use App\Models\Service\CsrfTokenModel;
 use App\Models\Entity\ValidationModel;
 use App\Models\Exceptions\ValidationException;
 use App\Models\Resource\ClientResourceModel;
@@ -23,13 +23,12 @@ class Login extends AbstractController
             $block->render();
         } else {
 
-            $authResult = $validation->checkValidate(
+            $authResult = $validation->checkValidation(
                 $this->getPostParam('email'),
                 $this->getPostParam('password')
             );
             if ($authResult != null) {
-                $inputToken = $this->getPostParam('csrf_token');
-                $validation->verifyToken($inputToken);
+                $validation->verifyToken();
                 SessionModel::getInstance()->setClientId($authResult);
 
                 $this->redirectTo('profile');

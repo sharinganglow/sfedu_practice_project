@@ -1,6 +1,7 @@
 <?php
 /**
  * @var App\Blocks\OrderBlock $this
+ * @var App\Models\Entity\OrderModel $order
  */
 ?>
 <div class="main-space">
@@ -10,14 +11,14 @@
         </h2>
         <div class="bottom-bar">
         <?php $total = 0; ?>
-        <?php foreach ($this->getOrder() as $item): ?>
+        <?php foreach ($this->getModel() as $order): ?>
             <div class="check-box__unit">
                 <div class="product">
-                    <?= $this->validateOutput($item['name']) ?>
+                    <?= $this->sanitizeOutput($order->getName()) ?>
                 </div>
                 <div class="check__item">
-                    <?= $this->validateOutput($item['total']) ?>
-                    <?php $total += $item['total'] ?>
+                    <?= $this->sanitizeOutput($order->getTotal()) ?>
+                    <?php $total += $order->getTotal() ?>
                 </div>
             </div>
         <?php endforeach; ?>

@@ -17,15 +17,4 @@ class StorageBlock extends Block
 
         require_once "{$this->getPath()}components/layout.phtml";
     }
-
-    public function setStorage(StorageModel $model): self
-    {
-        $this->data = $model->getData();
-        return $this;
-    }
-
-    public function getStorage(): ?array
-    {
-        return $this->data ?? null;
-    }
 }

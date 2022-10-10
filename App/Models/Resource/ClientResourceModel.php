@@ -64,7 +64,7 @@ class ClientResourceModel extends HandlerResourceModel
     }
 
 
-    public function authenticate(string $email): ?array
+    public function getByEmail(string $email): ?array
     {
         $connection = Database::getConnection();
         $query = $connection->prepare('SELECT email, password, id FROM client WHERE email = ?;');

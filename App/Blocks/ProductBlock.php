@@ -9,6 +9,7 @@ class ProductBlock extends Block
 {
     protected $data;
     protected $template = 'product.phtml';
+    protected $model = [];
 
     public function render()
     {

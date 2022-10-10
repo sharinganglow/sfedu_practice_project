@@ -1,12 +1,13 @@
 <?php
 /**
  * @var App\Blocks\Block $this
+ * @var App\Models\Entity\ClientModel $client
  */
 ?>
 <div class="main-space">
     <div class="welcome-card input-form">
         <div class="form">
-            <?php $id = $this->getCurrentClient(); ?>
+            <?php $client = $this->getCurrentClient()[0]; ?>
             <div class="form__name">
                 Change information
             </div>
@@ -21,7 +22,7 @@
                     type="text"
                     name="name"
                     placeholder="name"
-                    value="<?= $this->validateOutput($id['name']) ?>"
+                    value="<?= $this->sanitizeOutput($client->getName()) ?>"
                 >
             </div>
 
@@ -33,7 +34,7 @@
                     type="text"
                     name="surname"
                     placeholder="surname"
-                    value="<?= $this->validateOutput($id['surname']) ?>"
+                    value="<?= $this->sanitizeOutput($client->getSurname()) ?>"
                 >
             </div>
 
@@ -43,7 +44,7 @@
                     type="email"
                     name="email"
                     placeholder="email"
-                    value="<?= $this->validateOutput($id['email']) ?>"
+                    value="<?= $this->sanitizeOutput($client->getEmail()) ?>"
                 >
             </div>
 

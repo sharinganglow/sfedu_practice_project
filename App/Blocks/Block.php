@@ -2,8 +2,10 @@
 
 namespace App\Blocks;
 
+use App\Models\Entity\ClientsModel;
 use App\Models\Entity\Model;
 use App\Models\Entity\ProductModel;
+use App\Models\Entity\ProductsModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Resource\CategoryResourceModel;
 use App\Models\Resource\ClientResourceModel;
@@ -13,7 +15,7 @@ class Block
 {
     private $path = APP_ROOT . '/views/';
 
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }
@@ -31,8 +33,10 @@ class Block
     {
         $clientResource = new ClientResourceModel();
         $clientId = SessionModel::getInstance()->getClientId();
+        $clientInfo = new ClientsModel();
+        $clientInfo->setClient($clientResource->getClientById($clientId));
 
-        return $clientResource->getClientById($clientId);
+        return $clientInfo->getData();
     }
 
     public function getCurrentId(): ?int
@@ -40,7 +44,7 @@ class Block
         return SessionModel::getInstance()->getClientId();
     }
 
-    public function validateOutput(string $output): string
+    public function sanitizeOutput(string $output): string
     {
         return htmlspecialchars($output);
     }
@@ -50,20 +54,26 @@ class Block
         return SessionModel::getInstance()->getCsrfToken();
     }
 
-    public function setProduct(ProductModel $model): self
+    public function setModel(Model $model): self
     {
-        $this->data = $model->getData();
+        $this->model = $model;
         return $this;
     }
 
-    public function getProduct(): ?array
+    public function getModel(): ?array
     {
-        return $this->data ?? null;
+        return $this->model->getData() ?? null;
     }
 
     public function getProductCategories(int $productId): ?array
     {
         $categoryResource = new CategoryResourceModel();
         return $categoryResource->getAllCategories($productId) ?? null;
+    }
+
+    public function getProductCategoriesText($product, $delimiter = ' '): string
+    {
+        $categories = $this->getProductCategories($product) ?? null;
+        return implode($delimiter, (array_column($categories, 'name')));
     }
 }

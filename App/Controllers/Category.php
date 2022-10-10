@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Blocks\CategoryBlock;
+use App\Models\Entity\CategoriesModel;
 use App\Models\Entity\CategoryModel;
 use App\Models\Database;
 use App\Models\Resource\CategoryResourceModel;
@@ -13,11 +14,15 @@ class Category
     {
         $categoryResource = new CategoryResourceModel();
         $category = new CategoryModel();
-        $category->setData($categoryResource->getQuery());
+        $categoriesList = new CategoriesModel();
+
+        foreach ($categoryResource->getQuery() as $item) {
+            $categoriesList->setCategory($item);
+        }
 
         $block = new CategoryBlock();
         $block
-            ->setCategories($category)
+            ->setModel($categoriesList)
             ->render();
     }
 }

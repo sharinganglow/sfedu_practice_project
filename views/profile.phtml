@@ -1,13 +1,14 @@
 <?php
 /**
  * @var App\Blocks\Block $this
+ * @var App\Models\Entity\ClientModel $client
  */
 ?>
 
 <div class="main-space">
-    <?php $data = $this->getCurrentClient() ?>
+    <?php $client = $this->getCurrentClient()[0] ?>
     <div class="profile">
-        <a href="../editProfile?id=<?= $this->validateOutput($data['id']) ?>" class="edit">
+        <a href="../editProfile?id=<?= $this->sanitizeOutput($client->getId()) ?>" class="edit">
             <img src="../icons/edit-button.svg" alt="edit" class="edit__svg">
         </a>
         <div class="form">
@@ -17,13 +18,13 @@
         </div>
         <div class="description">
             <div class="description__item">
-                name: <?= $this->validateOutput($data['name']) ?>
+                name: <?= $this->sanitizeOutput($client->getName()) ?>
             </div>
             <div class="description__item">
-                surname: <?= $this->validateOutput($data['surname']) ?>
+                surname: <?= $this->sanitizeOutput($client->getSurname()) ?>
             </div>
             <div class="description__item">
-                email: <?= $this->validateOutput($data['email']) ?>
+                email: <?= $this->sanitizeOutput($client->getEmail()) ?>
             </div>
         </div>
     </div>

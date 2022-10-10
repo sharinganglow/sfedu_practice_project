@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Blocks\StorageBlock;
 use App\Models\Database;
+use App\Models\Entity\StoragesModel;
 use App\Models\Resource\StorageResourceModel;
 use App\Models\Entity\StorageModel;
 
@@ -13,11 +14,15 @@ class Storage
     {
        $storageResource = new StorageResourceModel();
        $storage = new StorageModel();
-       $storage->setData($storageResource->getQuery());
+       $storageList = new StoragesModel();
+
+       foreach ($storageResource->getQuery() as $item) {
+           $storageList->setStorage($item);
+       }
 
         $block = new StorageBlock();
         $block
-            ->setStorage($storage)
+            ->setModel($storageList)
             ->render();
     }
 }

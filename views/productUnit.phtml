@@ -1,19 +1,20 @@
 <?php
 /**
  * @var App\Blocks\Block $this
+ * @var App\Models\Entity\ProductModel $product
  */
 ?>
 <div class="main-space">
-    <?php $product = $this->getProduct() ?>
+    <?php $product = $this->getModel()[0] ?>
     <div class="welcome-card">
         <div class="delete">
-            <a href="../deleteEntity?id=<?= $this->validateOutput($product['id_product']) ?>" class="delete__block">
+            <a href="../deleteEntity?id=<?= $this->sanitizeOutput($product->getId()) ?>" class="delete__block">
                 <img class="delete__icon" src="../icons/x.png" alt="x">
             </a>
         </div>
         <div class="form">
             <div class="form__name">
-                <?= $this->validateOutput($product['name']) ?>
+                <?= $this->sanitizeOutput($product->getName()) ?>
             </div>
             <div class="photo-box">
                 <img src="../img/addClientPhoto.jpg" alt="picture" class="photo photo_full">
@@ -21,21 +22,20 @@
         </div>
         <div class="description">
             <div class="description__item">
-                price: <?= $this->validateOutput($product['price']) ?> rub
+                price: <?= $this->sanitizeOutput($product->getPrice()) ?> rub
             </div>
             <div class="description__item">
-                country: <?= $this->validateOutput($product['country']) ?>
+                country: <?= $this->sanitizeOutput($product->getCountry()) ?>
             </div>
             <div class="description__item">
-                brand: <?= $this->validateOutput($product['brand']) ?>
+                brand: <?= $this->sanitizeOutput($product->getBrand()) ?>
             </div>
             <div class="description__item">
-                date: <?= $this->validateOutput($product['date']) ?>
+                date: <?= $this->sanitizeOutput($product->getDate()) ?>
             </div>
-            <?php $categories = $this->getProductCategories($product['id_product']); ?>
             <div class="description__item">
                 category:
-                <?= $this->validateOutput(implode(' ', (array_column($categories, 'name')))); ?>
+                <?= $this->sanitizeOutput($this->getProductCategoriesText($product->getId())); ?>
             </div>
         </div>
     </div>

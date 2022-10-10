@@ -18,15 +18,4 @@ class ClientBlock extends Block
 
         require_once "{$this->getPath()}components/layout.phtml";
     }
-
-    public function setClient(ClientModel $model): self
-    {
-        $this->data = $model->getData();
-        return $this;
-    }
-
-    public function getClient(): ?array
-    {
-        return $this->data ?? null;
-    }
 }

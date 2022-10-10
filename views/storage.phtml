@@ -1,14 +1,15 @@
 <?php
 /**
  * @var App\Blocks\StorageBlock $this
+ * @var App\Models\Entity\StorageModel $storage
  */
 ?>
 <div class="main-space">
     <div class="welcome-card">
         <div class="element-box">
-            <?php foreach ($this->getStorage() as $item): ?>
+            <?php foreach ($this->getModel() as $storage): ?>
                 <div class="element element_large">
-                    <?= $this->validateOutput($item['address']) ?>
+                    <?= $this->sanitizeOutput($storage->getAddress()) ?>
                 </div>
             <?php endforeach; ?>
         </div>

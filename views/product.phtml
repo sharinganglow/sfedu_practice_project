@@ -1,22 +1,23 @@
 <?php
 /**
  * @var App\Blocks\ProductBlock $this
+ * @var App\Models\Entity\ProductModel $product
  */
 ?>
 <div class="main-space">
-    <?php foreach ($this->getProduct() as $product): ?>
+    <?php foreach ($this->getModel() as $product): ?>
     <div class="welcome-card">
         <div class="delete">
-            <a href="../deleteEntity?id=<?= $this->validateOutput($product['id_product']) ?>" class="delete__block">
+            <a href="../deleteEntity?id=<?= $this->sanitizeOutput($product->getId()) ?>" class="delete__block">
                 <img class="delete__icon" src="../icons/x.png" alt="x">
             </a>
         </div>
         <div class="form">
-            <a href="../productUnit?id=<?= $this->validateOutput($product['id_product']) ?>"
+            <a href="../productUnit?id=<?= $this->sanitizeOutput($product->getId()) ?>"
                class="form__name link name"
-               data-replace="<?= $product['name'] ?>">
+               data-replace="<?= $this->sanitizeOutput($product->getName()) ?>">
                 <span class="name__item">
-                    <?= $product['name'] ?>
+                    <?= $this->sanitizeOutput($product->getName()) ?>
                 </span>
             </a>
             <div class="photo-box">
@@ -25,21 +26,20 @@
         </div>
         <div class="description description_tabbed">
             <div class="description__item">
-                price: <?= $this->validateOutput($product['price']) ?> rub
+                price: <?= $this->sanitizeOutput($product->getPrice()) ?> rub
             </div>
             <div class="description__item">
-                country: <?= $this->validateOutput($product['country']) ?>
+                country: <?= $this->sanitizeOutput($product->getCountry()) ?>
             </div>
             <div class="description__item">
-                brand: <?= $this->validateOutput($product['brand']) ?>
+                brand: <?= $this->sanitizeOutput($product->getBrand()) ?>
             </div>
             <div class="description__item">
-                date: <?= $this->validateOutput($product['date']) ?>
+                date: <?= $this->sanitizeOutput($product->getDate()) ?>
             </div>
-                <?php $categories = $this->getProductCategories($product['id_product']); ?>
             <div class="description__item">
                 category:
-                <?= $this->validateOutput(implode(' ', (array_column($categories, 'name')))); ?>
+                <?= $this->sanitizeOutput($this->getProductCategoriesText($product->getId())); ?>
             </div>
         </div>
     </div>

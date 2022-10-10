@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Blocks\AddClientBlock;
 use App\Models\Database;
-use App\Models\Entity\CsrfTokenModel;
+use App\Models\Service\CsrfTokenModel;
 use App\Models\Entity\ValidationModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Exceptions\ValidationException;
@@ -18,36 +18,11 @@ class AddClient extends AbstractController
         $validation = new ValidationModel();
 
         if ($this->getRequestMethod() == 'GET') {
-            $token = new CsrfTokenModel();
-            SessionModel::getInstance()->setCsrfToken($token->generateCsrfToken());
+            $this->executeGetForm('add');
 
-            $block = new AddClientBlock();
-            $block->render();
         } elseif ($validation->isEmailValid($this->getPostParam('email'))) {
 
-            $newClient = new ClientResourceModel();
-            $formAccepted = $validation->isInputValid(
-                $this->getPostParam('name'),
-                $this->getPostParam('surname'),
-                $this->getPostParam('email'),
-                $this->getPostParam('password'),
-                $this->getPostParam('re-password')
-            );
-
-            if ($formAccepted) {
-                $inputToken = $this->getPostParam('csrf_token');
-                $validation->verifyToken($inputToken);
-
-                $protectedPass = $newClient->hashPassword($this->getPostParam('password'));
-                $newClient->addClient(
-                    $this->getPostParam('name'),
-                    $this->getPostParam('surname'),
-                    $this->getPostParam('email'),
-                    $protectedPass
-                );
-            } else {
-                throw new ValidationException('Ошибка при добавлении пользователя');
-            }
+            $this->executePostForm('add');
             $this->redirectTo('mainpage');
         }
     }

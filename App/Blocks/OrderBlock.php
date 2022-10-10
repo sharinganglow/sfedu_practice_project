@@ -18,15 +18,4 @@ class OrderBlock extends Block
 
         require_once "{$this->getPath()}components/layout.phtml";
     }
-
-    public function setOrder(OrderModel $model): self
-    {
-        $this->data = $model->getData();
-        return $this;
-    }
-
-    public function getOrder(): ?array
-    {
-        return $this->data ?? null;
-    }
 }

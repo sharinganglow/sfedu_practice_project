@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Blocks\ClientBlock;
 use App\Models\Entity\ClientModel;
 use App\Models\Database;
+use App\Models\Entity\ClientsModel;
 use App\Models\Resource\ClientResourceModel;
 
 class Client
@@ -13,11 +14,15 @@ class Client
     {
         $clientResource = new ClientResourceModel();
         $client = new ClientModel();
-        $client->setData($clientResource->getQuery());
+        $clientsList = new ClientsModel();
+
+        foreach ($clientResource->getQuery() as $item) {
+            $clientsList->setClient($item);
+        }
 
         $block = new ClientBlock();
         $block
-            ->setClient($client)
+            ->setModel($clientsList)
             ->render();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Blocks\ProductBlock;
 use App\Models\Database;
 use App\Models\Entity\ProductModel;
+use App\Models\Entity\ProductsModel;
 use App\Models\Resource\ProductResourceModel;
 
 class Product
@@ -13,11 +14,15 @@ class Product
     {
         $productResource = new ProductResourceModel();
         $product = new ProductModel();
-        $product->setData($productResource->getQuery());
+        $productsList = new ProductsModel();
+
+        foreach ($productResource->getQuery() as $item) {
+            $productsList->setProduct($item);
+        }
 
         $block = new ProductBlock();
         $block
-            ->setProduct($product)
+            ->setModel($productsList)
             ->render();
     }
 }

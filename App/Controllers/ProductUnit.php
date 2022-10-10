@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Blocks\ProductUnitBlock;
 use App\Models\Database;
 use App\Models\Entity\ProductModel;
+use App\Models\Entity\ProductsModel;
 use App\Models\Resource\ProductResourceModel;
 
 class ProductUnit extends AbstractController
@@ -13,11 +14,13 @@ class ProductUnit extends AbstractController
     {
         $productUnitResource = new ProductResourceModel();
         $product = new ProductModel();
-        $product->setData($productUnitResource->getProductById($this->getIDParam()));
+
+        $productsList = new ProductsModel();
+        $productsList->setProduct($productUnitResource->getProductById($this->getIdParam()));
 
         $block = new ProductUnitBlock();
         $block
-            ->setProduct($product)
+            ->setModel($productsList)
             ->render();
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Entity;
+namespace App\Models\Service;
 
-class CsrfTokenModel extends Model
+class CsrfTokenModel
 {
     public function generateCsrfToken(): string
     {

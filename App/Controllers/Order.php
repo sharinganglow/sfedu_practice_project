@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Blocks\OrderBlock;
 use App\Models\Database;
 use App\Models\Entity\OrderModel;
+use App\Models\Entity\OrdersModel;
 use App\Models\Resource\OrderResourceModel;
 
 class Order
@@ -12,13 +13,17 @@ class Order
     public function execute(): void
     {
         $orderResource = new OrderResourceModel();
-        $orderItem = 2;
+        $orderItem = 3;
         $order = new OrderModel();
-        $order->setData($orderResource->initOrder($orderItem));
+        $ordersList = new OrdersModel();
+
+        foreach ($orderResource->initOrder($orderItem) as $item) {
+            $ordersList->setOrder($item);
+        }
 
         $block = new OrderBlock();
         $block
-            ->setOrder($order)
+            ->setModel($ordersList)
             ->render();
     }
 }
