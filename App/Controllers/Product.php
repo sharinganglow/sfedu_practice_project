@@ -13,7 +13,6 @@ class Product
     public function execute(): void
     {
         $productResource = new ProductResourceModel();
-        $product = new ProductModel();
         $productsList = new ProductsModel();
 
         foreach ($productResource->getQuery() as $item) {

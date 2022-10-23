@@ -15,6 +15,7 @@
 @import "../delete/delete.css";
 @import "../login/login.css";
 @import "../order/order.css";
+@import "../add/add.css";
 
 * {
     margin: 0;
@@ -78,6 +79,27 @@
 
     border-radius: 50%;
     transition: 0.3s all ease-in-out;
+}
+
+.edit_shifted {
+    position: center;
+
+    margin-right: 50px;
+}
+
+.interact {
+    position: absolute;
+    right: 4%;
+    top: 10%;
+
+    width: 100px;
+    height: max-content;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-direction: row-reverse;
 }
 
 .edit__svg {

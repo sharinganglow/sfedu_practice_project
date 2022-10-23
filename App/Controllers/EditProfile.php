@@ -2,16 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Blocks\AddClientBlock;
-use App\Blocks\ClientBlock;
-use App\Blocks\EditProfileBlock;
-use App\Models\Database;
-use App\Models\Service\CsrfTokenModel;
 use App\Models\Entity\ValidationModel;
-use App\Models\Exceptions\LogicalException;
-use App\Models\Exceptions\ValidationException;
-use App\Models\Resource\ClientResourceModel;
-use App\Models\SessionModel;
 
 class EditProfile extends AbstractController
 {

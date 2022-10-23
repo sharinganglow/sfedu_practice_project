@@ -41,9 +41,11 @@ class ClientResourceModel extends HandlerResourceModel
         $query->execute([$name, $surname, $email, $password]);
     }
 
-    public function updateProfile($name, $surname, $email, $password): void
+    public function editProfile($name, $surname, $email, $password, $clientId = null): void
     {
-        $clientId = $_GET['id'];
+        if (!isset($clientId)) {
+            $clientId = $_GET['id'];
+        }
 
         $connection = Database::getConnection();
         $query = $connection->prepare(
@@ -52,6 +54,15 @@ class ClientResourceModel extends HandlerResourceModel
                     WHERE id = ?;'
         );
         $query->execute([$name, $surname, $email, $password, $clientId]);
+    }
+
+    public function updateProfile($name, $surname, $id): void
+    {
+        $connection = Database::getConnection();
+        $query = $connection->prepare(
+            'UPDATE client SET name = ?, surname = ? WHERE id = ?;'
+        );
+        $query->execute([$name, $surname, $id]);
     }
 
     public function checkExistingEmail(string $email): ?array

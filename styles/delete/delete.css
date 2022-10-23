@@ -12,6 +12,10 @@
     font-size: 18px;
 }
 
+.delete_shifted {
+    position: center;
+}
+
 .delete__icon {
     width: 25px;
     height: 25px;

@@ -8,4 +8,4 @@ define('APP_ROOT', dirname(__FILE__));
 $requestPath = $_SERVER['REQUEST_URI'] ?? '';
 
 $router = new Router($requestPath);
-$router->runRoute();
+$router->selectController();

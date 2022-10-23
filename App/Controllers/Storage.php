@@ -13,7 +13,6 @@ class Storage
     public function execute(): void
     {
        $storageResource = new StorageResourceModel();
-       $storage = new StorageModel();
        $storageList = new StoragesModel();
 
        foreach ($storageResource->getQuery() as $item) {

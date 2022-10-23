@@ -1,0 +1,98 @@
+<?php
+/**
+ * @var App\Models\Entity\ProductModel $product
+ * @var App\Blocks\Block $this
+ */
+?>
+<div class="main-space">
+    <div class="welcome-card input-form">
+        <div class="form">
+            <div class="form__name">
+                Edit product
+            </div>
+            <div class="photo-box">
+                <img class="photo photo_full" src="../img/background.jpg" alt="beauty">
+            </div>
+        </div>
+        <?php $product = $this->getModel()[0] ?>
+        <form class="add"  action="" method="post">
+
+            <div class="add__rows">
+                <div class="add__block">
+
+                    <div class="add__field">
+                        <input
+                                class="add__input"
+                                type="text"
+                                name="name"
+                                placeholder="name"
+                                value="<?= $product->getName() ?>"
+                        >
+                    </div>
+
+                    <input name="csrf_token" type="hidden" value="<?= $this->getCsrfToken() ?>">
+
+                    <div class="add__field">
+                        <input
+                                class="add__input"
+                                type="text"
+                                name="price"
+                                placeholder="price"
+                                value="<?= $product->getPrice() ?>"
+                        >
+                    </div>
+
+                    <div class="add__field">
+                        <input
+                                class="add__input"
+                                type="text"
+                                name="country"
+                                placeholder="country"
+                                value="<?= $product->getCountry() ?>"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="add__block">
+
+                    <div class="add__field">
+                        <input
+                                class="add__input"
+                                type="text"
+                                name="brand"
+                                placeholder="brand"
+                                value="<?= $product->getBrand() ?>"
+                        >
+                    </div>
+
+                    <div class="add__field">
+                        <input
+                                class="add__input"
+                                type="text"
+                                name="date"
+                                placeholder="year of issue"
+                                value="<?= $product->getDate() ?>"
+                        >
+                    </div>
+
+                    <div class="add__field">
+                        <input
+                                class="add__input"
+                                type="text"
+                                name="category"
+                                placeholder="category"
+                                value="<?= $this->sanitizeOutput($this
+                                        ->getProductCategoriesText($product->getId(), ', ')) ?>"
+                        >
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="add__field">
+                <input class="add__submit" type="submit" name="submit" value="edit">
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="main-space">
+    <div class="welcome-card input-form">
+        <div class="form">
+            <div class="form__name">
+                Add product
+            </div>
+            <div class="photo-box">
+                <img class="photo photo_full" src="../img/background.jpg" alt="beauty">
+            </div>
+        </div>
+        <form class="add"  action="" method="post">
+
+            <div class="add__rows">
+            <div class="add__block">
+
+            <div class="add__field">
+                <input class="add__input" type="text" name="name" placeholder="name">
+            </div>
+
+            <input name="csrf_token" type="hidden" value="<?= $this->getCsrfToken() ?>">
+
+            <div class="add__field">
+                <input class="add__input" type="text" name="price" placeholder="price">
+            </div>
+
+            <div class="add__field">
+                <input class="add__input" type="text" name="country" placeholder="country">
+            </div>
+
+            </div>
+
+            <div class="add__block">
+
+            <div class="add__field">
+                <input class="add__input" type="text" name="brand" placeholder="brand">
+            </div>
+
+            <div class="add__field">
+                <input class="add__input" type="text" name="date" placeholder="year of issue">
+            </div>
+
+            <div class="add__field">
+                <input class="add__input" type="text" name="category" placeholder="category">
+            </div>
+
+            </div>
+            </div>
+
+            <div class="add__field">
+                <input class="add__submit" type="submit" name="submit" value="add">
+            </div>
+        </form>
+    </div>
+</div>
