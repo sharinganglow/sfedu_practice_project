@@ -3,6 +3,10 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
+use App\Models\Entity\BrandModel;
+use App\Models\Entity\CategoryModel;
+use App\Models\Entity\ClientModel;
+use App\Models\Entity\Model;
 
 class BrandResourceModel extends HandlerResourceModel
 {
@@ -11,20 +15,37 @@ class BrandResourceModel extends HandlerResourceModel
     public function addBrand(string $brand): void
     {
         $connection = Database::getConnection();
-        if (!$this->checkIfExist($brand)) {
-            $query = $connection->prepare("INSERT INTO brand (brand) VALUE (?);");
-            $query->bindParam(1, $brand, \PDO::PARAM_STR | \PDO::PARAM_INPUT_OUTPUT);
-            $query->execute();
+        if (!$this->isExist($brand)) {
+            $query = $connection->prepare('INSERT INTO brand (brand) VALUE (?);');
+            $query->execute([$brand]);
         }
     }
 
-    public function checkIfExist(string $input): ?int
+    public function isExist(string $input): bool
     {
         foreach ($this->getQuery() as $row) {
-            if ($row['brand'] == $input) {
-                return $row['id'];
+            if ($row->getBrand() == $input) {
+                return $row->getId();
             }
         }
-        return null;
+        return false;
+    }
+
+    public function getByBrand($value): Model
+    {
+        $data = $this->getRowByColumn('brand', $value);
+        return $data;
+    }
+
+    protected function buildItem(array $data): Model
+    {
+        return $this->buildEmptyItem()
+            ->setBrand($data['brand'] ?? '')
+            ->setId($data['id'] ?? 0);
+    }
+
+    protected function buildEmptyItem(): Model
+    {
+        return new BrandModel();
     }
 }

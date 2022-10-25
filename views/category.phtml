@@ -7,7 +7,7 @@
 <div class="main-space">
         <div class="welcome-card">
             <div class="element-box">
-                <?php foreach ($this->getModel() as $category): ?>
+                <?php foreach ($this->getData() as $category): ?>
                     <div class="element">
                 <?= $this->sanitizeOutput($category->getCategory()) ?>
                     </div>

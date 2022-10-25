@@ -6,7 +6,7 @@
 ?>
 
 <div class="main-space">
-    <?php $client = $this->getCurrentClient()[0] ?>
+    <?php $client = $this->getCurrentClient() ?>
     <div class="profile">
         <a href="../editProfile?id=<?= $this->sanitizeOutput($client->getId()) ?>" class="edit">
             <img src="../icons/edit-button.svg" alt="edit" class="edit__svg">

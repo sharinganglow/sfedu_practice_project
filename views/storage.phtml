@@ -7,7 +7,7 @@
 <div class="main-space">
     <div class="welcome-card">
         <div class="element-box">
-            <?php foreach ($this->getModel() as $storage): ?>
+            <?php foreach ($this->getData() as $storage): ?>
                 <div class="element element_large">
                     <?= $this->sanitizeOutput($storage->getAddress()) ?>
                 </div>

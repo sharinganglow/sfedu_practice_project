@@ -2,19 +2,19 @@
 
 namespace App\Models\Entity;
 
-class CategoryModel extends Model
+class BrandModel extends Model
 {
     protected $data = [];
 
-    public function setCategory($data): self
+    public function setBrand($data): self
     {
-        $this->data['category'] = $data;
+        $this->data['brand'] = $data;
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getBrand(): ?string
     {
-        return $this->data['category'] ?? null;
+        return $this->data['brand'] ?? null;
     }
 
     public function setId($data): self

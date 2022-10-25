@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Api;
 
-use App\Models\Entity\StoragesModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Resource\StorageResourceModel;
 
@@ -10,7 +9,7 @@ class StorageApi extends AbstractApi
 {
     public function execute()
     {
-        if ($this->getRequestMethod() == 'GET') {
+        if ($this->isGet()) {
             if ($this->hasId()) {
                 $this->getStorage();
             } else {
@@ -18,31 +17,29 @@ class StorageApi extends AbstractApi
             }
         }
 
-        if ($this->getRequestMethod() == 'PUT') {
+        if ($this->isPut()) {
             $this->editStorage();
-            header('Status: 200');
+            $this->success();
         }
 
-        if ($this->getRequestMethod() == 'POST') {
+        if ($this->isPost()) {
             $this->addStorage();
-            header('Status: 200');
+            $this->success();
         }
 
-        if ($this->getRequestMethod() == 'DELETE') {
+        if ($this->isDelete()) {
             $this->deleteStorage();
-            header('Status: 200');
+            $this->success();
         }
 
-        header('Status: 404');
+        $this->noRoute();
     }
 
     public function getStorage(): void
     {
         $storageResource = new StorageResourceModel();
-        $storageList = new StoragesModel();
 
-        $storageList->setStorage($storageResource->getRecordById($this->getId()));
-        $data = $storageList->getData()[0];
+        $data = $storageResource->getRecordById($this->getId());
 
         $storage = ['address' => $data->getAddress()];
         $this->display($storage);
@@ -51,14 +48,11 @@ class StorageApi extends AbstractApi
     public function getStorageList(): void
     {
         $storageResource = new StorageResourceModel();
+        $data = $storageResource->getQuery();
 
         $storages = [];
-        foreach ($storageResource->getQuery() as $row) {
-            $storage = new StoragesModel();
-            $storage->setStorage($row);
-            $data = $storage->getData()[0];
-
-            $unit = ['address' => $data->getAddress()];
+        foreach ($data as $row) {
+            $unit = ['address' => $row->getAddress()];
             $storages [] = $unit;
         }
 
@@ -67,14 +61,14 @@ class StorageApi extends AbstractApi
 
     public function editStorage(): void
     {
-        $input = $this->decodeJson();
+        $input = $this->decodeJsonRequest();
         $storageResource = new StorageResourceModel();
         $storageResource->editStorage($input['address'], $this->getId());
     }
 
     public function addStorage(): void
     {
-        $input = $this->decodeJson();
+        $input = $this->decodeJsonRequest();
         $storageResource = new StorageResourceModel();
         $storageResource->addStorage($input['address']);
     }

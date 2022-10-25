@@ -2,19 +2,19 @@
 
 namespace App\Models\Entity;
 
-class CategoryModel extends Model
+class CountryModel extends Model
 {
     protected $data = [];
 
-    public function setCategory($data): self
+    public function setCountry($data): self
     {
-        $this->data['category'] = $data;
+        $this->data['country'] = $data;
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getCountry(): ?string
     {
-        return $this->data['category'] ?? null;
+        return $this->data['country'] ?? null;
     }
 
     public function setId($data): self

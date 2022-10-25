@@ -3,11 +3,24 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
+use App\Models\Entity\CategoryModel;
 use App\Models\Entity\Model;
+use App\Models\Entity\ProductModel;
 
 class ProductResourceModel extends HandlerResourceModel
 {
     protected $table = 'product';
+
+    public function getProductId($column, $value): ?int
+    {
+        $connection = Database::getConnection();
+        $query = $connection->prepare("SELECT id FROM {$this->table} WHERE {$column} = :value LIMIT 1;");
+        $query->bindParam(':value', $value, \PDO::PARAM_STR | \PDO::PARAM_INPUT_OUTPUT);
+        $query->execute();
+        $data = $query->fetchColumn();
+
+        return $data;
+    }
 
     public function getQuery(): array
     {
@@ -18,11 +31,17 @@ class ProductResourceModel extends HandlerResourceModel
                     JOIN brand ON (brand.id=product.brand_id)'
         );
         $query->execute();
+        $data = $query->fetchAll();
 
-        return $query->fetchAll();
+        $result = [];
+        foreach ($data as $datum) {
+            $result [] = $this->buildItem($datum);
+        }
+
+        return $result;
     }
 
-    public function getProductById($id): array
+    public function getProductById($id): Model
     {
         $connection = Database::getConnection();
         $query = $connection->prepare(
@@ -33,40 +52,56 @@ class ProductResourceModel extends HandlerResourceModel
         );
         $query->bindParam(':product_id', $id, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
         $query->execute();
+        $data = $query->fetch();
 
-        return $query->fetch();
+        return $data ? $this->buildItem($data) : $this->buildEmptyItem();
     }
 
-    public function addProduct(
-        $name,
-        $price,
-        $country,
-        $brand,
-        $date
-    ): void
+    public function addProduct(array $data): void
     {
         $connection = Database::getConnection();
         $query = $connection->prepare(
             'INSERT INTO product (name, price, country_id, brand_id, date) VALUES (?, ?, ?, ?, ?);'
         );
-        $query->execute([$name, $price, $country, $brand, $date]);
+        $query->execute([
+            $data['name'],
+            $data['price'],
+            $data['country'],
+            $data['brand'],
+            $data['date'],
+        ]);
     }
 
-    public function editProduct(
-        $name,
-        $price,
-        $country,
-        $brand,
-        $date,
-        $productId
-    ): void
+    public function editProduct(array $data): void
     {
         $connection = Database::getConnection();
         $query = $connection->prepare(
-            'UPDATE product SET name = ?,
-                   price = ?, country_id = ?, brand_id = ?,
-                   date = ? WHERE id = ?;'
+            'UPDATE product SET name = ?, price = ?, country_id = ?, brand_id = ?, date = ? 
+               WHERE id = ?;'
         );
-        $query->execute([$name, $price, $country, $brand, $date, $productId]);
+        $query->execute([
+            $data['name'],
+            $data['price'],
+            $data['country'],
+            $data['brand'],
+            $data['date'],
+            $data['id']
+        ]);
+    }
+
+    protected function buildItem(array $data): ProductModel
+    {
+        return $this->buildEmptyItem()
+            ->setName($data['name'] ?? '')
+            ->setPrice($data['price'] ?? 0)
+            ->setBrand($data['brand'] ?? '')
+            ->setCountry($data['country'] ?? '')
+            ->setDate($data['date'] ?? '')
+            ->setId($data['id_product'] ?? 0);
+    }
+
+    protected function buildEmptyItem(): ProductModel
+    {
+        return new ProductModel();
     }
 }

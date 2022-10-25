@@ -5,16 +5,16 @@
  */
 ?>
 <div class="main-space">
-    <?php $product = $this->getModel()[0] ?>
+    <?php $product = $this->getProduct() ?>
     <div class="welcome-card">
         <div class="interact">
             <div class="delete">
-                <a href="../deleteEntity?id=<?= $this->sanitizeOutput($product->getId()) ?>" class="delete delete_shifted">
+                <a href="../deleteEntity?id=<?= $product->getId() ?>" class="delete delete_shifted">
                     <img class="delete__icon" src="../icons/x.png" alt="x">
                 </a>
             </div>
             <div class="delete">
-                <a href="../editProduct?id=<?= $this->sanitizeOutput($product->getId()) ?>" class="edit edit_shifted">
+                <a href="../editProduct?id=<?= $product->getId() ?>" class="edit edit_shifted">
                     <img src="../icons/edit-button.svg" alt="edit" class="edit__svg ">
                 </a>
             </div>

@@ -3,6 +3,9 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
+use App\Models\Entity\CategoryModel;
+use App\Models\Entity\ClientModel;
+use App\Models\Entity\Model;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Exceptions\ValidationException;
 
@@ -10,15 +13,15 @@ class ClientResourceModel extends HandlerResourceModel
 {
     protected $table = 'client';
 
-    public function getClientById($id): array
+    public function getClientById($id): Model
     {
         $connection = Database::getConnection();
         $query = $connection->prepare('SELECT * FROM client WHERE id = ?;');
 
-        $query->bindParam(1, $id, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
-        $query->execute();
+        $query->execute([$id]);
+        $data = $query->fetch();
 
-        return $query->fetch();
+        return $data ? $this->buildItem($data) : $this->buildEmptyItem();
     }
 
     public function getClientId($email, $password)
@@ -26,8 +29,7 @@ class ClientResourceModel extends HandlerResourceModel
         $connection = Database::getConnection();
         $query = $connection->prepare('SELECT id FROM client WHERE email = ? AND password = ?;');
 
-        $query->bindParam(2, $email, $password, \PDO::PARAM_INT | \PDO::PARAM_INPUT_OUTPUT);
-        $query->execute();
+        $query->execute([$email, $password]);
 
         return $query->fetch();
     }
@@ -49,8 +51,7 @@ class ClientResourceModel extends HandlerResourceModel
 
         $connection = Database::getConnection();
         $query = $connection->prepare(
-            'UPDATE client SET name = ?, 
-                    surname = ?, email = ?, password = ? 
+            'UPDATE client SET name = ?, surname = ?, email = ?, password = ? 
                     WHERE id = ?;'
         );
         $query->execute([$name, $surname, $email, $password, $clientId]);
@@ -65,13 +66,14 @@ class ClientResourceModel extends HandlerResourceModel
         $query->execute([$name, $surname, $id]);
     }
 
-    public function checkExistingEmail(string $email): ?array
+    public function checkExistingEmail(string $email): Model
     {
         $connection = Database::getConnection();
         $query = $connection->prepare('SELECT email, id FROM client WHERE email = ?;');
         $query->execute([$email]);
+        $data = $query->fetch();
 
-        return $query->fetchAll();
+        return $data ? $this->buildItem($data) : $this->buildEmptyItem();
     }
 
 
@@ -79,9 +81,23 @@ class ClientResourceModel extends HandlerResourceModel
     {
         $connection = Database::getConnection();
         $query = $connection->prepare('SELECT email, password, id FROM client WHERE email = ?;');
-        $query->bindParam(1, $email, \PDO::PARAM_STR | \PDO::PARAM_INPUT_OUTPUT);
-        $query->execute();
+        $query->execute([$email]);
 
         return $query->fetch() ?? null;
+    }
+
+    protected function buildItem(array $data): ClientModel
+    {
+        return $this->buildEmptyItem()
+            ->setName($data['name'] ?? '')
+            ->setSurname($data['surname'] ?? '')
+            ->setEmail($data['email'] ?? '')
+            ->setPassword($data['password'])
+            ->setId($data['id']);
+    }
+
+    protected function buildEmptyItem(): ClientModel
+    {
+        return new ClientModel();
     }
 }

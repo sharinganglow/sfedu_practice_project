@@ -10,12 +10,12 @@ class EditProfile extends AbstractController
     {
         $validation = new ValidationModel();
 
-        if ($this->getRequestMethod() == 'GET') {
-            $this->executeGetForm('edit');
+        if ($this->getRequestMethod() === 'GET') {
+            $this->executeGetClientForm('edit');
 
         } elseif ($validation->isEmailValid($this->getPostParam('email'))) {
 
-            $this->executePostForm('edit');
+            $this->executeClientHandle($this->getInputParams(), 'edit');
             $this->redirectTo('mainpage');
         }
     }

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Blocks\AddProductBlock;
+use App\Models\Entity\ProductModel;
 use App\Models\Entity\ValidationModel;
 use App\Models\Resource\BrandResourceModel;
 use App\Models\Resource\CategoryResourceModel;
@@ -15,12 +16,8 @@ class AddProduct extends AbstractController
 {
     public function execute(): void
     {
-        if ($this->getRequestMethod() == 'GET') {
-            $token = new CsrfTokenModel();
-            SessionModel::getInstance()->setCsrfToken($token->generateCsrfToken());
-
-            $block = new AddProductBlock();
-            $block->render();
+        if ($this->getRequestMethod() === 'GET') {
+            $this->executeGetProductForm('add');
 
         } else {
             $this->createProduct();
@@ -33,6 +30,7 @@ class AddProduct extends AbstractController
         $validation = new ValidationModel();
         $validation->verifyToken($this->getCsrfToken());
 
-        $this->executeProductAddition($this->getInputParams());
+        $product = new ProductModel();
+        $product->executeProductAddition($this->getInputParams());
     }
 }

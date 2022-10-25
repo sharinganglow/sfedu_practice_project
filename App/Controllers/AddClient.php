@@ -17,12 +17,12 @@ class AddClient extends AbstractController
     {
         $validation = new ValidationModel();
 
-        if ($this->getRequestMethod() == 'GET') {
-            $this->executeGetForm('add');
+        if ($this->getRequestMethod() === 'GET') {
+            $this->executeGetClientForm('add');
 
         } elseif ($validation->isEmailValid($this->getPostParam('email'))) {
 
-            $this->executePostForm('add');
+            $this->executeClientHandle($this->getInputParams(), 'add');
             $this->redirectTo('mainpage');
         }
     }

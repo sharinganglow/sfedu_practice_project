@@ -3,6 +3,8 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
+use App\Models\Entity\CategoryModel;
+use App\Models\Entity\Model;
 
 class CategoryResourceModel extends HandlerResourceModel
 {
@@ -17,26 +19,27 @@ class CategoryResourceModel extends HandlerResourceModel
                      WHERE t3.id = ?;"
         );
         $query->execute([$productId]);
+
         return $query->fetchAll();
     }
 
     public function addCategory($category, $date, $parent = 1): void
     {
         $connection = Database::getConnection();
-        if (!$this->checkIfExist($category)) {
+        if (!$this->isExist($category)) {
             $query = $connection->prepare("INSERT INTO category (name, date, parent_id) VALUES (?, ?, ?);");
             $query->execute([$category, $date, $parent]);
         }
     }
 
-    public function checkIfExist(string $input): ?int
+    public function isExist(string $input): bool
     {
         foreach ($this->getQuery() as $row) {
-            if ($row['name'] == $input) {
-                return $row['id'];
+            if ($row->getCategory() == $input) {
+                return $row->getId();
             }
         }
-        return null;
+        return false;
     }
 
     public function tieWithProduct($productId, $categoryId): void
@@ -55,5 +58,23 @@ class CategoryResourceModel extends HandlerResourceModel
             'DELETE FROM categories_of_products WHERE product_id = ?;'
         );
         $query->execute([$productId]);
+    }
+
+    public function getByName($value): Model
+    {
+        $data = $this->getRowByColumn('name', $value);
+        return $data;
+    }
+
+    protected function buildItem(array $data): CategoryModel
+    {
+        return $this->buildEmptyItem()
+            ->setCategory($data['name'] ?? '')
+            ->setId($data['id'] ?? 0);
+    }
+
+    protected function buildEmptyItem(): CategoryModel
+    {
+        return new CategoryModel();
     }
 }

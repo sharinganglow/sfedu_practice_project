@@ -13,13 +13,13 @@ class WebRouter extends Router
     public function runRoute(): void
     {
         SessionModel::getInstance()->start();
-        $branch  = strpos($this->uri, '/');
+        $route  = strpos($this->uri, '/');
         $queryParamsIndex = strpos($this->uri, '?');
 
         if ($queryParamsIndex === false) {
-            $this->uri = substr($this->uri, $branch);
+            $this->uri = substr($this->uri, $route);
         } else {
-            $this->uri = substr($this->uri, $branch, $queryParamsIndex);
+            $this->uri = substr($this->uri, $route, $queryParamsIndex);
         }
 
         if ($this->uri == '/') {
@@ -28,14 +28,9 @@ class WebRouter extends Router
 
             $path = explode('/', $this->uri);
             $method = ucfirst(end($path));
-            $method = ucfirst($method);
             $className = 'App\\Controllers\\' . $method;
 
-            if (class_exists($className)) {
-                $controller = new $className;
-            } else {
-                $controller = new PageNotFound();
-            }
+            $controller = class_exists($className) ? new $className : new PageNotFound();
         }
 
         $controller->execute();

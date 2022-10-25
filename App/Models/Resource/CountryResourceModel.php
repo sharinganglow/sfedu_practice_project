@@ -3,6 +3,9 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
+use App\Models\Entity\ClientModel;
+use App\Models\Entity\CountryModel;
+use App\Models\Entity\Model;
 
 class CountryResourceModel extends HandlerResourceModel
 {
@@ -11,20 +14,37 @@ class CountryResourceModel extends HandlerResourceModel
     public function addCountry(string $country): void
     {
         $connection = Database::getConnection();
-        if (!$this->checkIfExist($country)) {
+        if (!$this->isExist($country)) {
             $query = $connection->prepare("INSERT INTO country (country) VALUE (?);");
-            $query->bindParam(1, $country, \PDO::PARAM_STR | \PDO::PARAM_INPUT_OUTPUT);
-            $query->execute();
+            $query->execute([$country]);
         }
     }
 
-    public function checkIfExist(string $input): ?int
+    public function isExist(string $input): bool
     {
         foreach ($this->getQuery() as $row) {
-            if ($row['country'] == $input) {
-                return $row['id'];
+            if ($row->getCountry() == $input) {
+                return $row->getId();
             }
         }
-        return null;
+        return false;
+    }
+
+    public function getByCountry($value): Model
+    {
+        $data = $this->getRowByColumn('country', $value);
+        return $data;
+    }
+
+    protected function buildItem(array $data): Model
+    {
+        return $this->buildEmptyItem()
+            ->setCountry($data['country'] ?? '')
+            ->setId($data['id'] ?? 0);
+    }
+
+    protected function buildEmptyItem(): Model
+    {
+        return new CountryModel();
     }
 }

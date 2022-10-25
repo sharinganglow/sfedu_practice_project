@@ -11,7 +11,7 @@
         </h2>
         <div class="bottom-bar">
         <?php $total = 0; ?>
-        <?php foreach ($this->getModel() as $order): ?>
+        <?php $order = $this->getOrder() ?>
             <div class="check-box__unit">
                 <div class="product">
                     <?= $this->sanitizeOutput($order->getName()) ?>
@@ -21,7 +21,6 @@
                     <?php $total += $order->getTotal() ?>
                 </div>
             </div>
-        <?php endforeach; ?>
             <div class="total">
                 <div class="total__name">
                     Total:

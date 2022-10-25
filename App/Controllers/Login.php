@@ -15,7 +15,7 @@ class Login extends AbstractController
     {
         $validation = new ValidationModel();
 
-        if ($this->getRequestMethod() == 'GET') {
+        if ($this->getRequestMethod() === 'GET') {
             $token = new CsrfTokenModel();
             SessionModel::getInstance()->setCsrfToken($token->generateCsrfToken());
 

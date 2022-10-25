@@ -17,7 +17,7 @@ class ValidationModel
         $session = SessionModel::getInstance();
         $clientResource = new ClientResourceModel();
         $clientInfo = $clientResource->checkExistingEmail($email);
-        if ($clientInfo && $clientInfo[0]['id'] != $session->getClientId()) {
+        if ($clientInfo && $clientInfo->getId() != $session->getClientId()) {
             throw new ValidationException('Данная почта уже используется');
         }
 

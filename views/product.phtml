@@ -11,22 +11,22 @@
             add product
         </a>
     </div>
-    <?php foreach ($this->getModel() as $product): ?>
+    <?php foreach ($this->getData() as $product): ?>
     <div class="welcome-card">
         <div class="interact">
             <div class="delete">
-                <a href="../deleteEntity?id=<?= $this->sanitizeOutput($product->getId()) ?>" class="delete delete_shifted">
+                <a href="../deleteEntity?id=<?= $product->getId() ?>" class="delete delete_shifted">
                     <img class="delete__icon" src="../icons/x.png" alt="x">
                 </a>
             </div>
             <div class="delete">
-                <a href="../editProduct?id=<?= $this->sanitizeOutput($product->getId()) ?>" class="edit edit_shifted">
+                <a href="../editProduct?id=<?= $product->getId() ?>" class="edit edit_shifted">
                     <img src="../icons/edit-button.svg" alt="edit" class="edit__svg ">
                 </a>
             </div>
         </div>
         <div class="form">
-            <a href="../productUnit?id=<?= $this->sanitizeOutput($product->getId()) ?>"
+            <a href="../productUnit?id=<?= $product->getId() ?>"
                class="form__name link name"
                data-replace="<?= $this->sanitizeOutput($product->getName()) ?>">
                 <span class="name__item">

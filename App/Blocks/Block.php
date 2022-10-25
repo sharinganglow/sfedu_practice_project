@@ -2,10 +2,8 @@
 
 namespace App\Blocks;
 
-use App\Models\Entity\ClientsModel;
 use App\Models\Entity\Model;
 use App\Models\Entity\ProductModel;
-use App\Models\Entity\ProductsModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Resource\CategoryResourceModel;
 use App\Models\Resource\ClientResourceModel;
@@ -29,14 +27,12 @@ class Block
         }
     }
 
-    public function getCurrentClient(): array
+    public function getCurrentClient(): Model
     {
         $clientResource = new ClientResourceModel();
         $clientId = SessionModel::getInstance()->getClientId();
-        $clientInfo = new ClientsModel();
-        $clientInfo->setClient($clientResource->getClientById($clientId));
 
-        return $clientInfo->getData();
+        return $clientResource->getClientById($clientId);
     }
 
     public function getCurrentId(): ?int
@@ -54,15 +50,15 @@ class Block
         return SessionModel::getInstance()->getCsrfToken();
     }
 
-    public function setModel(Model $model): self
+    public function setData(array $model): self
     {
         $this->model = $model;
         return $this;
     }
 
-    public function getModel(): ?array
+    public function getData(): ?array
     {
-        return $this->model->getData() ?? null;
+        return $this->model ?? null;
     }
 
     public function getProductCategories(int $productId): ?array

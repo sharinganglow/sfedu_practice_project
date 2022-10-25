@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Api;
 
-use App\Models\Entity\ClientsModel;
 use App\Models\Entity\ValidationModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Exceptions\ValidationException;
@@ -12,7 +11,7 @@ class ClientApi extends AbstractApi
 {
     public function execute()
     {
-        if ($this->getRequestMethod() == 'GET') {
+        if ($this->isGet()) {
             if ($this->hasId()) {
                 $this->getClient();
             } else {
@@ -20,31 +19,28 @@ class ClientApi extends AbstractApi
             }
         }
 
-        if ($this->getRequestMethod() == 'PUT') {
+        if ($this->isPut()) {
             $this->editClient();
-            header('Status: 200');
+            $this->success();
         }
 
-        if ($this->getRequestMethod() == 'POST') {
+        if ($this->isPost()) {
             $this->addClient();
-            header('Status: 200');
+            $this->success();
         }
 
-        if ($this->getRequestMethod() == 'DELETE') {
+        if ($this->isDelete()) {
             $this->deleteClient();
-            header('Status: 200');
+            $this->success();
         }
 
-        header('Status: 404');
+        $this->noRoute();
     }
 
     public function getClient(): void
     {
         $clientResource = new ClientResourceModel();
-        $client = new ClientsModel();
-
-        $client->setClient($clientResource->getClientById($this->getId()));
-        $data = $client->getData()[0];
+        $data = $clientResource->getClientById($this->getId());
 
         $client = [
             'name' => $data->getName(),
@@ -57,17 +53,14 @@ class ClientApi extends AbstractApi
     public function getClientsList(): void
     {
         $clientResource = new ClientResourceModel();
+        $data = $clientResource->getQuery();
 
         $clientsList = [];
-        foreach ($clientResource->getQuery() as $row) {
-            $client = new ClientsModel();
-            $client->setClient($row);
-            $data = $client->getData()[0];
-
+        foreach ($data as $row) {
             $client = [
-                'name' => $data->getName(),
-                'surname' => $data->getSurname(),
-                'email' => $data->getEmail()
+                'name' => $row->getName(),
+                'surname' => $row->getSurname(),
+                'email' => $row->getEmail()
             ];
             $clientsList [] = $client;
         }
@@ -77,12 +70,12 @@ class ClientApi extends AbstractApi
 
     public function editClient(): void
     {
-        $this->handleClient('edit');
+        $this->executeClientHandle($this->decodeJsonRequest(), 'edit', true);
     }
 
     public function addClient(): void
     {
-        $this->handleClient('add');
+        $this->executeClientHandle($this->decodeJsonRequest(), 'add', true);
     }
 
     public function deleteClient(): void

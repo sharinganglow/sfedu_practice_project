@@ -16,6 +16,36 @@ abstract class AbstractApi extends AbstractController
         $this->id = $id;
     }
 
+    public function isGet(): bool
+    {
+        return $_SERVER['REQUEST_METHOD'] === 'GET';
+    }
+
+    public function isPost(): bool
+    {
+        return $_SERVER['REQUEST_METHOD'] === 'POST';
+    }
+
+    public function isPut(): bool
+    {
+        return $_SERVER['REQUEST_METHOD'] === 'PUT';
+    }
+
+    public function isDelete(): bool
+    {
+        return $_SERVER['REQUEST_METHOD'] === 'DELETE';
+    }
+
+    protected function success(): void
+    {
+        header('Status: 200');
+    }
+
+    public function noRoute(): void
+    {
+        header('Status: 404');
+    }
+
     public function hasId(): bool
     {
         return isset($this->id);
@@ -37,40 +67,8 @@ abstract class AbstractApi extends AbstractController
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
-    public function decodeJson()
+    public function decodeJsonRequest()
     {
         return json_decode(file_get_contents('php://input'), true);
-    }
-
-    public function handleClient(string $type): void
-    {
-        $validation = new ValidationModel();
-        $clientResource = new ClientResourceModel();
-        $input = $this->decodeJson();
-
-        $isInputAccepted = $validation->isInputValid($input);
-        if (!$validation->isEmailValid($input['email']) && $isInputAccepted) {
-            throw new ValidationException('Ошибка при добавлении пользователя');
-        }
-
-        if ($type == 'edit') {
-            $protectedPass = $clientResource->hashPassword($this->getPostParam('password'));
-            $clientResource->editProfile(
-                $input['name'],
-                $input['surname'],
-                $input['email'],
-                $protectedPass,
-                $this->getId()
-            );
-        } else {
-
-            $protectedPass = $clientResource->hashPassword($this->getPostParam('password'));
-            $clientResource->addClient(
-                $input['name'],
-                $input['surname'],
-                $input['email'],
-                $protectedPass
-            );
-        }
     }
 }

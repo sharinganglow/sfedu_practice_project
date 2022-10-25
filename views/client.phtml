@@ -11,7 +11,7 @@
 </div>
 
 <div class="main-space main-space_row">
-    <?php $data = $this->getModel() ?>
+    <?php $data = $this->getData() ?>
     <?php foreach ($data as $client): ?>
         <div class="welcome-card welcome-card_little">
             <a href="../editProfile?id=<?= $client->getId() ?>" class="edit">

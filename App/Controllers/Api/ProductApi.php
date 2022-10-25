@@ -3,7 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\AbstractController;
-use App\Models\Entity\ProductsModel;
+use App\Models\Entity\ProductModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Resource\BrandResourceModel;
 use App\Models\Resource\CategoryResourceModel;
@@ -14,7 +14,7 @@ class ProductApi extends AbstractApi
 {
     public function execute()
     {
-        if ($this->getRequestMethod() == 'GET') {
+        if ($this->isGet()) {
             if ($this->hasId()) {
                 $this->getProduct();
             } else {
@@ -22,29 +22,29 @@ class ProductApi extends AbstractApi
             }
         }
 
-        if ($this->getRequestMethod() == 'PUT') {
+        if ($this->isPut()) {
             $this->editProduct();
-            header('Status: 200');
+            $this->success();
         }
 
-        if ($this->getRequestMethod() == 'POST') {
+        if ($this->isPost()) {
             $this->addProduct();
-            header('Status: 200');
+            $this->success();
         }
 
-        if ($this->getRequestMethod() == 'DELETE') {
+        if ($this->isDelete()) {
             $this->deleteProduct();
-            header('Status: 200');
+            $this->success();
         }
+
+        $this->noRoute();
     }
 
     public function getProduct()
     {
         $productResource = new ProductResourceModel();
         $category = new CategoryResourceModel();
-        $product = new ProductsModel();
-        $product->setProduct($productResource->getProductById($this->getId()));
-        $data = $product->getData()[0];
+        $data = $productResource->getProductById($this->getId());
 
         $categoryList = $this->glueCategories($category->getAllCategories($this->getId()));
         $product = [
@@ -62,21 +62,20 @@ class ProductApi extends AbstractApi
     public function getProductsList()
     {
         $productResource = new ProductResourceModel();
+        $data = $productResource->getQuery();
         $category = new CategoryResourceModel();
 
+
         $productList = [];
-        foreach ($productResource->getQuery() as $row) {
-            $categoryList = $this->glueCategories($category->getAllCategories($row['id_product']));
-            $product = new ProductsModel();
-            $product->setProduct($row);
-            $data = $product->getData()[0];
+        foreach ($data as $row) {
+            $categoryList = $this->glueCategories($category->getAllCategories($row->getId()));
 
             $unit = [
-                'name' => $data->getName(),
-                'price' => $data->getPrice(),
-                'country' => $data->getCountry(),
-                'brand' => $data->getBrand(),
-                'date' => $data->getDate(),
+                'name' => $row->getName(),
+                'price' => $row->getPrice(),
+                'country' => $row->getCountry(),
+                'brand' => $row->getBrand(),
+                'date' => $row->getDate(),
                 'category' => $categoryList
             ];
             $productList [] = $unit;
@@ -86,12 +85,14 @@ class ProductApi extends AbstractApi
 
     public function editProduct()
     {
-        $this->executeProductEdition($this->decodeJson(), $this->getId());
+        $product = new ProductModel();
+        $product->executeProductEdition($this->decodeJsonRequest(), $this->getId());
     }
 
     public function addProduct(): void
     {
-        $this->executeProductAddition($this->decodeJson());
+        $product = new ProductModel();
+        $product->executeProductAddition($this->decodeJsonRequest());
     }
 
     public function deleteProduct(): void

@@ -3,10 +3,13 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
+use App\Models\Entity\CategoryModel;
+use App\Models\Entity\Model;
+use App\Models\Entity\OrderModel;
 
 class OrderResourceModel
 {
-    public function initOrder($id): array
+    public function initOrder($id): Model
     {
         $connection = Database::getConnection();
         $query = $connection->prepare(
@@ -15,16 +18,20 @@ class OrderResourceModel
                     WHERE order_id = ?;'
         );
         $query->execute([$id]);
+        $data = $query->fetch();
 
-        return $query->fetchAll();
+        return $data ? $this->buildItem($data) : $this->buildEmptyItem();
     }
 
-    public function addOrder($id): void
+    protected function buildItem(array $data): OrderModel
     {
-        $connection = Database::getConnection();
-        $query = $connection->prepare(
-            ''
-        );
-        $query->execute([$id]);
+        return $this->buildEmptyItem()
+            ->setName($data['name'] ?? '')
+            ->setTotal($data['total'] ?? 0);
+    }
+
+    protected function buildEmptyItem(): OrderModel
+    {
+        return new OrderModel();
     }
 }

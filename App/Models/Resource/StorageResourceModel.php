@@ -3,6 +3,8 @@
 namespace App\Models\Resource;
 
 use App\Models\Database;
+use App\Models\Entity\CategoryModel;
+use App\Models\Entity\StorageModel;
 
 class StorageResourceModel extends HandlerResourceModel
 {
@@ -24,5 +26,15 @@ class StorageResourceModel extends HandlerResourceModel
             'UPDATE storage SET address = ? WHERE id = ?;'
         );
         $query->execute([$address, $id]);
+    }
+
+    protected function buildItem(array $data): StorageModel
+    {
+        return $this->buildEmptyItem()->setAddress($data['address'] ?? '');
+    }
+
+    protected function buildEmptyItem(): StorageModel
+    {
+        return new StorageModel();
     }
 }

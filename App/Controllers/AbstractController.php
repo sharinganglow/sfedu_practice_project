@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Blocks\AddClientBlock;
+use App\Blocks\AddProductBlock;
+use App\Blocks\EditProductBlock;
 use App\Blocks\EditProfileBlock;
 use App\Models\Entity\ValidationModel;
 use App\Models\Environment\Environment;
@@ -51,7 +53,7 @@ abstract class AbstractController
         exit();
     }
 
-    public function executeGetForm(string $type): void
+    public function executeGetClientForm(string $type): void
     {
         $token = new CsrfTokenModel();
         SessionModel::getInstance()->setCsrfToken($token->generateCsrfToken());
@@ -65,89 +67,52 @@ abstract class AbstractController
         $block->render();
     }
 
-    public function executePostForm(string $type): void
+    public function executeGetProductForm(string $type): void
+    {
+        $token = new CsrfTokenModel();
+        SessionModel::getInstance()->setCsrfToken($token->generateCsrfToken());
+
+        if ($type == 'edit') {
+            $block = new EditProductBlock();
+            $productUnitResource = new ProductResourceModel();
+            $block->setProduct($productUnitResource->getProductById($this->getIdParam()));
+
+        } else {
+            $block = new AddProductBlock();
+        }
+
+        $block->render();
+    }
+
+    public function executeClientHandle(array $data, string $type, $isApi = false): void
     {
         $validation = new ValidationModel();
         $model = new ClientResourceModel();
-        $isFormAccepted = $validation->isInputValid($this->getInputParams());
+
+        $isFormAccepted = $validation->isInputValid($data);
 
         if (!$isFormAccepted) {
             throw new ValidationException('Ошибка при добавлении пользователя');
         }
-        $validation->verifyToken($this->getCsrfToken());
+        if (!$isApi) {
+            $validation->verifyToken($this->getCsrfToken());
+        }
         $protectedPass = $model->hashPassword($this->getPostParam('password'));
 
         if ($type == 'edit') {
             $model->editProfile(
-                $this->getPostParam('name'),
-                $this->getPostParam('surname'),
-                $this->getPostParam('email'),
+                $data['name'],
+                $data['surname'],
+                $data['email'],
                 $protectedPass
             );
         } else {
             $model->addClient(
-                $this->getPostParam('name'),
-                $this->getPostParam('surname'),
-                $this->getPostParam('email'),
+                $data['name'],
+                $data['surname'],
+                $data['email'],
                 $protectedPass
             );
-        }
-    }
-
-    public function executeProductEdition($data, $id): void
-    {
-        $brandResource = new BrandResourceModel();
-        $countryResource = new CountryResourceModel();
-        $categoryResource = new CategoryResourceModel();
-        $productResource = new ProductResourceModel();
-
-        if (!$brandResource->checkIfExist($data['brand'])) {
-            $brandResource->addBrand($data['brand']);
-        }
-        $brand = $brandResource->getRowByColumn('brand', $data['brand'])[0];
-
-        if (!$countryResource->checkIfExist($data['country'])) {
-            $countryResource->addCountry($data['country']);
-        }
-        $country = $countryResource->getRowByColumn('country', $data['country'])[0];
-        $productResource->editProduct(
-            $data['name'], $data['price'],
-            $country['id'], $brand['id'],
-            $data['date'], $id
-        );
-        $product = $productResource->getRowByColumn('name', $data['name'])[0];
-
-        $categories = explode(',', $data['category']);
-        $categoryResource->clearCategories($product['id']);
-        foreach ($categories as $item) {
-            if (!$categoryResource->checkIfExist($item)) {
-                $categoryResource->addCategory($item, $data['date']);
-            }
-            $category = $categoryResource->getRowByColumn('name', $item)[0];
-            $categoryResource->tieWithProduct($product['id'], $category['id']);
-        }
-    }
-
-    public function executeProductAddition($data): void
-    {
-        $brandResource = new BrandResourceModel();
-        $countryResource = new CountryResourceModel();
-        $categoryResource = new CategoryResourceModel();
-        $productResource = new ProductResourceModel();
-
-        $brandResource->addBrand($data['brand']);
-        $countryResource->addCountry($data['country']);
-
-        $country = $countryResource->getRowByColumn('country', $data['country'])[0];
-        $brand = $brandResource->getRowByColumn('brand', $data['brand'])[0];
-        $productResource->addProduct($data['name'], $data['price'], $country['id'], $brand['id'], $data['date']);
-        $product = $productResource->getRowByColumn('name', $data['name'])[0];
-
-        $categories = explode(',', $data['category']);
-        foreach ($categories as $item) {
-            $categoryResource->addCategory($item, $data['date']);
-            $category = $categoryResource->getRowByColumn('name', $item)[0];
-            $categoryResource->tieWithProduct($product['id'], $category['id']);
         }
     }
 }
