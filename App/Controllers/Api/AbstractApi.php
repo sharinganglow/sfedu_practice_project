@@ -3,17 +3,19 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\AbstractController;
-use App\Models\Entity\ValidationModel;
-use App\Models\Exceptions\ValidationException;
-use App\Models\Resource\ClientResourceModel;
+use App\Models\Cache\FileCache;
+use App\Models\Environment\Environment;
 
 abstract class AbstractApi extends AbstractController
 {
     protected $id;
+    protected $cacheModel;
+    protected $cacheData;
 
     public function __construct($id = null)
     {
         $this->id = $id;
+        $this->cacheModel = Environment::checkInstance()->getCacheModel();
     }
 
     public function isGet(): bool
@@ -51,14 +53,9 @@ abstract class AbstractApi extends AbstractController
         return isset($this->id);
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
-        return $this->id;
-    }
-
-    public function glueCategories(array $categories, $delimiter = ','): string
-    {
-        return implode($delimiter, (array_column($categories, 'name')));
+        return $this->id ?? null;
     }
 
     public function display($data): void
@@ -70,5 +67,16 @@ abstract class AbstractApi extends AbstractController
     public function decodeJsonRequest()
     {
         return json_decode(file_get_contents('php://input'), true);
+    }
+
+    public function getData($fileName, object $service): ?array
+    {
+        $data = [];
+        if (!$data = $this->cacheModel->get($fileName, $this->getId())) {
+            $data = $this->getId() ? $service->getUnit($this->getId()) : $service->getAll();
+            $this->cacheModel->set($fileName, $data, $this->getId());
+        }
+
+        return $data;
     }
 }

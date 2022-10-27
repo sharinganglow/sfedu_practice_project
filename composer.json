@@ -6,6 +6,7 @@
   },
   "require": {
     "ext-pdo": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "predis/predis": "^2.0"
   }
 }

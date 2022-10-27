@@ -2,13 +2,10 @@
 
 namespace App\Controllers\Api;
 
-use App\Controllers\AbstractController;
-use App\Models\Entity\ProductModel;
+use App\Models\Cache\FileCache;
 use App\Models\Exceptions\LogicalException;
-use App\Models\Resource\BrandResourceModel;
-use App\Models\Resource\CategoryResourceModel;
-use App\Models\Resource\CountryResourceModel;
 use App\Models\Resource\ProductResourceModel;
+use App\Models\Service\ProductService;
 
 class ProductApi extends AbstractApi
 {
@@ -20,6 +17,7 @@ class ProductApi extends AbstractApi
             } else {
                 $this->getProductsList();
             }
+            $this->success();
         }
 
         if ($this->isPut()) {
@@ -42,64 +40,50 @@ class ProductApi extends AbstractApi
 
     public function getProduct()
     {
-        $productResource = new ProductResourceModel();
-        $category = new CategoryResourceModel();
-        $data = $productResource->getProductById($this->getId());
-
-        $categoryList = $this->glueCategories($category->getAllCategories($this->getId()));
-        $product = [
-            'name'      => $data->getName(),
-            'price'     => $data->getPrice(),
-            'country'   => $data->getCountry(),
-            'brand'     => $data->getBrand(),
-            'date'      => $data->getDate(),
-            'category'  => $categoryList
-        ];
-
-        $this->display($product);
+        $service = new ProductService();
+        $this->display($this->getData('cached_product', $service));
     }
 
     public function getProductsList()
     {
-        $productResource = new ProductResourceModel();
-        $data = $productResource->getQuery();
-        $category = new CategoryResourceModel();
-
-
-        $productList = [];
-        foreach ($data as $row) {
-            $categoryList = $this->glueCategories($category->getAllCategories($row->getId()));
-
-            $unit = [
-                'name' => $row->getName(),
-                'price' => $row->getPrice(),
-                'country' => $row->getCountry(),
-                'brand' => $row->getBrand(),
-                'date' => $row->getDate(),
-                'category' => $categoryList
-            ];
-            $productList [] = $unit;
-        }
-        $this->display($productList);
+        $service = new ProductService();
+        $this->display($this->getData('cached_products_list', $service));
     }
 
     public function editProduct()
     {
-        $product = new ProductModel();
-        $product->executeProductEdition($this->decodeJsonRequest(), $this->getId());
+        $product = new ProductService();
+        $cache = new FileCache();
+        $product->edit($this->decodeJsonRequest(), $this->getId());
+
+        $data = $product->getAll();
+        $cache->set('cached_products_list', $data);
+        $data = $product->getUnit($this->getId());
+        $cache->set('cached_product', $data, $this->getId());
     }
 
     public function addProduct(): void
     {
-        $product = new ProductModel();
-        $product->executeProductAddition($this->decodeJsonRequest());
+        $product = new ProductService();
+        $cache = new FileCache();
+        $product->add($this->decodeJsonRequest());
+
+        $data = $product->getAll();
+        $cache->set('cached_products_list', $data);
     }
 
     public function deleteProduct(): void
     {
         try {
             $productResource = new ProductResourceModel();
+            $service = new ProductService();
+            $cache = new FileCache();
             $productResource->deleteEntity($this->getId());
+
+            $data = $service->getAll();
+            $cache->set('cached_products_list', $data);
+            $cache->delete('cached_product', $this->getId());
+
         } catch (LogicalException $exception) {
             throw new LogicalException('Ошибка при удалении сущности' . PHP_EOL);
         }

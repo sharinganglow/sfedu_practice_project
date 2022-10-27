@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Blocks\AddClientBlock;
 use App\Models\Database;
+use App\Models\Service\ClientService;
 use App\Models\Service\CsrfTokenModel;
 use App\Models\Entity\ValidationModel;
 use App\Models\Exceptions\LogicalException;
@@ -22,7 +23,8 @@ class AddClient extends AbstractController
 
         } elseif ($validation->isEmailValid($this->getPostParam('email'))) {
 
-            $this->executeClientHandle($this->getInputParams(), 'add');
+            $service = new ClientService();
+            $service->handle($this->getInputParams(), 'add', false, $this->getCsrfToken());
             $this->redirectTo('mainpage');
         }
     }

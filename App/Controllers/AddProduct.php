@@ -10,6 +10,7 @@ use App\Models\Resource\CategoryResourceModel;
 use App\Models\Resource\CountryResourceModel;
 use App\Models\Resource\ProductResourceModel;
 use App\Models\Service\CsrfTokenModel;
+use App\Models\Service\ProductService;
 use App\Models\SessionModel;
 
 class AddProduct extends AbstractController
@@ -30,7 +31,7 @@ class AddProduct extends AbstractController
         $validation = new ValidationModel();
         $validation->verifyToken($this->getCsrfToken());
 
-        $product = new ProductModel();
-        $product->executeProductAddition($this->getInputParams());
+        $product = new ProductService();
+        $product->add($this->getInputParams());
     }
 }

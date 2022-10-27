@@ -2,10 +2,13 @@
 
 namespace App\Controllers\Api;
 
+use App\Models\Cache\FileCache;
 use App\Models\Entity\ValidationModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Exceptions\ValidationException;
 use App\Models\Resource\ClientResourceModel;
+use App\Models\Service\CategoryService;
+use App\Models\Service\ClientService;
 
 class ClientApi extends AbstractApi
 {
@@ -39,50 +42,50 @@ class ClientApi extends AbstractApi
 
     public function getClient(): void
     {
-        $clientResource = new ClientResourceModel();
-        $data = $clientResource->getClientById($this->getId());
-
-        $client = [
-            'name' => $data->getName(),
-            'surname' => $data->getSurname(),
-            'email' => $data->getEmail()
-        ];
-        $this->display($client);
+        $service = new ClientService();
+        $this->display($this->getData('cached_client', $service));
     }
 
     public function getClientsList(): void
     {
-        $clientResource = new ClientResourceModel();
-        $data = $clientResource->getQuery();
-
-        $clientsList = [];
-        foreach ($data as $row) {
-            $client = [
-                'name' => $row->getName(),
-                'surname' => $row->getSurname(),
-                'email' => $row->getEmail()
-            ];
-            $clientsList [] = $client;
-        }
-
-        $this->display($clientsList);
+        $service = new ClientService();
+        $this->display($this->getData('cached_clients_list', $service));
     }
 
     public function editClient(): void
     {
-        $this->executeClientHandle($this->decodeJsonRequest(), 'edit', true);
+        $service = new ClientService();
+        $cache = new FileCache();
+        $service->handle($this->decodeJsonRequest(), 'edit', $this->getId());
+
+        $data = $service->getAll();
+        $cache->set('cached_products_list', $data);
+        $data = $service->getUnit($this->getId());
+        $cache->set('cached_product', $data, $this->getId());
     }
 
     public function addClient(): void
     {
-        $this->executeClientHandle($this->decodeJsonRequest(), 'add', true);
+        $service = new ClientService();
+        $cache = new FileCache();
+        $service->handle($this->decodeJsonRequest(), 'add', $this->getId());
+
+        $data = $service->getAll();
+        $cache->set('cached_products_list', $data);
     }
 
     public function deleteClient(): void
     {
         try {
+            $service = new ClientService();
+            $cache = new FileCache();
             $clientResource = new ClientResourceModel();
             $clientResource->deleteEntity($this->getId());
+
+            $data = $service->getAll();
+            $cache->set('cached_clients_list', $data);
+            $cache->delete('cached_client', $this->getId());
+
         } catch (LogicalException $exception) {
             throw new LogicalException('Ошибка при удалении сущности' . PHP_EOL);
         }

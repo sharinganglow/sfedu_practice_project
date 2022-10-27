@@ -34,19 +34,19 @@ class ClientResourceModel extends HandlerResourceModel
         return $query->fetch();
     }
 
-    public function addClient($name, $surname, $email, $password): void
+    public function addClient(array $data): void
     {
         $connection = Database::getConnection();
         $query = $connection->prepare(
             'INSERT INTO client (name, surname, email, password) VALUES (?, ?, ?, ?);'
         );
-        $query->execute([$name, $surname, $email, $password]);
+        $query->execute([$data['name'], $data['surname'], $data['email'], $data['password']]);
     }
 
-    public function editProfile($name, $surname, $email, $password, $clientId = null): void
+    public function editProfile(array $data): void
     {
-        if (!isset($clientId)) {
-            $clientId = $_GET['id'];
+        if ($data['id'] === false) {
+            $data['id'] = $_GET['id'];
         }
 
         $connection = Database::getConnection();
@@ -54,7 +54,7 @@ class ClientResourceModel extends HandlerResourceModel
             'UPDATE client SET name = ?, surname = ?, email = ?, password = ? 
                     WHERE id = ?;'
         );
-        $query->execute([$name, $surname, $email, $password, $clientId]);
+        $query->execute([$data['name'], $data['surname'], $data['email'], $data['password'], $data['id']]);
     }
 
     public function updateProfile($name, $surname, $id): void

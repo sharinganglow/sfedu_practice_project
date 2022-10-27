@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Entity\ValidationModel;
+use App\Models\Service\ClientService;
 
 class EditProfile extends AbstractController
 {
@@ -15,7 +16,8 @@ class EditProfile extends AbstractController
 
         } elseif ($validation->isEmailValid($this->getPostParam('email'))) {
 
-            $this->executeClientHandle($this->getInputParams(), 'edit');
+            $service = new ClientService();
+            $service->handle($this->getInputParams(), 'edit', false, $this->getCsrfToken());
             $this->redirectTo('mainpage');
         }
     }

@@ -83,36 +83,4 @@ abstract class AbstractController
 
         $block->render();
     }
-
-    public function executeClientHandle(array $data, string $type, $isApi = false): void
-    {
-        $validation = new ValidationModel();
-        $model = new ClientResourceModel();
-
-        $isFormAccepted = $validation->isInputValid($data);
-
-        if (!$isFormAccepted) {
-            throw new ValidationException('Ошибка при добавлении пользователя');
-        }
-        if (!$isApi) {
-            $validation->verifyToken($this->getCsrfToken());
-        }
-        $protectedPass = $model->hashPassword($this->getPostParam('password'));
-
-        if ($type == 'edit') {
-            $model->editProfile(
-                $data['name'],
-                $data['surname'],
-                $data['email'],
-                $protectedPass
-            );
-        } else {
-            $model->addClient(
-                $data['name'],
-                $data['surname'],
-                $data['email'],
-                $protectedPass
-            );
-        }
-    }
 }

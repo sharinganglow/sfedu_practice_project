@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use App\Models\Exceptions\LogicalException;
 use App\Models\Resource\StorageResourceModel;
+use App\Models\Service\StorageService;
 
 class StorageApi extends AbstractApi
 {
@@ -37,26 +38,14 @@ class StorageApi extends AbstractApi
 
     public function getStorage(): void
     {
-        $storageResource = new StorageResourceModel();
-
-        $data = $storageResource->getRecordById($this->getId());
-
-        $storage = ['address' => $data->getAddress()];
-        $this->display($storage);
+        $service = new StorageService();
+        $this->display($service->getUnit($this->getId()));
     }
 
     public function getStorageList(): void
     {
-        $storageResource = new StorageResourceModel();
-        $data = $storageResource->getQuery();
-
-        $storages = [];
-        foreach ($data as $row) {
-            $unit = ['address' => $row->getAddress()];
-            $storages [] = $unit;
-        }
-
-        $this->display($storages);
+        $service = new StorageService();
+        $this->display($service->getAll());
     }
 
     public function editStorage(): void

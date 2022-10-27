@@ -12,6 +12,7 @@ use App\Models\Resource\CategoryResourceModel;
 use App\Models\Resource\CountryResourceModel;
 use App\Models\Resource\ProductResourceModel;
 use App\Models\Service\CsrfTokenModel;
+use App\Models\Service\ProductService;
 use App\Models\SessionModel;
 
 class EditProduct extends AbstractController
@@ -31,7 +32,7 @@ class EditProduct extends AbstractController
         $validation = new ValidationModel();
         $validation->verifyToken($this->getCsrfToken());
 
-        $product = new ProductModel();
-        $product->executeProductEdition($this->getInputParams(), $this->getIdParam());
+        $product = new ProductService();
+        $product->edit($this->getInputParams(), $this->getIdParam());
     }
 }

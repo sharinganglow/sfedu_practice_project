@@ -2,10 +2,14 @@
 
 namespace App\Models\Environment;
 
+use App\Models\Cache\CacheFactory;
+use App\Models\Cache\CacheInterface;
+
 class Environment
 {
     private $settings = [];
     protected $linkSettings = [];
+    protected $cacheSettings = [];
     protected $databaseSettings = [];
     private static $instance = null;
 
@@ -14,6 +18,7 @@ class Environment
         $this->settings = parse_ini_file(APP_ROOT . '/.env', true);
         $this->linkSettings = $this->settings['LINK'] ?? '';
         $this->databaseSettings = $this->settings['DATABASE'] ?? '';
+        $this->cacheSettings = $this->settings['CACHE'] ?? '';
     }
 
     public static function checkInstance(): Environment
@@ -53,5 +58,16 @@ class Environment
     public function getCharset(): string
     {
         return $this->databaseSettings['CHARSET'] ?? '';
+    }
+
+    public function getCacheMethod(): string
+    {
+        return $this->cacheSettings['TYPE'] ?? '';
+    }
+
+    public function getCacheModel(): CacheInterface
+    {
+        $factory = new CacheFactory();
+        return $factory->getObject($this->getCacheMethod());
     }
 }
