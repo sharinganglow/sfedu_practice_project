@@ -3,8 +3,10 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\AbstractController;
+use App\Models\Cache\CacheFactory;
 use App\Models\Cache\FileCache;
 use App\Models\Environment\Environment;
+use App\Models\Service\AbstractService;
 
 abstract class AbstractApi extends AbstractController
 {
@@ -15,7 +17,8 @@ abstract class AbstractApi extends AbstractController
     public function __construct($id = null)
     {
         $this->id = $id;
-        $this->cacheModel = Environment::checkInstance()->getCacheModel();
+        $factory = new CacheFactory();
+        $this->cacheModel = $factory->getObject();
     }
 
     public function isGet(): bool
@@ -69,12 +72,12 @@ abstract class AbstractApi extends AbstractController
         return json_decode(file_get_contents('php://input'), true);
     }
 
-    public function getData($fileName, object $service): ?array
+    public function handleCache(AbstractService $service): ?array
     {
-        $data = [];
-        if (!$data = $this->cacheModel->get($fileName, $this->getId())) {
+        $data = $this->cacheModel->get($this->cacheKey, $this->getId());
+        if (!$data) {
             $data = $this->getId() ? $service->getUnit($this->getId()) : $service->getAll();
-            $this->cacheModel->set($fileName, $data, $this->getId());
+            $this->cacheModel->set($this->cacheKey, $data, $this->getId());
         }
 
         return $data;

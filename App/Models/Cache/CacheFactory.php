@@ -2,25 +2,29 @@
 
 namespace App\Models\Cache;
 
+use App\Models\Environment\Environment;
 use App\Models\Exceptions\CacheException;
 
 class CacheFactory
 {
-    public function getObject(string $method): CacheInterface
+    public function getObject(): CacheInterface
     {
-        switch ($method) {
-            case 'file' :
-            {
-                return new FileCache();
-            }
-            case 'predis' :
-            {
-                return new PredisCache();
-            }
-            default :
-            {
-                throw new CacheException('Неверно указан метод кэширования');
-            }
+        $method = $this->defineMethod();
+        $cacheMap = [
+            'file' => FileCache::class,
+            'redis' => RedisCache::class
+        ];
+
+        $cache = new $cacheMap[$method] ?? null;
+        if (!$cache) {
+            throw new CacheException('Неверно указан метод кэширования');
         }
+
+        return $cache;
+    }
+
+    protected function defineMethod(): string
+    {
+        return Environment::checkInstance()->getCacheMethod();
     }
 }

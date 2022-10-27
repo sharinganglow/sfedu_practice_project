@@ -64,10 +64,4 @@ class Environment
     {
         return $this->cacheSettings['TYPE'] ?? '';
     }
-
-    public function getCacheModel(): CacheInterface
-    {
-        $factory = new CacheFactory();
-        return $factory->getObject($this->getCacheMethod());
-    }
 }

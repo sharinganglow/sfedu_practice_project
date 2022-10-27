@@ -9,6 +9,8 @@ use App\Models\Service\ProductService;
 
 class ProductApi extends AbstractApi
 {
+    protected $cacheKey = 'product';
+
     public function execute()
     {
         if ($this->isGet()) {
@@ -41,13 +43,13 @@ class ProductApi extends AbstractApi
     public function getProduct()
     {
         $service = new ProductService();
-        $this->display($this->getData('cached_product', $service));
+        $this->display($this->handleCache($service));
     }
 
     public function getProductsList()
     {
         $service = new ProductService();
-        $this->display($this->getData('cached_products_list', $service));
+        $this->display($this->handleCache($service));
     }
 
     public function editProduct()
@@ -57,9 +59,9 @@ class ProductApi extends AbstractApi
         $product->edit($this->decodeJsonRequest(), $this->getId());
 
         $data = $product->getAll();
-        $cache->set('cached_products_list', $data);
+        $cache->set($this->cacheKey, $data);
         $data = $product->getUnit($this->getId());
-        $cache->set('cached_product', $data, $this->getId());
+        $cache->set($this->cacheKey, $data, $this->getId());
     }
 
     public function addProduct(): void
@@ -69,7 +71,7 @@ class ProductApi extends AbstractApi
         $product->add($this->decodeJsonRequest());
 
         $data = $product->getAll();
-        $cache->set('cached_products_list', $data);
+        $cache->set($this->cacheKey, $data);
     }
 
     public function deleteProduct(): void
@@ -81,8 +83,8 @@ class ProductApi extends AbstractApi
             $productResource->deleteEntity($this->getId());
 
             $data = $service->getAll();
-            $cache->set('cached_products_list', $data);
-            $cache->delete('cached_product', $this->getId());
+            $cache->set($this->cacheKey, $data);
+            $cache->delete($this->getId());
 
         } catch (LogicalException $exception) {
             throw new LogicalException('Ошибка при удалении сущности' . PHP_EOL);

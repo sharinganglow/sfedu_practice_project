@@ -12,6 +12,8 @@ use App\Models\Service\ClientService;
 
 class ClientApi extends AbstractApi
 {
+    protected $cacheKey = 'client';
+
     public function execute()
     {
         if ($this->isGet()) {
@@ -43,13 +45,13 @@ class ClientApi extends AbstractApi
     public function getClient(): void
     {
         $service = new ClientService();
-        $this->display($this->getData('cached_client', $service));
+        $this->display($this->handleCache($service));
     }
 
     public function getClientsList(): void
     {
         $service = new ClientService();
-        $this->display($this->getData('cached_clients_list', $service));
+        $this->display($this->handleCache($service));
     }
 
     public function editClient(): void
@@ -59,9 +61,9 @@ class ClientApi extends AbstractApi
         $service->handle($this->decodeJsonRequest(), 'edit', $this->getId());
 
         $data = $service->getAll();
-        $cache->set('cached_products_list', $data);
+        $cache->set($this->cacheKey, $data);
         $data = $service->getUnit($this->getId());
-        $cache->set('cached_product', $data, $this->getId());
+        $cache->set($this->cacheKey, $data, $this->getId());
     }
 
     public function addClient(): void
@@ -71,7 +73,7 @@ class ClientApi extends AbstractApi
         $service->handle($this->decodeJsonRequest(), 'add', $this->getId());
 
         $data = $service->getAll();
-        $cache->set('cached_products_list', $data);
+        $cache->set($this->cacheKey, $data);
     }
 
     public function deleteClient(): void
@@ -83,8 +85,8 @@ class ClientApi extends AbstractApi
             $clientResource->deleteEntity($this->getId());
 
             $data = $service->getAll();
-            $cache->set('cached_clients_list', $data);
-            $cache->delete('cached_client', $this->getId());
+            $cache->set($this->cacheKey, $data);
+            $cache->delete($this->getId());
 
         } catch (LogicalException $exception) {
             throw new LogicalException('Ошибка при удалении сущности' . PHP_EOL);

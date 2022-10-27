@@ -6,7 +6,7 @@ use App\Models\Entity\ValidationModel;
 use App\Models\Exceptions\ValidationException;
 use App\Models\Resource\ClientResourceModel;
 
-class ClientService
+class ClientService extends AbstractService
 {
     public function getUnit(int $id): array
     {

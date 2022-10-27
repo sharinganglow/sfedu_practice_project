@@ -35,6 +35,6 @@ class FileCache implements CacheInterface
     {
         return isset($id) ?
             self::BASE_PATH . $key . "_{$id}" . '.json' :
-            self::BASE_PATH . $key . '.json';
+            self::BASE_PATH . $key . 's_list.json';
     }
 }

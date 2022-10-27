@@ -7,7 +7,7 @@ use App\Models\Resource\CategoryResourceModel;
 use App\Models\Resource\CountryResourceModel;
 use App\Models\Resource\ProductResourceModel;
 
-class ProductService
+class ProductService extends AbstractService
 {
     public function getUnit(int $id): array
     {
