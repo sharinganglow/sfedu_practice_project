@@ -11,7 +11,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../styles/general/general.css">
+    <link rel="stylesheet" href="/styles/general/general.css">
     <title>Needful things</title>
 </head>
 <body>
@@ -19,7 +19,7 @@
 <header class="header">
 
     <a href="../mainpage">
-        <img class="header__logo" src="../../icons/Needful-things.svg" alt="logo">
+        <img class="header__logo" src="icons/Needful-things.svg" alt="logo">
     </a>
     <ul class="menu">
 
@@ -59,15 +59,15 @@
 
     <?php if (!$this->getCurrentId()) { ?>
     <div class="header__right-bar">
-        <a href="/addClient" class="sign-up link">sign up</a>
-        <a href="/login" class="button link link_white">
+        <a href="addClient" class="sign-up link">sign up</a>
+        <a href="login" class="button link link_white">
             sign in
         </a>
     </div>
     <?php } else { ?>
         <div class="header__right-bar">
-            <a href="/logOut" class="sign-up link">sign out</a>
-            <a href="/profile" class="button link link_white">
+            <a href="logOut" class="sign-up link">sign out</a>
+            <a href="profile" class="button link link_white">
                 profile
             </a>
         </div>

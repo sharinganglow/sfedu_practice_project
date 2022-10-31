@@ -51,4 +51,9 @@ class RedisCache implements CacheInterface
                 ->del($name);
         }
     }
+
+    protected function prepareKey($key, $id): string
+    {
+        return isset($id) ? $key . "_{$id}" : $key . 's_list';
+    }
 }
