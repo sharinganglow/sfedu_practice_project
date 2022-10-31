@@ -54,12 +54,13 @@ class ClientService extends AbstractService
         }
         $protectedPass = $model->hashPassword($data['password']);
 
+        $id = $apiId ? $apiId : $_GET['id'];
         $FormedData = [
             'name' => $data['name'],
             'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => $protectedPass,
-            'id' => $apiId,
+            'id' => $id,
         ];
 
         if ($type == 'edit') {

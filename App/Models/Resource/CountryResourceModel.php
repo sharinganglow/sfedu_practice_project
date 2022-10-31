@@ -11,13 +11,20 @@ class CountryResourceModel extends HandlerResourceModel
 {
     protected $table = 'country';
 
-    public function addCountry(string $country): void
+    public function addCountry(string $country): ?Model
     {
         $connection = Database::getConnection();
         if (!$this->isExist($country)) {
             $query = $connection->prepare("INSERT INTO country (country) VALUE (?);");
             $query->execute([$country]);
+
+            $model = new CountryModel();
+            $model
+                ->setCountry($country)
+                ->setId($connection->lastInsertId());
+            return $model;
         }
+        return $this->getByCountry($country);
     }
 
     public function isExist(string $input): bool

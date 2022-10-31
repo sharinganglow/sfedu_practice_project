@@ -61,11 +61,8 @@ class ProductService extends AbstractService
         $categoryResource = new CategoryResourceModel();
         $productResource = new ProductResourceModel();
 
-        $brandResource->addBrand($data['brand']);
-        $countryResource->addCountry($data['country']);
-
-        $country = $countryResource->getByCountry($data['country']);
-        $brand = $brandResource->getByBrand($data['brand']);
+        $brand = $brandResource->addBrand($data['brand']);
+        $country = $countryResource->addCountry($data['country']);
 
         $inputData = [
             'name'      => $data['name'],

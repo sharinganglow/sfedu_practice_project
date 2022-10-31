@@ -45,10 +45,6 @@ class ClientResourceModel extends HandlerResourceModel
 
     public function editProfile(array $data): void
     {
-        if ($data['id'] === false) {
-            $data['id'] = $_GET['id'];
-        }
-
         $connection = Database::getConnection();
         $query = $connection->prepare(
             'UPDATE client SET name = ?, surname = ?, email = ?, password = ? 

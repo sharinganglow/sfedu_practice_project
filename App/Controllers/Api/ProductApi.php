@@ -55,7 +55,7 @@ class ProductApi extends AbstractApi
     public function editProduct()
     {
         $product = new ProductService();
-        $cache = new FileCache();
+        $cache = $this->getCacheModel();
         $product->edit($this->decodeJsonRequest(), $this->getId());
 
         $data = $product->getAll();
@@ -67,7 +67,7 @@ class ProductApi extends AbstractApi
     public function addProduct(): void
     {
         $product = new ProductService();
-        $cache = new FileCache();
+        $cache = $this->getCacheModel();
         $product->add($this->decodeJsonRequest());
 
         $data = $product->getAll();
@@ -79,7 +79,7 @@ class ProductApi extends AbstractApi
         try {
             $productResource = new ProductResourceModel();
             $service = new ProductService();
-            $cache = new FileCache();
+            $cache = $this->getCacheModel();
             $productResource->deleteEntity($this->getId());
 
             $data = $service->getAll();

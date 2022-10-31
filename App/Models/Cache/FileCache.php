@@ -33,8 +33,9 @@ class FileCache implements CacheInterface
 
     protected function getPath($key, $id): string
     {
-        return isset($id) ?
-            self::BASE_PATH . $key . "_{$id}" . '.json' :
-            self::BASE_PATH . $key . 's_list.json';
+        $prefix = self::BASE_PATH . $key;
+        $suffix = '.json';
+        return $prefix . (isset($id) ? "_{$id}" : 's_list') . $suffix;
+
     }
 }

@@ -16,7 +16,7 @@ class RedisCache implements CacheInterface
     public function set($key, $value, $id = null): void
     {
 
-        $name = isset($id) ? $key . "_{$id}" : $key . 's_list';
+        $name = $this->prepareKey($key, $id);
         foreach ($value as $i => $row) {
             $this->client->hset($name, $i, json_encode($row, JSON_UNESCAPED_UNICODE));
         }
@@ -24,7 +24,7 @@ class RedisCache implements CacheInterface
 
     public function get($key, $id = null): ?array
     {
-        $name = isset($id) ? $key . "_{$id}" : $key . 's_list';
+        $name = $this->prepareKey($key, $id);
 
         $cachedData = $this->client->exists($name) ? $this->client->hgetall($name) : null;
         if ($cachedData) {
@@ -43,7 +43,7 @@ class RedisCache implements CacheInterface
 
     public function delete($key, $id = null): void
     {
-        $name = isset($id) ? $key . "_{$id}" : $key . 's_list';
+        $name = $this->prepareKey($key, $id);
 
         if ($this->client->exists($name)) {
             $this
@@ -54,6 +54,6 @@ class RedisCache implements CacheInterface
 
     protected function prepareKey($key, $id): string
     {
-        return isset($id) ? $key . "_{$id}" : $key . 's_list';
+        return $key . (isset($id) ? "_{$id}" : 's_list');
     }
 }

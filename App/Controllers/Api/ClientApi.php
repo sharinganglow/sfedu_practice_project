@@ -57,7 +57,7 @@ class ClientApi extends AbstractApi
     public function editClient(): void
     {
         $service = new ClientService();
-        $cache = new FileCache();
+        $cache = $this->getCacheModel();
         $service->handle($this->decodeJsonRequest(), 'edit', $this->getId());
 
         $data = $service->getAll();
@@ -69,7 +69,7 @@ class ClientApi extends AbstractApi
     public function addClient(): void
     {
         $service = new ClientService();
-        $cache = new FileCache();
+        $cache = $this->getCacheModel();
         $service->handle($this->decodeJsonRequest(), 'add', $this->getId());
 
         $data = $service->getAll();
@@ -80,7 +80,7 @@ class ClientApi extends AbstractApi
     {
         try {
             $service = new ClientService();
-            $cache = new FileCache();
+            $cache = $this->getCacheModel();
             $clientResource = new ClientResourceModel();
             $clientResource->deleteEntity($this->getId());
 

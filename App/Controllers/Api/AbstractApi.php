@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use App\Controllers\AbstractController;
 use App\Models\Cache\CacheFactory;
+use App\Models\Cache\CacheInterface;
 use App\Models\Cache\FileCache;
 use App\Models\Environment\Environment;
 use App\Models\Service\AbstractService;
@@ -19,6 +20,11 @@ abstract class AbstractApi extends AbstractController
         $this->id = $id;
         $factory = new CacheFactory();
         $this->cacheModel = $factory->getObject();
+    }
+
+    public function getCacheModel(): CacheInterface
+    {
+        return $this->cacheModel;
     }
 
     public function isGet(): bool

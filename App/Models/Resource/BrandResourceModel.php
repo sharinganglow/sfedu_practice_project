@@ -12,13 +12,20 @@ class BrandResourceModel extends HandlerResourceModel
 {
     protected $table = 'brand';
 
-    public function addBrand(string $brand): void
+    public function addBrand(string $brand): ?Model
     {
         $connection = Database::getConnection();
         if (!$this->isExist($brand)) {
             $query = $connection->prepare('INSERT INTO brand (brand) VALUE (?);');
             $query->execute([$brand]);
+
+            $model = new BrandModel();
+            $model
+                ->setBrand($brand)
+                ->setId($connection->lastInsertId());
+            return $model;
         }
+        return $this->getByBrand($brand);
     }
 
     public function isExist(string $input): bool
