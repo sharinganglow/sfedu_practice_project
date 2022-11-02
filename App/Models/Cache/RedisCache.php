@@ -15,27 +15,17 @@ class RedisCache implements CacheInterface
 
     public function set($key, $value, $id = null): void
     {
-
         $name = $this->prepareKey($key, $id);
-        foreach ($value as $i => $row) {
-            $this->client->hset($name, $i, json_encode($row, JSON_UNESCAPED_UNICODE));
-        }
+        $this->client->set($name, json_encode($value, JSON_UNESCAPED_UNICODE));
     }
 
     public function get($key, $id = null): ?array
     {
         $name = $this->prepareKey($key, $id);
 
-        $cachedData = $this->client->exists($name) ? $this->client->hgetall($name) : null;
+        $cachedData = $this->client->exists($name) ? $this->client->get($name) : null;
         if ($cachedData) {
-            if (!is_array(reset($cachedData))) {
-                return json_decode($cachedData, true);
-            }
-            $result = [];
-            foreach ($cachedData as $row) {
-                $result [] = json_decode($row, true);
-            }
-            return $result;
+            return json_decode($cachedData, true);
         }
 
         return null;

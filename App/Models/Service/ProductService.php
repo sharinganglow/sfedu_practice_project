@@ -29,6 +29,11 @@ class ProductService extends AbstractService
         return $product;
     }
 
+    public function getKeys(): array
+    {
+        return ['name', 'price', 'country', 'brand', 'date', 'category'];
+    }
+
     public function getAll(): array
     {
         $productResource = new ProductResourceModel();
