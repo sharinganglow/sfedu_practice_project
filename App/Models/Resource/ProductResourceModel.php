@@ -19,7 +19,7 @@ class ProductResourceModel extends HandlerResourceModel
         $query->execute();
         $data = $query->fetchColumn();
 
-        return $data;
+        return $data ?? null;
     }
 
     public function getQuery(): array
@@ -68,7 +68,7 @@ class ProductResourceModel extends HandlerResourceModel
             $data['price'],
             $data['country'],
             $data['brand'],
-            $data['date'],
+            $data['date'] ?? null,
         ]);
     }
 

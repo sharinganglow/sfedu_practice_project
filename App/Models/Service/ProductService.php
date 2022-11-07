@@ -66,14 +66,14 @@ class ProductService extends AbstractService
         $categoryResource = new CategoryResourceModel();
         $productResource = new ProductResourceModel();
 
-        $brand = $brandResource->addBrand($data['brand']);
-        $country = $countryResource->addCountry($data['country']);
+        $brand = $brandResource->addBrand($data['brand']) ?? null;
+        $country = $countryResource->addCountry($data['country']) ?? null;
 
         $inputData = [
             'name'      => $data['name'],
             'price'     => $data['price'],
-            'country'   => $country->getId(),
-            'brand'     => $brand->getId(),
+            'country'   => $country ? $country->getId() : null,
+            'brand'     => $brand ? $brand->getId() : null,
             'date'      => $data['date'],
         ];
         $productResource->addProduct($inputData);
@@ -97,18 +97,18 @@ class ProductService extends AbstractService
         if (!$brandResource->isExist($data['brand'])) {
             $brandResource->addBrand($data['brand']);
         }
-        $brand = $brandResource->getByBrand($data['brand']);
+        $brand = $brandResource->getByBrand($data['brand']) ?? null;
 
         if (!$countryResource->isExist($data['country'])) {
             $countryResource->addCountry($data['country']);
         }
-        $country = $countryResource->getByCountry($data['country']);
+        $country = $countryResource->getByCountry($data['country']) ?? null;
 
         $inputData = [
             'name'      => $data['name'],
             'price'     => $data['price'],
-            'country'   => $country->getId(),
-            'brand'     => $brand->getId(),
+            'country'   => $country ? $country->getId() : null,
+            'brand'     => $brand ? $brand->getId() : null,
             'date'      => $data['date'],
             'id'        => $id
         ];

@@ -11,8 +11,12 @@ class CountryResourceModel extends HandlerResourceModel
 {
     protected $table = 'country';
 
-    public function addCountry(string $country): ?Model
+    public function addCountry(?string $country): ?Model
     {
+        if ($country === null) {
+            return null;
+        }
+
         $connection = Database::getConnection();
         if (!$this->isExist($country)) {
             $query = $connection->prepare("INSERT INTO country (country) VALUE (?);");
@@ -27,8 +31,12 @@ class CountryResourceModel extends HandlerResourceModel
         return $this->getByCountry($country);
     }
 
-    public function isExist(string $input): bool
+    public function isExist(?string $input): ?bool
     {
+        if ($input === null) {
+            return null;
+        }
+
         foreach ($this->getQuery() as $row) {
             if ($row->getCountry() == $input) {
                 return $row->getId();

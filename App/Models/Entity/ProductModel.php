@@ -35,7 +35,7 @@ class ProductModel extends Model
 
     public function setCountry($data): self
     {
-        $this->data['country'] = $data;
+        $this->data['country'] = $data ?? 'none';
         return $this;
     }
 
