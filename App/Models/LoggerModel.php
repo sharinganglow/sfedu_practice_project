@@ -8,9 +8,21 @@ use Monolog\Logger;
 class LoggerModel
 {
     private static $instance;
+    private $logger;
 
     private function __construct()
     {
+        $this->logger = new Logger('issue');
+
+        $this->logger->pushHandler(new StreamHandler(
+            APP_ROOT . '/var/log/warning.log',
+            Logger::WARNING
+        ));
+
+        $this->logger->pushHandler(new StreamHandler(
+            APP_ROOT . '/var/log/error.log',
+            Logger::ERROR
+        ));
 
     }
 
@@ -25,23 +37,11 @@ class LoggerModel
 
     public function setWarning(string $reason): void
     {
-        $logger = new Logger('warning');
-        $logger->pushHandler(new StreamHandler(
-            APP_ROOT . '/var/log/warning.log',
-            Logger::WARNING
-        ));
-
-        $logger->warning($reason);
+        $this->logger->warning($reason);
     }
 
     public function setError(string $reason): void
     {
-        $logger = new Logger('error');
-        $logger->pushHandler(new StreamHandler(
-            APP_ROOT . '/var/log/error.log',
-            Logger::ERROR
-        ));
-
-        $logger->error($reason);
+        $this->logger->error($reason);
     }
 }

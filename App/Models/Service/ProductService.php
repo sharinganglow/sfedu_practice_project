@@ -66,8 +66,8 @@ class ProductService extends AbstractService
         $categoryResource = new CategoryResourceModel();
         $productResource = new ProductResourceModel();
 
-        $brand = $brandResource->addBrand($data['brand']) ?? null;
-        $country = $countryResource->addCountry($data['country']) ?? null;
+        $brand = $brandResource->addBrand($data['brand']);
+        $country = $countryResource->addCountry($data['country']);
 
         $inputData = [
             'name'      => $data['name'],
@@ -97,12 +97,12 @@ class ProductService extends AbstractService
         if (!$brandResource->isExist($data['brand'])) {
             $brandResource->addBrand($data['brand']);
         }
-        $brand = $brandResource->getByBrand($data['brand']) ?? null;
+        $brand = $brandResource->getByBrand($data['brand']);
 
         if (!$countryResource->isExist($data['country'])) {
             $countryResource->addCountry($data['country']);
         }
-        $country = $countryResource->getByCountry($data['country']) ?? null;
+        $country = $countryResource->getByCountry($data['country']);
 
         $inputData = [
             'name'      => $data['name'],

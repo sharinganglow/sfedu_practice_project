@@ -19,7 +19,7 @@ class ProductModel extends Model
 
     public function getName(): ?string
     {
-        return $this->data['name'] ?? null;
+        return $this->data['name'];
     }
 
     public function setPrice($data): self
@@ -35,7 +35,7 @@ class ProductModel extends Model
 
     public function setCountry($data): self
     {
-        $this->data['country'] = $data ?? 'none';
+        $this->data['country'] = $data;
         return $this;
     }
 

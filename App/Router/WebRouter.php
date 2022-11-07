@@ -42,12 +42,6 @@ class WebRouter extends Router
             $controller->execute();
         } catch (\Exception $exception) {
             $logger->setWarning($exception->__toString());
-        } catch (ValidationException $exception) {
-            $logger->setWarning($exception->__toString());
-        } catch (CacheException $exception) {
-            $logger->setWarning($exception->__toString());
-        } catch (LogicalException $exception) {
-            $logger->setWarning($exception->__toString());
         }
     }
 }

@@ -27,20 +27,10 @@ class ApiRouter extends Router
         $className = 'App\\Controllers\\Api\\' . $controller . 'Api';
 
         try {
-            if (class_exists($className)) {
-                $controller = new $className($id);
-            } else {
-                $controller = new PageNotFound();
-            }
-
+            $controller = class_exists($className) ? new $className($id) : new PageNotFound();
             $controller->execute();
+
         } catch (\Exception $exception) {
-            $logger->setWarning($exception->__toString());
-        } catch (ValidationException $exception) {
-            $logger->setWarning($exception->__toString());
-        } catch (CacheException $exception) {
-            $logger->setWarning($exception->__toString());
-        } catch (LogicalException $exception) {
             $logger->setWarning($exception->__toString());
         }
     }
