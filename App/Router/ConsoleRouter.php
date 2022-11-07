@@ -3,14 +3,15 @@
 namespace App\Router;
 
 use App\Controllers\PageNotFound;
+use App\Models\Exceptions\LogicalException;
 use App\Models\SessionModel;
 
 class ConsoleRouter
 {
     public function runRoute(array $argv): void
     {
-        SessionModel::getInstance()->start();
         $controller = $argv[1];
+        $fileType = $argv[2];
 
         $controller = ucfirst($controller);
         $className = 'App\\Controllers\\Console\\' . $controller . 'Console';
@@ -18,9 +19,9 @@ class ConsoleRouter
         if (class_exists($className)) {
             $controller = new $className();
         } else {
-            $controller = new PageNotFound();
+            throw new LogicalException('No route');
         }
 
-        $controller->execute($argv[2]);
+        $controller->execute($fileType);
     }
 }

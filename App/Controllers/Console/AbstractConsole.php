@@ -6,84 +6,32 @@ use App\Models\Exceptions\LogicalException;
 use App\Models\Service\AbstractService;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 abstract class AbstractConsole
 {
+    protected $path;
+
     abstract public function execute($method);
 
-    public function setLocation($newPath, $fileName): self
+    public function setPath($path): self
     {
-        $this->path = $newPath . $fileName;
+        $this->path = $path ?? null;
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getPath(): ?string
     {
-        return $this->path ?? null;
+        return $this->path ?? $this->getOutputDir();
     }
 
-    protected function checkIfFail(): void
+    public function getOutputDir(): string
     {
-        if (!file_exists($this->getLocation())) {
-            throw new LogicalException('Не удалось создать файл');
-        }
-        echo 'Complete!' . PHP_EOL;
+        return APP_ROOT . '/var/output';
     }
 
-    function clearDirectory($dir): void
+    protected function getDate()
     {
-        $list = scandir(APP_ROOT . $dir);
-        unset($list[0], $list[1]);
-
-        foreach ($list as $file)
-        {
-            if (is_dir($dir.$file))
-            {
-                $this->clearDirectory($dir.$file.'/');
-                rmdir($dir.$file);
-            } else {
-                unlink(APP_ROOT . $dir.$file);
-            }
-        }
-    }
-
-    protected function formatTable(object $worksheet): void
-    {
-        $worksheet->getColumnDimension('A')->setWidth(15);
-        $worksheet->getColumnDimension('B')->setWidth(10);
-        $worksheet->getColumnDimension('C')->setWidth(8);
-        $worksheet->getColumnDimension('D')->setWidth(20);
-        $worksheet->getColumnDimension('E')->setWidth(15);
-        $worksheet->getColumnDimension('F')->setWidth(25);
-    }
-
-    public function handleCsv(AbstractService $model): void
-    {
-        $stream = fopen($this->getLocation(), 'w+');
-
-        fputcsv($stream, $model->getKeys());
-        foreach ($model->getAll() as $row) {
-            fputcsv($stream, $row);
-        }
-        fclose($stream);
-
-        $this->checkIfFail();
-    }
-
-    public function handleXlsx(AbstractService $model): void
-    {
-        $data = $model->getAll();
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $this->formatTable($sheet);
-
-        $sheet->setTitle('Workssheet 1');
-        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        array_unshift($data, $model->getKeys());
-
-        $sheet->fromArray($data);
-        $writer->save($this->getLocation());
-
-        $this->checkIfFail();
+        return date('d_m_o__H_i');
     }
 }

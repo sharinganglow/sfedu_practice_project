@@ -6,6 +6,7 @@ use App\Models\Entity\ProductModel;
 use App\Models\Exceptions\LogicalException;
 use App\Models\Resource\ProductResourceModel;
 use App\Models\Service\AbstractService;
+use App\Models\Service\FileSystemService;
 use App\Models\Service\ProductService;
 use http\Header;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -20,16 +21,14 @@ class ProductConsole extends AbstractConsole
     {
         $fileExtension = $method;
 
-        $date = new \DateTime();
-        $date = date('d_m_o__H_i', $date->getTimestamp());
-        $fileName = $this->entity . '_' . $date . '.' . $fileExtension;
+        $fileName = $this->entity . '_' . $this->getDate() . '.' . $fileExtension;
         $model = new ProductService();
-        $this->setLocation(APP_ROOT . '/var/output/', $fileName);
+        $fileService = new FileSystemService($this->getPath());
 
         if ($method == 'csv') {
-            $this->handleCsv($model);
+            $fileService->handleCsv($model, $fileName);
         } else {
-            $this->handleXlsx($model);
+            $fileService->handleXlsx($model, $fileName);
         }
     }
 }
