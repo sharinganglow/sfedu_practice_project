@@ -1,19 +1,19 @@
-<center> 7 php Nikita </center>
+Kravtsov N. A. KTbo3-1
  ===
 
  -----
 
-<center> Website with designed with MVC </center>
+Website with designed with MVC
  ---
 
  -----
 
-### <center> Environment: </center>
+### Environment:
 - minimal PHP version is 7.3.33
 - mysql 5.7.37
 
 
-### <center> How to use </center>
+### How to use 
 - first of all you need to install php, use this commands on terminal:
 
 
@@ -30,12 +30,12 @@
 
 
 -----
-### <center> The task of project:
+### The task of project:
 Create an extensible web service that will interact with the database and process requests dynamically
 
 
 ---
-### <center> General pages:
+### General pages:
 #### Mainpage - contains welcome words and navigation tabs
 
 #### Products - contains a list of products and (will contain an add to cart)
@@ -50,7 +50,7 @@ Create an extensible web service that will interact with the database and proces
 
 ---
 
-### <center>Folders:
+### Folders:
 #### App - application main folder. It contains all the logic of the program
 has the following folders:
 
@@ -79,7 +79,7 @@ has the following folders:
 
 ---
 
-### <center>General classes:
+### General classes:
 #### Router - the class responsible for dynamically determining the controller type
 
 >>receives an input uri and processes it
